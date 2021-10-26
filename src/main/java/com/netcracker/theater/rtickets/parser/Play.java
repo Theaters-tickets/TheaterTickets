@@ -1,13 +1,16 @@
 package com.netcracker.theater.rtickets.parser;
 
+
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Play {
     private int id;
-    private List<Map<String, String>> dates;
+    private List<Dates> dates;
     private String title;
-    private Map<String, Object> place;
+    private Integer place_id;
     private String description;
     private String body_text;
     private List<String> categories;
@@ -19,6 +22,7 @@ public class Play {
     private String short_title;
     private List<String> tags;
     private List<Participants> participants;
+
 
 
     //private int favorites_count;
@@ -56,14 +60,14 @@ public class Play {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.replaceAll("<[^>]*>", "");
     }
 
-    public List<Map<String, String>> getDates() {
+    public List<Dates> getDates() {
         return dates;
     }
 
-    public void setDates(List<Map<String, String>> dates) {
+    public void setDates(List<Dates> dates) {
         this.dates = dates;
     }
 
@@ -115,19 +119,23 @@ public class Play {
         this.id = id;
     }
 
-    public Map<String, Object> getPlace() {
-        return place;
+    public Integer  getPlace() {
+        return place_id;
     }
 
-    public void setPlace(Map<String, Object> place) {
-        this.place = place;
+    public void setPlace(Map<String,Integer>  place) {
+        try {
+            this.place_id = place.get("id");
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
     }
 
     public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<String>  categories) {
         this.categories = categories;
     }
 
@@ -155,14 +163,23 @@ public class Play {
         this.participants = participants;
     }
 
+    public Map<String, String> getSource() {
+        return source;
+    }
+
+    public void setSource(Map<String, String> source) {
+        this.source = source;
+    }
+
 
     @Override
     public String toString() {
         return "{" +
                 "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description=" + description +
+                ", place_id='" + place_id + '\'' +
                 ", price='" + price + '\'' +
+                ", categories='" + categories + '\'' +
+                ", tags='" + tags + '\'' +
                 '}';
     }
 
