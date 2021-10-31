@@ -1,12 +1,13 @@
-package com.netcracker.theater.rtickets.service;
+package com.netcracker.theater.rtickets.data.service;
 
-import com.netcracker.theater.rtickets.dao.TheatreDAO;
-import com.netcracker.theater.rtickets.entity.Theatre;
+import com.netcracker.theater.rtickets.data.dao.TheatreDAO;
+import com.netcracker.theater.rtickets.data.entity.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TheatreServiceImpl implements TheatreService{
@@ -28,13 +29,13 @@ public class TheatreServiceImpl implements TheatreService{
 
     @Override
     @Transactional
-    public Theatre getTheatre(int id) {
+    public Theatre getTheatre(UUID id) {
         return theatreDAO.findById(id).get();
     }
 
     @Override
     @Transactional
-    public void deleteTheatre(int id) {
+    public void deleteTheatre(UUID id) {
         theatreDAO.deleteById(id);
     }
 }
