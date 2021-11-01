@@ -1,16 +1,32 @@
 package com.netcracker.theater.rtickets.parser;
 
-import java.io.FileWriter;
+import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
+import com.netcracker.theater.rtickets.entity.Theatre;
+import com.netcracker.theater.rtickets.service.TheatreService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+
+
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public class Main {
+
+
     public static void main(String[] args) {
-        ArrayList<Play> arr = TESTPARSER.parsePlay();
-        for (Play plays : arr) {
-            System.out.println(plays);
+
+        ApplicationContext context= SpringApplication.run(NetcrackerTheaterTicketsApplication.class, args);
+        TheatreService theatreService = context.getBean(TheatreService.class);
+
+        ArrayList<Theatre> arr = ParserClass.parseTheatre();
+        for (Theatre theatre : arr) {
+            theatreService.saveTheatre(theatre);
         }
+        System.out.println(theatreService.getTheatre(3));
+        System.out.println("END!");
+
+
+
         /*
         try {
             FileWriter writer = new FileWriter("C:\\Users\\79501\\Documents\\PROJECT\\Project\\src\\main\\java\\com\\netcracker\\theater\\rtickets\\parser\\tags.txt", true);

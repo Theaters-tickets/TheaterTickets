@@ -18,7 +18,6 @@ public class Play {
     private String price;
     private boolean is_free;
     private List<Image> images;
-    private Map<String,String> source;
     private String short_title;
     private List<String> tags;
     private List<Participants> participants;
@@ -161,14 +160,6 @@ public class Play {
 
     public void setParticipants(List<Participants> participants) {
         this.participants = participants;
-    }
-
-    public Map<String, String> getSource() {
-        return source;
-    }
-
-    public void setSource(Map<String, String> source) {
-        this.source = source;
     }
 
 

@@ -5,7 +5,7 @@ import java.util.Map;
 public class Image {
 
     private String image;
-    private Map<String, String> source;
+    private Source source;
 
     public String getImage() {
         return image;
@@ -15,11 +15,11 @@ public class Image {
         this.image = image;
     }
 
-    public Map<String, String> getSource() {
+    public Source getSource() {
         return source;
     }
 
-    public void setSource(Map<String, Object> String) {
+    public void setSource(Source String) {
         this.source = source;
     }
 

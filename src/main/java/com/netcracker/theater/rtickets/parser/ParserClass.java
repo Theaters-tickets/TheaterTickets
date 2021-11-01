@@ -1,6 +1,7 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netcracker.theater.rtickets.entity.Theatre;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -44,11 +45,11 @@ public class ParserClass {
         return plays;
     }
 
-    public static ArrayList<Theater> parseTheater() {
+    public static ArrayList<Theatre> parseTheatre() {
         String pathToTheNextPage = "";
         try {
-            URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=20&fields=id,title,short_title,address,timetable,phone,images,description,body_text,foreign_url,coords,subway");
-
+            //URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=20&fields=id,title,short_title,address,timetable,phone,images,description,body_text,foreign_url,coords,subway");
+            URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=100&fields=id,title,short_title,address,timetable,phone,description,subway,body_text");
             ObjectMapper mapper = new ObjectMapper();
             theaters = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public class ParserClass {
                     }
                     theaterURL = new URL(pathToTheNextPage);
                     for (int i = 0; i < results.size(); i++) {
-                        theaters.add(mapper.readValue(results.get(i).toString(), Theater.class));
+                        theaters.add(mapper.readValue(results.get(i).toString(), Theatre.class));
                     }
 
                 }
@@ -155,7 +156,7 @@ public class ParserClass {
 
     public static ArrayList<Play> plays;
     public static URL playsURL;
-    public static ArrayList<Theater> theaters;
+    public static ArrayList<Theatre> theaters;
     public static ArrayList<Categories> categories;
 
 }
