@@ -1,5 +1,7 @@
 package com.netcracker.theater.rtickets.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.util.UUID;
 public class Repertoire {
     @Id
     @GeneratedValue
+    @JsonIgnore
     @Column(name = "id", length = 16, unique = true, nullable = false)
     private UUID id;
 
@@ -20,10 +23,13 @@ public class Repertoire {
     private String name;
 
     @Column(name="age_min")
-    private int age_min;
+    private String age_min;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 5000)
     private String title;
+
+    @Column(name = "description", length = 100000)
+    private String description;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -79,16 +85,67 @@ public class Repertoire {
         categories.add(category);
     }
 
+
+    public String getName() {
+        return name;
+    }
+    @JsonProperty("short_title")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAge_min() {
+        return age_min;
+    }
+    @JsonProperty("age_restriction")
+    public void setAge_min(String age_min) {
+        this.age_min = age_min;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    @JsonProperty("description")
+    public void setTitle(String title) {
+        this.title = title.replaceAll("<[^>]*>", "");
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    @JsonProperty("body_text")
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+    @JsonProperty("tags")
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Picture> getPictures() {
+        return pictures;
+    }
+    @JsonProperty("images")
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+
+
     public Repertoire() {
     }
 
-    public Repertoire(String name, int age_min, String title) {
+    public Repertoire(String name, String age_min, String title) {
         this.name = name;
         this.age_min = age_min;
         this.title = title;
     }
 
-    public Repertoire(String name, int age_min, String title, Set<Genre> genres, Set<Comment> comments, Set<Performance> performances, Set<Category> categories, Set<Picture> pictures) {
+    public Repertoire(String name, String age_min, String title, Set<Genre> genres, Set<Comment> comments, Set<Performance> performances, Set<Category> categories, Set<Picture> pictures) {
         this.name = name;
         this.age_min = age_min;
         this.title = title;

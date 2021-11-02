@@ -1,8 +1,10 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
-import com.netcracker.theater.rtickets.entity.Theatre;
-import com.netcracker.theater.rtickets.service.TheatreService;
+import com.netcracker.theater.rtickets.data.entity.Repertoire;
+import com.netcracker.theater.rtickets.data.entity.Theatre;
+import com.netcracker.theater.rtickets.data.service.RepertoireService;
+import com.netcracker.theater.rtickets.data.service.TheatreService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
@@ -14,16 +16,22 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-        ApplicationContext context= SpringApplication.run(NetcrackerTheaterTicketsApplication.class, args);
+        ApplicationContext context= SpringApplication.run(NetcrackerTheaterTicketsApplication.class);
         TheatreService theatreService = context.getBean(TheatreService.class);
+        RepertoireService repertoireService = context.getBean(RepertoireService.class);
 
-        ArrayList<Theatre> arr = ParserClass.parseTheatre();
-        for (Theatre theatre : arr) {
-            theatreService.saveTheatre(theatre);
+
+        ArrayList<Repertoire> repertoires = ParserClass.parseRepertoire();
+        for (Repertoire r : repertoires) {
+            repertoireService.saveRep(r);
         }
-        System.out.println(theatreService.getTheatre(3));
+        repertoires.clear();
+        ArrayList<Theatre> theatres = ParserClass.parseTheatre();
+        for (Theatre t : theatres) {
+            theatreService.saveTheatre(t);
+        }
         System.out.println("END!");
+
 
 
 

@@ -1,7 +1,9 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netcracker.theater.rtickets.entity.Theatre;
+
+import com.netcracker.theater.rtickets.data.entity.Repertoire;
+import com.netcracker.theater.rtickets.data.entity.Theatre;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,15 +16,51 @@ import java.util.Scanner;
 
 public class ParserClass {
 
+    public static URL url;
+
+    public static ArrayList<Repertoire> parseRepertoire() {
+        String pathToTheNextPage = null;
+        try {
+            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=1635240332&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images");
+            ObjectMapper mapper = new ObjectMapper();
+            repertoireArr = new ArrayList<>();
+            while (true) {
+                JSONObject obj = getObj(url);
+                if (obj.isEmpty()) {
+                    throw new RuntimeException();
+                } else {
+                    JSONArray results = (JSONArray) obj.get("results");
+
+                    try {
+                        pathToTheNextPage = obj.get("next").toString();
+                    } catch (NullPointerException ex) {
+                        break;
+                    }
+                    url = new URL(pathToTheNextPage);
+
+                    for (int i = 0; i < results.size(); i++) {
+                        repertoireArr.add(mapper.readValue(results.get(i).toString(), Repertoire.class));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("OK!");
+        return repertoireArr;
+    }
+
+
+    /*
     public static ArrayList<Play> parsePlay() {
         String pathToTheNextPage = null;
         try {
-            playsURL = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=1634365697&expand=&fields=id,title,short_title,place,description,body_text,categories,age_restriction,price,tags,participants,images,dates,is_free");
+            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=1634365697&expand=&fields=id,title,short_title,place,description,body_text,categories,age_restriction,price,tags,participants,images,dates,is_free");
             ObjectMapper mapper = new ObjectMapper();
             plays = new ArrayList<>();
 
             while (true) {
-                JSONObject obj = getObj(playsURL);
+                JSONObject obj = getObj(url);
                 if (obj.isEmpty()) {
                     throw new RuntimeException();
                 } else {
@@ -32,7 +70,7 @@ public class ParserClass {
                     } catch (NullPointerException ex) {
                         break;
                     }
-                    playsURL = new URL(pathToTheNextPage);
+                    url = new URL(pathToTheNextPage);
 
                     for (int i = 0; i < results.size(); i++) {
                         plays.add(mapper.readValue(results.get(i).toString(), Play.class));
@@ -43,15 +81,16 @@ public class ParserClass {
             e.printStackTrace();
         }
         return plays;
-    }
+    } */
 
     public static ArrayList<Theatre> parseTheatre() {
+
         String pathToTheNextPage = "";
         try {
             //URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=20&fields=id,title,short_title,address,timetable,phone,images,description,body_text,foreign_url,coords,subway");
-            URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=100&fields=id,title,short_title,address,timetable,phone,description,subway,body_text");
+            URL theaterURL = new URL("https://kudago.com/public-api/v1.4/places/?lang=ru&location=spb&categories=theatre&is_closed=0&expand=&page_size=100&fields=id,title,address,timetable,phone,description,subway,body_text");
             ObjectMapper mapper = new ObjectMapper();
-            theaters = new ArrayList<>();
+            theatreArr = new ArrayList<>();
 
             while (true) {
                 JSONObject obj = getObj(theaterURL);
@@ -66,7 +105,8 @@ public class ParserClass {
                     }
                     theaterURL = new URL(pathToTheNextPage);
                     for (int i = 0; i < results.size(); i++) {
-                        theaters.add(mapper.readValue(results.get(i).toString(), Theatre.class));
+                        //theatreService.saveTheatre(mapper.readValue(results.get(i).toString(), Theatre.class));
+                        theatreArr.add(mapper.readValue(results.get(i).toString(), Theatre.class));
                     }
 
                 }
@@ -74,29 +114,8 @@ public class ParserClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return theaters;
-    }
-
-    public static ArrayList<Categories> parseCategories() {
-        String pathToTheNextPage = "";
-        try {
-            URL categoriesURL = new URL("https://kudago.com/public-api/v1.4/event-categories/?lang=&order_by=&fields=");
-            ObjectMapper mapper = new ObjectMapper();
-            categories = new ArrayList<>();
-
-            JSONArray arr = getArray(categoriesURL);
-            if (arr.isEmpty()) {
-                throw new RuntimeException();
-            } else {
-                for (int i = 0; i < arr.size(); i++) {
-                    categories.add(mapper.readValue(arr.get(i).toString(), Categories.class));
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return categories;
+        System.out.println("OK!");
+        return theatreArr;
     }
 
 
@@ -152,13 +171,8 @@ public class ParserClass {
         return arr;
     }
 
-
-
-    public static ArrayList<Play> plays;
-    public static URL playsURL;
-    public static ArrayList<Theatre> theaters;
-    public static ArrayList<Categories> categories;
-
+    public static ArrayList<Theatre> theatreArr;
+    public static ArrayList<Repertoire> repertoireArr;
 }
 
 
