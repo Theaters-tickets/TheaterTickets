@@ -28,15 +28,6 @@ public class Picture {
     @Column
     private String source_link;
 
-    public String getImage() {
-        return image;
-    }
-    @JsonProperty("image")
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-
     @Column
     private int score;
 
@@ -47,6 +38,12 @@ public class Picture {
         this.image = image;
         this.score = score;
     }
+
+    @JsonProperty("image")
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @JsonProperty("source")
     public  void setSource(Map<String,String> source) {
         source_name = source.get("name");

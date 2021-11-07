@@ -1,6 +1,7 @@
 package com.netcracker.theater.rtickets.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -42,7 +43,7 @@ public class Theatre {
     private String title;
 
     @Column(name = "number")
-    private String number;
+    private Long number;
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -125,11 +126,11 @@ public class Theatre {
         this.title = title.replaceAll("<[^>]*>", "");
     }
     @JsonProperty("number")
-    public String getNumber() {
+    public Long getNumber() {
         return number;
     }
     @JsonProperty("id")
-    public void setNumber(String number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
@@ -141,7 +142,7 @@ public class Theatre {
         this.address = address;
     }
 
-    public Theatre(String name, String address, String description, String subway, String phone, String timetable, String title, String id) {
+    public Theatre(String name, String address, String description, String subway, String phone, String timetable, String title, Long number) {
         this.name = name;
         this.address = address;
         this.description = description;
@@ -149,10 +150,10 @@ public class Theatre {
         this.phone = phone;
         this.timetable = timetable;
         this.title = title;
-        this.number = id;
+        this.number = number;
     }
 
-    public Theatre(String name, String address, String description, String subway, String phone, String timetable, String title, String number, Set<Performance> performances, Set<Picture> pictures) {
+    public Theatre(String name, String address, String description, String subway, String phone, String timetable, String title, Long number, Set<Performance> performances, Set<Picture> pictures) {
         this.name = name;
         this.address = address;
         this.description = description;

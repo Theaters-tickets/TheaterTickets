@@ -3,6 +3,7 @@ package com.netcracker.theater.rtickets.data.service;
 import com.netcracker.theater.rtickets.data.dao.TheatreDAO;
 import com.netcracker.theater.rtickets.data.entity.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,4 +39,12 @@ public class TheatreServiceImpl implements TheatreService{
     public void deleteTheatre(UUID id) {
         theatreDAO.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Theatre getTheatreByNumber(Long number) { return theatreDAO.getByNumber(number); }
+
+    @Override
+    @Transactional
+    public boolean isExistByName(String name) { return theatreDAO.isExistByName(name); };
 }
