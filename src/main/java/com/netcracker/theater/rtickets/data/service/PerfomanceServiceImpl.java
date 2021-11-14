@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PerfomanceServiceImpl implements PerfomanceService {
@@ -22,6 +23,13 @@ public class PerfomanceServiceImpl implements PerfomanceService {
     @Override
     public void savePer(Performance performance) {
         perfomanceDAO.save(performance);
+    }
+
+    //Added by Ilya
+    //To get performance by id
+    @Override
+    public Performance getById(UUID id){
+        return perfomanceDAO.getById(id);
     }
 
 }

@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Поиск спекталя</title>
+
+
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+</head>
+
+
+<style>
+    h1{
+        font-family: "Comic Sans MS";
+        color: navy;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    strong {
+        font-weight: 700;
+        background-color: yellow;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        border: 3px solid purple;
+    }
+
+    thead th:nth-child(1) {
+        width: 30%;
+    }
+
+    thead th:nth-child(2) {
+        width: 20%;
+    }
+
+    thead th:nth-child(3) {
+        width: 15%;
+    }
+
+    thead th:nth-child(4) {
+        width: 35%;
+    }
+
+    th, td {
+        padding: 20px;
+    }
+
+
+
+    .block-left{width:20%;overflow:auto;float:left;}
+    .block-right{width:80%;overflow:auto;}
+
+
+
+
+
+    #mainBox {
+        font-family: "Comic Sans MS";
+        text-align: center;
+        line-height: 400px;
+
+    }
+    .btn-search {
+        background: #e6cd96;
+        background-image: -webkit-linear-gradient(top, #e6cd96, #777d69);
+        background-image: -moz-linear-gradient(top, #e6cd96, #777d69);
+        background-image: -ms-linear-gradient(top, #e6cd96, #777d69);
+        background-image: -o-linear-gradient(top, #e6cd96, #777d69);
+        background-image: linear-gradient(to bottom, #e6cd96, #777d69);
+        border-radius: 28px;
+        font-family: Georgia;
+        color: #ffffff;
+        font-size: 20px;
+        padding: 10px 20px 10px 20px;
+        border: solid #9e9e9e 2px;
+        text-decoration: none;
+    }
+    .btn-search:hover {
+        background: #52574c;
+        background-image: -webkit-linear-gradient(top, #52574c, #454542);
+        background-image: -moz-linear-gradient(top, #52574c, #454542);
+        background-image: -ms-linear-gradient(top, #52574c, #454542);
+        background-image: -o-linear-gradient(top, #52574c, #454542);
+        background-image: linear-gradient(to bottom, #52574c, #454542);
+        text-decoration: none;
+    }
+
+    html{
+        width: auto;
+        height: auto;
+    }
+
+    body{
+        /* background-image: url(../static/img/backgroundTheatre.jpg); */
+        background-size: 100%;
+        background-color: #9e9e9e;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+    }
+
+    .fixedFooter {
+        background: #9e9e9e;
+        position: fixed;
+        left:0px;
+        bottom:0px;
+        height:30px;
+        width:100%;
+        margin-bottom: 0px;
+    }
+    header{
+        margin-top: -15px;
+    }
+
+    .column3 {
+        background: #9e9e9e;
+        float: left;
+        width: 33.33333333%;
+    }
+
+    .rowBottom{
+        background-color: #9e9e9e;
+        height: max-content;
+    }
+
+    .textarea{
+        background: #9e9e9e;
+        border-color: #9e9e9e;
+        text-align: center;
+        overflow: hidden;
+        font-family: "Comic Sans MS";
+        color: navy;
+    }
+
+
+
+
+</style>
+<header>
+    <h1 class="row">
+        <div class="column3">First</div>
+        <div class="column3">Header</div>
+        <div class="column3"><a href="http://localhost:8080/login">Login</a></div>
+    </h1>
+</header>
+<body>
+
+<br>
+<div id="mainBox">
+    <button class="btn-search">
+        <a href=http://localhost:8080/search>Репертуар</a>
+    </button>
+</div>
+
+
+<h1 class="rowBottom">
+    <div class="column3">
+        <a th:text="${threeRandomRepertoire[0].name}"
+           th:href="@{|/play/${threeRandomRepertoire[0].id}|}">
+            First
+        </a>
+        <br>
+        <textarea disabled class="textarea" cols="50" rows="17"
+                  th:text="${threeRandomRepertoire[0].title}">
+            Desc1
+        </textarea>
+    </div>
+    <div class="column3">
+        <a th:text="${threeRandomRepertoire[1].name}"
+           th:href="@{|/play/${threeRandomRepertoire[1].id}|}">
+            Second
+        </a>
+        <br>
+        <textarea disabled class="textarea" cols="50" rows="17"
+                  th:text="${threeRandomRepertoire[1].title}">
+            Desc2
+        </textarea>
+    </div>
+    <div class="column3">
+        <a th:text="${threeRandomRepertoire[2].name}"
+           th:href="@{|/play/${threeRandomRepertoire[2].id}|}">
+            Third
+        </a>
+        <br>
+        <!-- <a th:text="${threeRandomRepertoire[2].title}">Desc3</a> -->
+        <textarea disabled class="textarea" cols="50" rows="17"
+                  th:text="${threeRandomRepertoire[2].title}">
+            Desc3
+        </textarea>
+    </div>
+
+</h1>
+
+<!--<a th:href="@{http://localhost:8080/theatres}"><button>Театры</button></a> -->
+</body>
+
+<footer><h1 class="fixedFooter">Fixed footer</h1></footer>
+</html>
