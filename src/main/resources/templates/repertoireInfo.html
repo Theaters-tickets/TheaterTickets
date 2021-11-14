@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+</head>
+
+<style>
+    h1{
+        font-family: "Comic Sans MS";
+        color: navy;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .column3 {
+        float: left;
+        width: 33.33333333%;
+    }
+
+    .imageContainer{
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+    }
+    .card{
+        width:350px;
+        height: 350px;
+        background-color: #cccccc;
+        border: 2px solid black;
+        text-align: center;
+    }
+    .viewPort{
+        width: 354px;
+        height: 354px;
+        overflow: hidden;
+    }
+
+
+</style>
+
+<script>
+
+    window.onload=function() {
+        const next = document.getElementById("next");
+        const prev = document.getElementById("prev");
+        const images = document.querySelector(".imageContainer")
+
+
+        const firstCardClone = images.children[0].cloneNode(true);
+        const lastCardClone = images.children[images.children.length - 1].cloneNode(true);
+
+        images.style.transitionDuration = "0.0s";
+        images.style.transform = `translate(-354px)`;
+
+        images.insertBefore(lastCardClone, images.children[0]);
+        images.appendChild(firstCardClone);
+
+        let currentCard = 1;
+
+        next.addEventListener('click', () => {
+            if (currentCard < images.children.length - 1) {
+                currentCard++;
+                console.log(currentCard);
+                images.style.transitionDuration = "0.5s";
+                images.style.transform = `translate(-${currentCard * 354}px)`;
+
+                if (currentCard === images.children.length - 1){
+                    images.style.transitionDuration = "0.0s";
+                    images.style.transform = `translate(-354px)`;
+                    currentCard = 1;
+                }
+            }
+            else
+                return
+        });
+        prev.addEventListener('click', () => {
+            if (currentCard > 0) {
+                currentCard--;
+                console.log(currentCard);
+                images.style.transitionDuration = "0.5s";
+                images.style.transform = `translate(-${currentCard * 354}px)`;
+                if (currentCard === 0){
+                    images.style.transitionDuration = "0.0s";
+                    images.style.transform = `translate(-${(images.children.length - 2) * 354}px)`;
+                    currentCard = images.children.length - 2;
+                }
+            }
+            else
+                return
+        });
+    }
+
+</script>
+
+<body>
+<h1 th:text="${'Информация о спектакле '+ repertoire.name}">Info:</h1>
+<!-- <h2 th:text="Информация о спектакле ${repertoire.description}">Информация о спектакле</h2> -->
+<div class="content" th:utext="${repertoire.getDescription()}" />
+
+<button id="prev">Prev</button>
+<button id="next">Next</button>
+<div class="viewPort">
+    <div class="imageContainer">
+        <tr th:each="img : ${repertoire.getPictures()}" class="tableImage">
+            <div class="card"><img th:src="${img.getImage()}" height="350px" width="350px"></img>1</div>
+        </tr>
+    </div>
+</div>
+
+<h1 class="row">
+    <div class="column3" th:text="${repertoire.genres}">Genres</div>
+    <div class="column3" th:text="${repertoire.age_min + '+'}">Min_age</div>
+    <div class="column3">Here might be a theatre link and time</div>
+</h1>
+
+<button th:onclick="goBack()">На главную</button>
+<input type="button" value="Назад" onclick="history.back()">
+
+</body>
+</html>
