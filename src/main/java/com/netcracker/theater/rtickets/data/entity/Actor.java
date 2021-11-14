@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -52,7 +53,7 @@ public class Actor {
 
     @JsonProperty("title")
     public void setFullName(String fullName) {
-        int idx = fullName.lastIndexOf(' ');
+        int idx = fullName.trim().lastIndexOf(' ');
         if (idx == -1)
             throw new IllegalArgumentException("Only a single name: " + fullName);
         name = fullName.substring(0, idx);
@@ -63,6 +64,18 @@ public class Actor {
         this.pictures = pictures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return Objects.equals(name, actor.name) && Objects.equals(last_name, actor.last_name) && Objects.equals(performances, actor.performances) && Objects.equals(pictures, actor.pictures);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, last_name, performances, pictures);
+    }
 
     @Override
     public String toString() {

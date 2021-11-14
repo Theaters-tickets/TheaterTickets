@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Star Rating Form | CodingNepal</title>
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
+
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <base href="/" />
+</head>
+
+<body>
+<div class="container">
+    <div class="post">
+        <div class="text">Спасибо за оценку!</div>
+        <div class="edit">Редактировать</div>
+    </div>
+
+    <div class="star-widget" th:object="${comment}">
+        <form action="#" method="post" th:action="@{/comments/}" th:object="${comment}">
+            <input th:field="*{score}" th:value="5" type="radio" name="rate" id="rate-5">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="4" type="radio" name="rate" id="rate-4">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="3" type="radio" name="rate" id="rate-3">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="2" type="radio" name="rate" id="rate-2">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="1" type="radio" name="rate" id="rate-1">
+            <label for="rate-1" class="fas fa-star"></label>
+            <header></header>
+            <div class="textarea">
+                <textarea th:field="*{text}" cols="30" placeholder="Оставьте комментарий.."
+                          class="form-control"></textarea>
+            </div>
+            <div class="btn">
+                <button id ="save-comment" type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table-comment">
+    <tr>
+        <th>ID</th>
+        <th>text</th>
+        <th>stars</th>
+        <th>time</th>
+
+    </tr>
+    <tr th:if="${#lists.isEmpty(comments)}">
+        <td colspan="5">Добавьте первый комментарий...!</td>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${comment.id}"></td>
+        <td th:text="${comment.text}"></td>
+        <td th:text="${comment.score}"></td>
+        <td th:text="${comment.createdAt}"></td>
+    </tr>
+</table>
+
+
+
+<script>
+    const btn = document.querySelector("button");
+    const post = document.querySelector(".post");
+    const widget = document.querySelector(".star-widget");
+    const editBtn = document.querySelector(".edit");
+    btn.onclick = ()=>{
+        alert(document.getElementById("comment").value);
+        widget.style.display = "none";
+        post.style.display = "block";
+        editBtn.onclick = ()=>{
+            widget.style.display = "block";
+            post.style.display = "none";
+        }
+        return false;
+    }
+</script>
+</body>
+</html>

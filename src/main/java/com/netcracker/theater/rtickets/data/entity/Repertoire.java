@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,11 +44,11 @@ public class Repertoire {
     @JoinColumn(name = "repertoire_id")
     private Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "repertoire_id")
     private Set<Performance> performances = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "category_id")
     private Set<Category> categories = new HashSet<>();
 
@@ -99,7 +100,7 @@ public class Repertoire {
     }
     @JsonProperty("age_restriction")
     public void setAge_min(String age_min) {
-        this.age_min = age_min;
+        this.age_min = age_min.replaceAll("\\+", "");;
     }
 
     public String getTitle() {
@@ -121,7 +122,7 @@ public class Repertoire {
     public Set<Category> getCategories() {
         return categories;
     }
-    @JsonProperty("tags")
+    //@JsonProperty("tags")
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
@@ -154,6 +155,19 @@ public class Repertoire {
         this.performances = performances;
         this.categories = categories;
         this.pictures = pictures;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Repertoire that = (Repertoire) o;
+        return name.equals(that.name) && Objects.equals(age_min, that.age_min) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(genres, that.genres) && Objects.equals(comments, that.comments) && Objects.equals(performances, that.performances) && Objects.equals(categories, that.categories) && Objects.equals(pictures, that.pictures);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age_min, title, description, genres, comments, performances, categories, pictures);
     }
 
     @Override

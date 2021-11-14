@@ -20,8 +20,6 @@ public class RepertoireServiceImpl implements RepertoireService{
 
     @Override
     public void saveRep(Repertoire repertoire) {
-        System.out.println(repertoire);
-
         repertoireDAO.save(repertoire);
     }
 

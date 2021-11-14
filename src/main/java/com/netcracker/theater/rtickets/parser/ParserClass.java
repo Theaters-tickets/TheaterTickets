@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -32,7 +33,13 @@ public class ParserClass {
     private RoleActorService roleActorService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private CategoryService categoryService;
 
+    private static long CURRENT_TIME = Instant.now().getEpochSecond();
+    private boolean check;
+
+    public int countPages = 0;
 
     public static URL url;
 
@@ -51,8 +58,9 @@ public class ParserClass {
                     JSONArray results = (JSONArray) obj.get("results");
                     for (Object result : results) {
                         Repertoire repertoire = mapper.readValue(result.toString(), Repertoire.class);
-                        //repertoireService.saveRep(repertoire);
 
+
+                        //SAVE THEATRE
                         JSONObject resultObject = (JSONObject)result;
                         try {
                             theatreNumber = (Long) ((JSONObject) resultObject.get("place")).get("id");
@@ -72,40 +80,92 @@ public class ParserClass {
                                 theatre = theatreService.getTheatreByNumber(theatreNumber);
                             }
                         }
-                        JSONArray dateArr = (JSONArray)resultObject.get("dates");
+
+
+                        //SAVE PARTICIPANTS
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         Set<Actor> actors = new HashSet<>();
                         for (Object participant : participantsArr) {
                             RoleActor roleActor = roleActorService.getRoleByName(((JSONObject)((JSONObject) participant).get("role")).get("slug").toString());
-                            if (roleActor== null) {
+                            if (roleActor == null) {
                                 roleActor = mapper.readValue((((JSONObject) participant).get("role").toString()), RoleActor.class);
+                                if (roleActor.getName().equals("stage-theatre")) {
+                                    continue; //don't write theatres as role
+                                }
                             }
                             Actor actor = mapper.readValue(( ((JSONObject) participant).get("agent").toString()), Actor.class);
-                            roleActor.addActor(actor);
+                            check = true;
+                            for (Actor act : actorService.getAllActors()) {
+                                if (act.equals(actor)) { //check fot unique value
+                                    actor = act;
+                                    check = false;
+                                    break;
+                                }
+                            }
+                            if (check) {
+                                roleActor.addActor(actor);
+                                roleActorService.saveRole(roleActor);
+                            }
                             actors.add(actor);
-                            roleActorService.saveRole(roleActor);
                         }
 
+
+                        //SAVE PERFORMANCE
+                        JSONArray dateArr = (JSONArray)resultObject.get("dates");
                         for (Object date : dateArr) {
-                            if ((Long)((JSONObject)date).get("start") > 1635240332) {
+                            if ((Long)((JSONObject)date).get("start") > CURRENT_TIME) {
                                 Performance performance = mapper.readValue(( (JSONObject) date).toString(), Performance.class);
-                                performance.setActors(actors);
-                                theatre.addPerformance(performance);
-                                repertoire.addPerformance(performance);
+                                check = true;
+                                for (Performance perf : perfomanceService.getAllPerformance()) {
+                                    if (performance.equals(perf)) { //check fot unique value
+                                        performance = perf;
+                                        check = false;
+                                        break;
+                                    }
+                                }
+                                if (check) {
+                                    performance.setActors(actors);
+                                    perfomanceService.savePer(performance);
+                                    theatre.addPerformance(performance);
+                                    repertoire.addPerformance(performance);
+                                    theatreService.saveTheatre(theatre);
+                                }
                             }
                         }
-                        theatreService.saveTheatre(theatre);
-                        //repertoire.setPerformances(theatre.getPerformances());
+
+                        //SAVE TAGS
+                        JSONArray tagsArr = (JSONArray)resultObject.get("tags");
+                        Set<Category> categoriesForRep = new HashSet<>();
+                        for (Object tag : tagsArr) {
+                            Category category = mapper.readValue("\"" + tag.toString() + "\"", Category.class);
+
+                            for (Category catg : categoryService.getAllCategories()) {
+                                check = true;
+                                if (catg.equals(category)) { //check fot unique value
+                                    category = catg;
+                                    check = false;
+                                    categoriesForRep.add(category);
+                                    break;
+                                }
+                            }
+                            if (check) {
+                                categoryService.saveCategory(category);
+                                categoriesForRep.add(category);
+                            }
+                        }
+                        repertoire.setCategories(categoriesForRep);
                         repertoireService.saveRep(repertoire);
                     }
 
 
                     try {
                         pathToTheNextPage = obj.get("next").toString();
-                    } catch (NullPointerException ex) {
+                        url = new URL(pathToTheNextPage);
+                        countPages++;
+                        System.out.println("PAGE " + countPages);
+                    } catch (Exception ex) {
                         break;
                     }
-                    url = new URL(pathToTheNextPage);
                 }
             }
         } catch (Exception e) {

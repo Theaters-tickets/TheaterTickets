@@ -12,8 +12,8 @@ public class Main {
         //System.out.println(Instant.now().getEpochSecond());
         ApplicationContext context= SpringApplication.run(NetcrackerTheaterTicketsApplication.class);
         ParserClass parserClass = context.getBean(ParserClass.class);
-        //TESTPARSER testparser = context.getBean(TESTPARSER.class);
-        parserClass.parseTheatre();
+        TESTPARSER testparser = context.getBean(TESTPARSER.class);
+        //parserClass.parseTheatre();
         parserClass.parseRepertoire();
 
     }

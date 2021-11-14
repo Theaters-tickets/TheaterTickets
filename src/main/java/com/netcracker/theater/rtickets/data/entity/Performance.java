@@ -100,6 +100,19 @@ public class Performance {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Performance that = (Performance) o;
+        return Objects.equals(timeStart, that.timeStart) && Objects.equals(timeEnd, that.timeEnd) && Objects.equals(date, that.date) && Objects.equals(actors, that.actors) && Objects.equals(usersAttended, that.usersAttended) && Objects.equals(usersPlanned, that.usersPlanned) && Objects.equals(patternDate, that.patternDate) && Objects.equals(patternTime, that.patternTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timeStart, timeEnd, date, actors, usersAttended, usersPlanned, patternDate, patternTime);
+    }
+
+    @Override
     public String toString() {
         return "Performance{" +
                 "id=" + id +
