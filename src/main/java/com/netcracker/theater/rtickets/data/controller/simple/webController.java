@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -143,8 +144,50 @@ public class webController {
     }
 
      */
-    @GetMapping("/check")
-    public String check(){
-        return "qwe";
+    @GetMapping("/registration")
+    public String getRegistration(Map<String, Object> model){
+        return "registration";
     }
+    @PostMapping("/registration")
+    public String postRegistration(
+            @RequestParam (value="email") String email,
+            @RequestParam (value="login") String login,
+            @RequestParam (value="password") String password,
+            @RequestParam (value="passwordRepeat") String passwordRepeat,
+            Map<String, Object> model)
+    {
+        if (password.equals(passwordRepeat)){
+            model.put("status", "SUCCESS");
+        }
+        else{
+            model.put("status", "ERROR");
+        }
+        return "registration";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(Map<String, Object> model){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String postLogin(
+            @RequestParam (value="login") String login,
+            @RequestParam (value="password") String password,
+            Map<String, Object> model) {
+        if (login.equals("root") && password.equals("root")) {
+            model.put("status", "OK");
+        } else {
+            model.put("status", "ERROR");
+
+        }
+        return "login";
+    }
+
+
+
+
+
+
+
 }

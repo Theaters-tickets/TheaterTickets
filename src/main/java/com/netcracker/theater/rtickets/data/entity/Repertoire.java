@@ -2,6 +2,8 @@ package com.netcracker.theater.rtickets.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netcracker.theater.rtickets.data.dao.TheatreDAO;
+import com.netcracker.theater.rtickets.data.service.TheatreService;
 import lombok.Data;
 
 import javax.persistence.*;
