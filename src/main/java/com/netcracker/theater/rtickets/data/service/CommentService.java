@@ -13,4 +13,5 @@ public interface CommentService {
     Comment getComment(UUID id);
 
     void deleteComment(UUID id);
+
 }

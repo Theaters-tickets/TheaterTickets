@@ -58,6 +58,17 @@ public class ParserClass {
                     JSONArray results = (JSONArray) obj.get("results");
                     for (Object result : results) {
                         Repertoire repertoire = mapper.readValue(result.toString(), Repertoire.class);
+                        check = true;
+                        for (Repertoire rep : repertoireService.getAllRepertoire()) {
+                            if (rep.equals(repertoire)) { //check fot unique value
+                                repertoire = rep;
+                                check = false;
+                                break;
+                            }
+                        }
+                        if (check) {
+                            repertoireService.saveRep(repertoire);
+                        }
 
 
                         //SAVE THEATRE
@@ -125,6 +136,7 @@ public class ParserClass {
                                 }
                                 if (check) {
                                     performance.setActors(actors);
+                                    //performance.
                                     perfomanceService.savePer(performance);
                                     theatre.addPerformance(performance);
                                     repertoire.addPerformance(performance);
@@ -135,35 +147,31 @@ public class ParserClass {
 
                         //SAVE TAGS
                         JSONArray tagsArr = (JSONArray)resultObject.get("tags");
-                        Set<Category> categoriesForRep = new HashSet<>();
                         for (Object tag : tagsArr) {
                             Category category = mapper.readValue("\"" + tag.toString() + "\"", Category.class);
-
+                            check = true;
                             for (Category catg : categoryService.getAllCategories()) {
-                                check = true;
                                 if (catg.equals(category)) { //check fot unique value
-                                    category = catg;
+                                    repertoire.addCategory(catg);
                                     check = false;
-                                    categoriesForRep.add(category);
                                     break;
                                 }
                             }
                             if (check) {
                                 categoryService.saveCategory(category);
-                                categoriesForRep.add(category);
+                                repertoire.addCategory(category);
                             }
                         }
-                        repertoire.setCategories(categoriesForRep);
                         repertoireService.saveRep(repertoire);
                     }
-
 
                     try {
                         pathToTheNextPage = obj.get("next").toString();
                         url = new URL(pathToTheNextPage);
                         countPages++;
                         System.out.println("PAGE " + countPages);
-                    } catch (Exception ex) {
+                    } catch (NullPointerException ex) {
+                        System.out.println("END!");
                         break;
                     }
                 }

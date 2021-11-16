@@ -35,6 +35,9 @@ public class Performance {
     @ManyToMany(mappedBy = "performances_planned")
     private Set<User> usersPlanned = new HashSet<>();
 
+    @ManyToOne
+    private Repertoire repertoire;
+
     @Transient
     SimpleDateFormat patternDate = new SimpleDateFormat("dd.MM.yyyy");
     @Transient

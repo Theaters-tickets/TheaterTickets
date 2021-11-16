@@ -26,6 +26,7 @@ public class Comment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
+
     public String getText() {
         return text;
     }

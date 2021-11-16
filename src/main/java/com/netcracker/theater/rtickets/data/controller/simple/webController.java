@@ -1,20 +1,15 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
 import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
+import com.netcracker.theater.rtickets.data.entity.Comment;
 import com.netcracker.theater.rtickets.data.entity.Repertoire;
-import com.netcracker.theater.rtickets.data.service.GenresService;
-import com.netcracker.theater.rtickets.data.service.PerfomanceService;
-import com.netcracker.theater.rtickets.data.service.RepertoireService;
-import com.netcracker.theater.rtickets.data.service.TheatreService;
+import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class webController {
@@ -27,6 +22,10 @@ public class webController {
 
     @Autowired
     PerfomanceService perfomanceService;
+
+    @Autowired
+    CommentService commentService;
+
 
 
     @GetMapping("/greeting")
@@ -86,9 +85,20 @@ public class webController {
     String getPlayById(@PathVariable("id") UUID id, Map<String, Object> model) {
         Repertoire repertoire = repertoireService.getById(id);
         model.put("repertoire", repertoire);
+
+        List<Comment> comments = List.copyOf(repertoire.getComments());
+        model.put("comments", comments);
+        Comment comment = new Comment();
+        model.put("comment", comment);
         return "repertoireInfo";
     }
-
+    @PostMapping("/play/{id}")
+    public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment) {
+        Repertoire repertoire = repertoireService.getById(id);
+        repertoire.addComment(comment);
+        repertoireService.saveRep(repertoire);
+        return "redirect:/play/{id}";
+    }
 
 
     @GetMapping("/search")

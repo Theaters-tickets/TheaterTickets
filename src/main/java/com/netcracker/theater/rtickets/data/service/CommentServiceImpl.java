@@ -29,5 +29,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void deleteComment(UUID id) { commentDAO.deleteById(id); };
+    public void deleteComment(UUID id) { commentDAO.deleteById(id); }
+
 }

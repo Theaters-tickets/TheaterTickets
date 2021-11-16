@@ -4,6 +4,9 @@
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
 </head>
 
@@ -93,6 +96,21 @@
         });
     }
 
+    //Script added
+    const btn = document.querySelector(".save-comment");
+    const post = document.querySelector(".post");
+    const widget = document.querySelector(".star-widget");
+    const editBtn = document.querySelector(".edit");
+    btn.onclick = ()=>{
+        widget.style.display = "none";
+        post.style.display = "block";
+        editBtn.onclick = ()=>{
+            widget.style.display = "block";
+            post.style.display = "none";
+        }
+        return false;
+    }
+
 </script>
 
 <body>
@@ -118,6 +136,60 @@
 
 <button th:onclick="goBack()">На главную</button>
 <input type="button" value="Назад" onclick="history.back()">
+
+
+<h1 th:text="'Рейтинг пользователей:'+ ${repertoire.getRating()}">Рейтинг:</h1>
+<div class="container">
+    <div class="post">
+        <div class="text">Спасибо за оценку!</div>
+        <div class="edit">Редактировать</div>
+    </div>
+
+    <div class="star-widget" th:object="${comment}">
+        <form method="post" th:object="${comment}">
+            <input th:field="*{score}" th:value="5" type="radio" name="rate" id="rate-5">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="4" type="radio" name="rate" id="rate-4">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="3" type="radio" name="rate" id="rate-3">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="2" type="radio" name="rate" id="rate-2">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input th:field="*{score}" th:value="1" type="radio" name="rate" id="rate-1">
+            <label for="rate-1" class="fas fa-star"></label>
+            <header></header>
+            <div class="textarea">
+                <textarea th:field="*{text}" cols="30" placeholder="Оставьте комментарий.."
+                          class="form-control"></textarea>
+            </div>
+            <div class="btn">
+                <button id ="save-comment" type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p class="table-p">
+<table class="table-comment">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>text</th>
+            <th>stars</th>
+            <th>time</th>
+        </tr>
+    </thead>
+    <tr th:if="${#lists.isEmpty(comments)}">
+        <td colspan="5">Добавьте первый комментарий...!</td>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${comment.id}"></td>
+        <td th:text="${comment.text}"></td>
+        <td th:text="${comment.score}"></td>
+        <td th:text="${comment.createdAt}"></td>
+    </tr>
+</table>
+</p>
 
 </body>
 </html>

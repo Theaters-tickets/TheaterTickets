@@ -48,8 +48,12 @@ public class Repertoire {
     @JoinColumn(name = "repertoire_id")
     private Set<Performance> performances = new HashSet<>();
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "category_id")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "repertoire_categories",
+            joinColumns = @JoinColumn(name = "repertoire_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -119,14 +123,6 @@ public class Repertoire {
         this.description = description;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
-    //@JsonProperty("tags")
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
     public Set<Picture> getPictures() {
         return pictures;
     }
@@ -135,9 +131,31 @@ public class Repertoire {
         this.pictures = pictures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Repertoire that = (Repertoire) o;
+        return Objects.equals(name, that.name) && Objects.equals(age_min, that.age_min) && Objects.equals(title, that.title) && Objects.equals(description, that.description);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age_min, title, description);
+    }
 
     public Repertoire() {
+    }
+
+    public double getRating() {
+        double sum = 0;
+        if (comments.isEmpty()) {
+            return 0;
+        }
+        for (Comment comm : comments) {
+            sum += comm.getScore();
+        }
+        return Math.round(sum/comments.size()* 100.0) / 100.0;
     }
 
     public Repertoire(String name, String age_min, String title) {
@@ -155,19 +173,6 @@ public class Repertoire {
         this.performances = performances;
         this.categories = categories;
         this.pictures = pictures;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Repertoire that = (Repertoire) o;
-        return name.equals(that.name) && Objects.equals(age_min, that.age_min) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(genres, that.genres) && Objects.equals(comments, that.comments) && Objects.equals(performances, that.performances) && Objects.equals(categories, that.categories) && Objects.equals(pictures, that.pictures);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, age_min, title, description, genres, comments, performances, categories, pictures);
     }
 
     @Override

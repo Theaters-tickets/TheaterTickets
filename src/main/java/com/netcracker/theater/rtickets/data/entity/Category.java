@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +20,14 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Repertoire repertoire;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "repertoire_categories",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "repertoire_id")
+    )
+    private Set<Repertoire> repertoires = new HashSet<>();
 
     @Column
     private String name;
