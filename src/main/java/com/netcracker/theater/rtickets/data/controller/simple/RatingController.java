@@ -28,7 +28,7 @@ public class RatingController {
     }
 
     @RequestMapping(value = "/comments", method = RequestMethod.POST)
-    public String createUser(Model model, @ModelAttribute Comment comment) {
+    public String createComment(Model model, @ModelAttribute Comment comment) {
         commentService.saveComment(comment);
         return "redirect:/comments/";
     }

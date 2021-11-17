@@ -136,14 +136,13 @@ public class ParserClass {
                                 }
                                 if (check) {
                                     performance.setActors(actors);
-                                    //performance.
                                     perfomanceService.savePer(performance);
                                     theatre.addPerformance(performance);
                                     repertoire.addPerformance(performance);
-                                    theatreService.saveTheatre(theatre);
                                 }
                             }
                         }
+                        theatreService.saveTheatre(theatre);
 
                         //SAVE TAGS
                         JSONArray tagsArr = (JSONArray)resultObject.get("tags");

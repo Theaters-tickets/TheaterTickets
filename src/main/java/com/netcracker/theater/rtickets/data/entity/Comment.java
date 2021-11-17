@@ -26,6 +26,9 @@ public class Comment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
 
     public String getText() {
         return text;

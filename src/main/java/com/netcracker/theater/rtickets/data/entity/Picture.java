@@ -31,6 +31,12 @@ public class Picture {
     @Column
     private int score;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Repertoire repertoire;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Theatre theatre;
+
     public Picture() {
     }
 
