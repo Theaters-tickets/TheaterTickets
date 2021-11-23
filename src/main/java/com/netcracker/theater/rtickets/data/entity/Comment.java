@@ -3,6 +3,7 @@ package com.netcracker.theater.rtickets.data.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -16,16 +17,58 @@ public class Comment {
     private UUID id;
 
     @Column
-    private String comment;
+    private String text;
 
     @Column
     private int score;
 
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+
     public Comment() {
     }
 
-    public Comment(String comment, int score) {
-        this.comment = comment;
+    public Comment(String text, int score) {
+        this.text = text;
         this.score = score;
     }
 
@@ -33,7 +76,7 @@ public class Comment {
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", comment='" + comment + '\'' +
+                ", text='" + text + '\'' +
                 ", score=" + score +
                 '}';
     }

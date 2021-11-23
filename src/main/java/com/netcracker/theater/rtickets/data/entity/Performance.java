@@ -35,6 +35,20 @@ public class Performance {
     @ManyToMany(mappedBy = "performances_planned")
     private Set<User> usersPlanned = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Repertoire repertoire;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Theatre theatre;
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "attended_event",
+            joinColumns = { @JoinColumn(name = "performance_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    private Set<User> users = new HashSet<>();
+
     @Transient
     SimpleDateFormat patternDate = new SimpleDateFormat("dd.MM.yyyy");
     @Transient
@@ -97,6 +111,19 @@ public class Performance {
     @JsonProperty("participants")
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Performance that = (Performance) o;
+        return Objects.equals(timeStart, that.timeStart) && Objects.equals(timeEnd, that.timeEnd) && Objects.equals(date, that.date) && Objects.equals(actors, that.actors) && Objects.equals(usersAttended, that.usersAttended) && Objects.equals(usersPlanned, that.usersPlanned) && Objects.equals(patternDate, that.patternDate) && Objects.equals(patternTime, that.patternTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timeStart, timeEnd, date, actors, usersAttended, usersPlanned, patternDate, patternTime);
     }
 
     @Override

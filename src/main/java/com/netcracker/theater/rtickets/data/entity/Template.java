@@ -26,6 +26,9 @@ public class Template {
     @JoinColumn(name = "template_id")
     private Set<Parameter> parameters = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     public void addParameter(Parameter parameter)
     {
         if (parameters == null) parameters = new HashSet<>();

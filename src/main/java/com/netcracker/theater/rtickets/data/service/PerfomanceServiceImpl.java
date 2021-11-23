@@ -22,7 +22,6 @@ public class PerfomanceServiceImpl implements PerfomanceService {
 
     @Override
     public void savePer(Performance performance) {
-        System.out.println(performance);
         perfomanceDAO.save(performance);
     }
 

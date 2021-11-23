@@ -1,6 +1,5 @@
 package com.netcracker.theater.rtickets;
 
-import com.netcracker.theater.rtickets.parser.ParserClass;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

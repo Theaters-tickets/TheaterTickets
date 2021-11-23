@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,12 +46,16 @@ public class Repertoire {
     @JoinColumn(name = "repertoire_id")
     private Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "repertoire_id")
     private Set<Performance> performances = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "category_id")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "repertoire_categories",
+            joinColumns = @JoinColumn(name = "repertoire_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -101,7 +106,7 @@ public class Repertoire {
     }
     @JsonProperty("age_restriction")
     public void setAge_min(String age_min) {
-        this.age_min = age_min;
+        this.age_min = age_min.replaceAll("\\+", "");;
     }
 
     public String getTitle() {
@@ -120,14 +125,6 @@ public class Repertoire {
         this.description = description;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
-    @JsonProperty("tags")
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
     public Set<Picture> getPictures() {
         return pictures;
     }
@@ -136,9 +133,31 @@ public class Repertoire {
         this.pictures = pictures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Repertoire that = (Repertoire) o;
+        return Objects.equals(name, that.name) && Objects.equals(age_min, that.age_min) && Objects.equals(title, that.title) && Objects.equals(description, that.description);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age_min, title, description);
+    }
 
     public Repertoire() {
+    }
+
+    public double getRating() {
+        double sum = 0;
+        if (comments.isEmpty()) {
+            return 0;
+        }
+        for (Comment comm : comments) {
+            sum += comm.getScore();
+        }
+        return Math.round(sum/comments.size()* 100.0) / 100.0;
     }
 
     public Repertoire(String name, String age_min, String title) {

@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -46,7 +47,7 @@ public class Theatre {
     private Long number;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "theatre_id")
     private Set<Performance> performances = new HashSet<>();
 
@@ -65,7 +66,6 @@ public class Theatre {
         if (pictures == null) pictures = new HashSet<>();
         pictures.add(picture);
     }
-
 
     @JsonProperty("name")
     public String getName() {
@@ -166,8 +166,18 @@ public class Theatre {
         this.pictures = pictures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Theatre theatre = (Theatre) o;
+        return name.equals(theatre.name) && Objects.equals(address, theatre.address) && Objects.equals(description, theatre.description) && Objects.equals(subway, theatre.subway) && Objects.equals(phone, theatre.phone) && Objects.equals(timetable, theatre.timetable) && Objects.equals(title, theatre.title) && number.equals(theatre.number) && Objects.equals(performances, theatre.performances) && Objects.equals(pictures, theatre.pictures);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, description, subway, phone, timetable, title, number, performances, pictures);
+    }
 
     @Override
     public String toString() {
