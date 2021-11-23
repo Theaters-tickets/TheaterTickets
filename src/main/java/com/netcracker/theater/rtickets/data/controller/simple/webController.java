@@ -4,6 +4,8 @@ import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
 import com.netcracker.theater.rtickets.data.entity.Comment;
 import com.netcracker.theater.rtickets.data.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.service.*;
+import com.netcracker.theater.rtickets.data.entity.User;
+import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.List;
 import java.util.*;
+import java.util.*;
 
 @Controller
 public class webController {
@@ -24,7 +27,8 @@ public class webController {
     RepertoireService repertoireService;
     @Autowired
     GenresService genresService;
-
+    @Autowired
+    CategoryService categoryService;
     @Autowired
     PerfomanceService perfomanceService;
 
@@ -39,53 +43,62 @@ public class webController {
         return "greeting";
     }
 
+    @Autowired
+    UserService userService;
 
-    @GetMapping("/theatres")
-    public String getAllTheatres(
-            Map<String, Object> model) {
-        model.put("theatreList", theatreService.getAllTheatre());
-        return "allTheatres";
-    }
-
-/*
-    @PostMapping("/all")
-    public String findTheatre(@RequestParam String theatreName, Map<String, Object> model) {
-        model.put("theatreList", filter.theatreByName(theatreName));
-        return "allTheatres";
-    }
-
- */
-
-
+    //Main page
     @GetMapping("/mainPage")
     public String mainPage(
             Map<String, Object> model) {
         List<Repertoire> threeRandom = repertoireService.getThreeRandomRepertoire();
         model.put("threeRandomRepertoire", threeRandom);
+        List<String> images = new ArrayList<>();
+        images.add(threeRandom.get(0).getPictures().iterator().next().getImage());
+        images.add(threeRandom.get(1).getPictures().iterator().next().getImage());
+        images.add(threeRandom.get(2).getPictures().iterator().next().getImage());
+        model.put("images", images);
         return "mainPage";
     }
 
-    /*
-    @GetMapping("/repertoire")
-    public String getAllPlays(Map<String, Object> model) {
-        model.put("plays", repertoireService.getAllRepertoire());
-        return "listOfPlays";
+    //Registration page
+    @GetMapping("/registration")
+    public String getRegistration(Map<String, Object> model){
+        return "registration";
+    }
+    @PostMapping("/registration")
+    public void postRegistration(
+            @RequestBody User user)
+    {
+        try {
+            userService.saveUser(user);
+        }
+        //Error if user with same login
+        catch (Exception e){
+            System.out.println(e.getCause());
+        }
     }
 
-     */
+    //Login page
+    @GetMapping("/login")
+    public String getLogin(Map<String, Object> model){ return "login";}
 
-    /*
-    @PostMapping("/repertoire")
-    public String getFiltratedPlays(@RequestParam String desc, @RequestParam String ageString, Map<String, Object> model) {
-
-        model.put("plays", filter.filterRepertoire(ageString, desc));
-        return "listOfPlays";
+    @PostMapping("/login")
+    public String postLogin(
+            @RequestParam (value="login") String login,
+            @RequestParam (value="password") String password,
+            Map<String, Object> model) {
+        //To-do - authentication
+        if (login.equals("root") && password.equals("root")) {
+            model.put("status", "OK");
+        } else {
+            model.put("status", "ERROR");
+        }
+        return "login";
     }
 
-     */
 
 
-
+    //Information about play
     @GetMapping("/play/{id}")
     String getPlayById(@PathVariable("id") UUID id, Map<String, Object> model) {
         Repertoire repertoire = repertoireService.getById(id);
@@ -105,7 +118,7 @@ public class webController {
         return "redirect:/play/{id}";
     }
 
-
+    //Search page
     @GetMapping("/search")
     String playSearcherGet(Map<String, Object> model) {
         model.put("plays", repertoireService.getAllRepertoire());
@@ -115,93 +128,26 @@ public class webController {
     String playSearcherPost(@RequestParam (value="date") String date,
                                     @RequestParam (value="name") String name,
                                     @RequestParam (value="description") String description,
-                                    @RequestParam (value="age") String age,
+                                    @RequestParam (value="age", defaultValue = "99") String age,
                                     Map<String, Object> model){
-        age = age == "" ? "99" : age;
         model.put("plays", repertoireService.filterRepertoire(date, description, name, age));
-        System.out.println(date + description + name + age);
-        System.out.println(repertoireService.filterRepertoire(date, description, name, age).size());
         return "playSearcher";
     }
 
-
-
-
-/*
-    @GetMapping("/filter")
-    String getAllPlaysWithDateGet(Map<String, Object> model){
-        model.put("rep", repertoireService.getAllRepertoire());
-        return "filter";
+    //Page with tags
+    @GetMapping("/adminTags")
+    public String adminTagsGet(Map<String, Object> model){
+        GroupsContainer groupsContainer = new GroupsContainer(categoryService.getAllCategories());
+        model.put("groupsContainer", groupsContainer);
+        model.put("categoryNames", groupsContainer.mapContainer.keySet());
+        return "tagsOnStart1";
     }
 
-
-    @PostMapping("/filter")
-    String getAllPlaysWithDatesPost(@RequestParam (value="date") String date,
-                                    @RequestParam (value="name") String name,
-                                    @RequestParam (value="description") String description,
-                                    @RequestParam (value="age") String age,
-                                    Map<String, Object> model){
-        age = age == "" ? "99" : age;
-        model.put("rep", repertoireService.filterRepertoire(date, description, name, age));
-        System.out.println(date + description + name + age);
-        return "filter";
+    @PostMapping("/adminTags")
+    public void adminTagsPost(
+            @RequestBody(required = false) List<TagInfo> TagInfos,
+            Map<String, Object> model){
+        for (TagInfo newTagType : TagInfos){
+            categoryService.updateType(newTagType.tag, newTagType.parent);}
     }
-
- */
-
-
-    /*
-    @PostMapping("/search")
-    String playSearcherPost(@RequestParam String desc, @RequestParam String ageString, Map<String, Object> model) {
-        model.put("plays", filter.filterRepertoire(ageString, desc));
-        return "playSearcher";
-    }
-
-     */
-    @GetMapping("/registration")
-    public String getRegistration(Map<String, Object> model){
-        return "registration";
-    }
-    @PostMapping("/registration")
-    public String postRegistration(
-            @RequestParam (value="email") String email,
-            @RequestParam (value="login") String login,
-            @RequestParam (value="password") String password,
-            @RequestParam (value="passwordRepeat") String passwordRepeat,
-            Map<String, Object> model)
-    {
-        if (password.equals(passwordRepeat)){
-            model.put("status", "SUCCESS");
-        }
-        else{
-            model.put("status", "ERROR");
-        }
-        return "registration";
-    }
-
-    @GetMapping("/login")
-    public String getLogin(Map<String, Object> model){
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String postLogin(
-            @RequestParam (value="login") String login,
-            @RequestParam (value="password") String password,
-            Map<String, Object> model) {
-        if (login.equals("root") && password.equals("root")) {
-            model.put("status", "OK");
-        } else {
-            model.put("status", "ERROR");
-
-        }
-        return "login";
-    }
-
-
-
-
-
-
-
 }

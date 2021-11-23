@@ -49,6 +49,7 @@ public class Performance {
     )
     private Set<User> users = new HashSet<>();
 
+
     @Transient
     SimpleDateFormat patternDate = new SimpleDateFormat("dd.MM.yyyy");
     @Transient

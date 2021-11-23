@@ -66,6 +66,7 @@
         next.addEventListener('click', () => {
             if (currentCard < images.children.length - 1) {
                 currentCard++;
+                document.getElementById("photosAmount").textContent=currentCard;
                 console.log(currentCard);
                 images.style.transitionDuration = "0.5s";
                 images.style.transform = `translate(-${currentCard * 354}px)`;
@@ -75,6 +76,7 @@
                     images.style.transform = `translate(-354px)`;
                     currentCard = 1;
                 }
+                document.getElementById("photosAmount").textContent=currentCard;
             }
             else
                 return
@@ -82,6 +84,7 @@
         prev.addEventListener('click', () => {
             if (currentCard > 0) {
                 currentCard--;
+                document.getElementById("photosAmount").textContent=currentCard;
                 console.log(currentCard);
                 images.style.transitionDuration = "0.5s";
                 images.style.transform = `translate(-${currentCard * 354}px)`;
@@ -90,6 +93,7 @@
                     images.style.transform = `translate(-${(images.children.length - 2) * 354}px)`;
                     currentCard = images.children.length - 2;
                 }
+                document.getElementById("photosAmount").textContent=currentCard;
             }
             else
                 return
@@ -120,6 +124,10 @@
 
 <button id="prev">Prev</button>
 <button id="next">Next</button>
+
+<a id="photosAmount">1</a>
+<a th:text="${'/ ' + repertoire.pictures.size()}">/1</a>
+
 <div class="viewPort">
     <div class="imageContainer">
         <tr th:each="img : ${repertoire.getPictures()}" class="tableImage">

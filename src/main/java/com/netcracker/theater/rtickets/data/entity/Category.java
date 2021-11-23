@@ -27,6 +27,10 @@ public class Category {
     @Column
     private String name;
 
+    //Added by Ilya
+    @Column(columnDefinition = "varchar(255) default 'Uncategorized'")
+    String type;
+
     public Category() {
     }
 
@@ -56,11 +60,20 @@ public class Category {
         return Objects.hash(name);
     }
 
+
+    public String getType(){return type;}
+
+    public  void setType(String type){
+        this.type = type;
+    }
+
+
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

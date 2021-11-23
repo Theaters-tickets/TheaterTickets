@@ -12,6 +12,7 @@
 
 
 <style>
+
     h1{
         font-family: "Comic Sans MS";
         color: navy;
@@ -63,7 +64,7 @@
     #mainBox {
         font-family: "Comic Sans MS";
         text-align: center;
-        line-height: 400px;
+        line-height: 200px;
 
     }
     .btn-search {
@@ -114,6 +115,17 @@
         width:100%;
         margin-bottom: 0px;
     }
+
+    .fixedHeader {
+        background: #9e9e9e;
+        position: fixed;
+        left:0px;
+        top:0px;
+        height:30px;
+        width:100%;
+        margin-top: 0px;
+    }
+
     header{
         margin-top: -15px;
     }
@@ -130,6 +142,7 @@
     }
 
     .textarea{
+        resize: none;
         background: #9e9e9e;
         border-color: #9e9e9e;
         text-align: center;
@@ -138,15 +151,26 @@
         color: navy;
     }
 
+    .playImage{
+        max-height: 350px;
+        max-width: 350px;
+    }
+
 
 
 
 </style>
+
+
+
 <header>
-    <h1 class="row">
-        <div class="column3">First</div>
-        <div class="column3">Header</div>
-        <div class="column3"><a href="http://localhost:8080/login">Login</a></div>
+    <h1 class="fixedHeader">
+        <div class="column3">_</div>
+        <div class="column3">Thicket searcher</div>
+        <div class="column3">
+            <a href="/login">Login</a>
+            <a href="/registration">Registration</a>
+        </div>
     </h1>
 </header>
 <body>
@@ -161,35 +185,46 @@
 
 <h1 class="rowBottom">
     <div class="column3">
+        <img class="playImage" th:src="${images[0]}">
+        <br>
         <a th:text="${threeRandomRepertoire[0].name}"
            th:href="@{|/play/${threeRandomRepertoire[0].id}|}">
             First
         </a>
         <br>
-        <textarea disabled class="textarea" cols="50" rows="17"
+        <textarea disabled class="textarea" cols="50" rows="12"
                   th:text="${threeRandomRepertoire[0].title}">
             Desc1
         </textarea>
+
     </div>
+
+
     <div class="column3">
+        <img class="playImage" th:src="${images[1]}">
+        <br>
         <a th:text="${threeRandomRepertoire[1].name}"
            th:href="@{|/play/${threeRandomRepertoire[1].id}|}">
             Second
         </a>
         <br>
-        <textarea disabled class="textarea" cols="50" rows="17"
+        <textarea disabled class="textarea" cols="50" rows="12"
                   th:text="${threeRandomRepertoire[1].title}">
             Desc2
         </textarea>
     </div>
+
+
     <div class="column3">
+        <img class="playImage" th:src="${images[2]}">
+        <br>
         <a th:text="${threeRandomRepertoire[2].name}"
            th:href="@{|/play/${threeRandomRepertoire[2].id}|}">
             Third
         </a>
         <br>
         <!-- <a th:text="${threeRandomRepertoire[2].title}">Desc3</a> -->
-        <textarea disabled class="textarea" cols="50" rows="17"
+        <textarea disabled class="textarea" cols="50" rows="12"
                   th:text="${threeRandomRepertoire[2].title}">
             Desc3
         </textarea>
@@ -200,5 +235,8 @@
 <!--<a th:href="@{http://localhost:8080/theatres}"><button>Театры</button></a> -->
 </body>
 
-<footer><h1 class="fixedFooter">Fixed footer</h1></footer>
+<footer>
+    <h1 class="fixedFooter">Contacts</h1>
+</footer>
+
 </html>

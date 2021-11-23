@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+    .tagsField{
+        background-color: #4AAE9B;
+        border: #454542 solid 2px;
+    }
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    .main {
+        width: 50%;
+        height: auto;
+        max-height: 90vh;
+        border: #454542 solid 2px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .sidebar {
+        width: 50%;
+        height: fit-content;
+        border: #DFA612 solid 2px;
+    }
+    .example-parent {
+        border: 2px solid #DFA612;
+        color: black;
+        display: flex;
+        font-family: sans-serif;
+        font-weight: bold;
+    }
+
+    .example-origin {
+        flex-basis: 100%;
+        flex-grow: 1;
+        padding: 10px;
+    }
+
+    .example-draggable {
+        background-color: #4AAE9B;
+        font-weight: normal;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .example-dropzone {
+        background-color: #6DB65B;
+        flex-basis: 100%;
+        flex-grow: 1;
+        padding: 10px;
+        border: #454542 solid 2px;
+    }
+</style>
+
+<script>
+    function onDragStart(event) {
+        event
+            .dataTransfer
+            .setData('text/plain', event.target.id);
+        console.log("Drag start");
+        console.log(event.currentTarget.id);
+        console.log(event.currentTarget);
+        event
+            .currentTarget
+            .style
+            .backgroundColor = 'yellow';
+    }
+
+
+    function onDragOver(event) {
+        event.preventDefault();
+    }
+    function onDrop(event) {
+        const id = event
+            .dataTransfer
+            .getData('text');
+        const draggableElement = document.getElementById(id);
+        const dropzone = event.target;
+
+        console.log(event.target.className)
+        if (event.target.className == "example-dropzone"){
+            dropzone.appendChild(draggableElement);
+            event
+                .dataTransfer
+                .clearData();
+        }
+    }
+
+
+    function create(){
+        const container = document.getElementById("container");
+
+        const i = document.createElement('div');
+        i.setAttribute('class', 'example-dropzone');
+        i.innerHTML = "New";
+
+    }
+
+    function save(){
+/*
+        const data = document.getElementById("myForm")
+        let formData = new FormData(data);
+        console.log(data);
+        console.log(formData.getAll("name"));
+        // Собираем данные формы в объект
+        let obj = {};
+        formData.forEach((value, key) => obj[key] = value);
+        console.log(JSON.stringify(obj));
+ */
+        var jsonObject = {};
+        var finalJSON = '[';
+
+        const data = document.getElementsByClassName("example-draggable");
+        console.log(data.length);
+        for (let i = 0; i < data.length; i++){
+            //jsonObject.id = data[i].id;
+            jsonObject.parent = data[i].parentElement.id;
+            jsonObject.tag = data[i].textContent;
+            var jsonString = JSON.stringify(jsonObject);
+            console.log(jsonString);
+            finalJSON+= jsonString;
+            finalJSON+=",";
+
+
+        }
+        finalJSON = finalJSON.substring(0, finalJSON.length -1);
+        finalJSON+="]";
+        let request = new Request("/adminTags", {
+            method: 'POST',
+            body: finalJSON,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        // Отправляем (асинхронно!)
+        fetch(request).then(
+            function(response) {
+                // Запрос успешно выполнен
+                console.log(response);
+                // return response.json() и так далее см. документацию
+            },
+            function(error) {
+                // Запрос не получилось отправить
+                console.error(error);
+            }
+        );
+
+        // Код после fetch выполнится ПЕРЕД получением ответа
+        // на запрос, потому что запрос выполняется асинхронно,
+        // отдельно от основного кода
+        console.log('Запрос отправляется');
+        console.log(finalJSON);
+
+
+
+    }
+
+    function getAllChildren(){
+        const dropzones = document.getElementsByClassName("example-dropzone");
+        for(let i = 0; i < dropzones.length; i++){
+            let childrens = dropzones[i].childNodes;
+            /* (childrens.forEach(value => console.log(value.textContent))); */
+            for (let j = 0; j < childrens.length; j++){
+                console.log(dropzones[i].childNodes[j].textContent);
+            }
+
+        }
+        console.log("--------------");
+    }
+</script>
+
+<body>
+<button onclick="save()">Save</button>
+
+
+
+
+<div class="wrapper">
+    <div class="sidebar">
+        <div class="example-parent" id="container1">
+            <div class="example-dropzone"
+                 id="Классика"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);">Классика
+            </div>
+
+            <div class="example-dropzone"
+                 id="Драма"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Драма
+            </div>
+            <div class="example-dropzone"
+                 id="Комедия"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Комедия
+            </div>
+        </div>
+        <div class="example-parent" id="container2">
+            <div class="example-dropzone"
+                 id="Семейное"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Семейное
+            </div>
+            <div class="example-dropzone"
+                 id="Для взрослых"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Для взрослых
+            </div>
+            <div class="example-dropzone"
+                 id="Балет"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Балет
+            </div>
+        </div>
+        <div class="example-parent" id="container3">
+            <div class="example-dropzone"
+                 id="Праздник"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Праздник
+            </div>
+            <div class="example-dropzone"
+                 id="Уникальный эвент"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Уникальный эвент
+            </div>
+            <div class="example-dropzone"
+                 id="Современное искусство"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Современное искусство
+            </div>
+        </div>
+        <div class="example-parent" id="container4">
+            <div class="example-dropzone"
+                 id="Экскурсия"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Экскурсия
+            </div>
+            <div class="example-dropzone"
+                 id="Парам"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Парам
+            </div>
+            <div class="example-dropzone"
+                 id="Музыка"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"> Музыка
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+
+        <div name="group" th:each="name : ${categoryNames}">
+            <div th:text = "${name}"></div>
+            <div th:each="tag: ${groupsContainer.getMapContainer().get(name)}" th:id="${name}"
+                 ondragover="onDragOver(event);"
+                 ondrop="onDrop(event);"
+                 class="example-dropzone";
+            >
+                <div th:text="${tag}"
+                     th:id="${'drag' + tag}"
+                     class="example-draggable"
+                     draggable="true"
+                     ondragstart="onDragStart(event);">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--
+    <div class="wrapper">
+
+        <div class="sidebar">
+            <div>New tag</div>
+        </div>
+
+        <div class="main">
+            <div id="group" name="group" class="groupRow" th:each="group:${groupsContainer.container}">
+                Group type
+                <a th:text="${group.type}" />
+                <div id="tagsField" class="tagsField" th:each="tag:${group.tags}">
+                    <div id="exactTag" class="exactTag" th:text="${tag}" name="tag">Tag</div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+
+<button onclick="save()">Save</button>
+-->
+<button onclick="save()">Save</button>
+<button onclick="getAllChildren()">Get all</button>
+
+
+</body>
+</html>

@@ -20,11 +20,13 @@ public interface RepertoireDAO extends JpaRepository<Repertoire, UUID> {
             "where (performance.date like %:date%) " +
             "and  (repertoire.description like %:description%)" +
             "and  (repertoire.name like %:name%)" +
-            "and (repertoire.age_min <= :age)", nativeQuery = true)
+            "and (cast(repertoire.age_min as signed integer) <= :age)", nativeQuery = true)
     public List<Repertoire> filterRepertoire(@Param("date") String date,
                                              @Param("description") String description,
                                              @Param("name") String name,
                                              @Param("age") String age);
+
+
 
     //Added by Ilya
     //Random repertoire for main page

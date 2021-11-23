@@ -17,6 +17,9 @@ public class User {
     @Column(name = "id", length = 16, unique = true, nullable = false)
     private UUID id;
 
+    //Added by Ilya
+    //To not allow to create users with same login
+    @Column(unique = true)
     private String login;
 
     private String password;
@@ -80,6 +83,13 @@ public class User {
     }
 
     public User() {
+    }
+
+    //Added by Ilya
+    //For registration
+    public User(String login, String password){
+        this.login = login;
+        this.password = password;
     }
 
     public User(String login, String password, String name, String last_name, String patronymic, Date birthday, Date ban) {
