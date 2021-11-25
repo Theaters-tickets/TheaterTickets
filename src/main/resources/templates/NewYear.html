@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Year recommendations </title>
+    <link href="/css/newYearStyle.css" rel="stylesheet">
+</head>
+
+<style>
+    header{
+        text-align: center
+    }
+    table {
+        width: 65vw;
+        table-layout: fixed;
+    }
+    th,td {
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    table.fixed td {
+        overflow: hidden;
+    }
+
+    .white-box {
+        width: 65vw;
+        background-color: white;
+        margin: auto;
+        right:0;
+        left:0;
+        position: absolute;
+        z-index: 5;
+    }
+
+    .repname {
+        font-size: 20pt;
+    }
+    .title {
+        width: 65vw;
+        margin: auto;
+    }
+
+    a:link {
+        color: #2B3247;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #3C4667;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #000000;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: #3C4667;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <div class="white-box">
+        <header>
+            <h1 class>
+                Новогодние спектакли
+            </h1>
+        </header>
+        <table class="table-rec">
+            <tr th:if="${#lists.isEmpty(repertoires)}">
+                <td colspan="5">Спектаклей пока нет...!</td>
+            </tr>
+            <tr th:each="rep : ${repertoires}">
+                <td>
+                    <a class="repname" th:text="${rep.name}"
+                       th:href="@{|/play/${rep.id}|}">
+                        Second
+                    </a>
+                    <div class="title" th:text="${rep.title}"></div>
+                    <img th:src= "${rep.getPictures().iterator().next().getImage()}"height="250px" width="400px">
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+</body>
+</html>

@@ -28,8 +28,6 @@ public class Picture {
     @Column
     private String source_link;
 
-    @Column
-    private int score;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Repertoire repertoire;
@@ -40,9 +38,8 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(String image, int score) {
+    public Picture(String image) {
         this.image = image;
-        this.score = score;
     }
 
     @JsonProperty("image")
@@ -60,8 +57,7 @@ public class Picture {
     public String toString() {
         return "Picture{" +
                 "id=" + id +
-                ", comment='" + image + '\'' +
-                ", score=" + score +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/recStyle.css" rel="stylesheet">
+</head>
+
+<style>
+    body{
+        background-color: #9E9E9E;
+    }
+    header{
+        text-align: center
+    }
+    .white-box {
+        width: 65vw;
+        height: 100vh;
+        background-color: white;
+        color: black;
+        margin: auto;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+    }
+
+
+    table {
+        width: 75vw;
+    }
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table.fixed {
+        table-layout: fixed;
+    }
+    table.fixed td {
+        overflow: hidden;
+    }
+    .table-rec {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<body>
+    <div class="white-box">
+        <header>
+            <h1 class>
+                Рекоммендации
+            </h1>
+        </header>
+        <table class="table-rec">
+            <tr th:if="${#lists.isEmpty(recommendations)}">
+                <td colspan="5">Спектаклей пока нет...!</td>
+            </tr>
+
+            <tr th:each="rec : ${recommendations}">
+                <td>
+                    <a th:href="@{|/recommendation/${rec.getName()}|}" >
+                    <div class="picture"><img th:src= "${rec.picture.getImage()}"height="200px" width="400px"></img></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</body>
+</html>

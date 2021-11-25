@@ -18,11 +18,11 @@ public class Category {
     @Column(name = "id", length = 16, unique = true, nullable = false)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Repertoire repertoire;
-
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private Set<Repertoire> repertoires = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Recommendation recommendation;
 
     @Column
     private String name;

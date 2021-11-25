@@ -1,7 +1,7 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
-import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
 import com.netcracker.theater.rtickets.data.entity.Comment;
+import com.netcracker.theater.rtickets.data.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.service.*;
 import com.netcracker.theater.rtickets.data.entity.User;
@@ -34,6 +34,8 @@ public class webController {
 
     @Autowired
     CommentService commentService;
+    @Autowired
+    RecommendationService recommendationService;
 
 
 
@@ -96,6 +98,35 @@ public class webController {
         return "login";
     }
 
+    //Added by Alisa
+    @GetMapping("/recommendation")
+    public String recommendation(Map<String, Object> model) {
+
+        List<Recommendation> recommendations = recommendationService.getAllRecommendations();
+        model.put("recommendations", recommendations);
+        Recommendation rec = new Recommendation();
+        model.put("rec", rec);
+        return "recommendations";
+    }
+    @GetMapping("/recommendation/NewYear")
+    public String recommendationNewYear(Map<String, Object> model) {
+        Recommendation recommendation = recommendationService.getRecommendationByName("NewYear");
+        List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
+        model.put("repertoires", repertoires);
+        Repertoire rep = new Repertoire();
+        model.put("rep", rep);
+        return "NewYear";
+    }
+    @GetMapping("/recommendation/children")
+    public String recommendationChildren(Map<String, Object> model) {
+        Recommendation recommendation = recommendationService.getRecommendationByName("children");
+        List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
+        model.put("repertoires", repertoires);
+        Repertoire rep = new Repertoire();
+        model.put("rep", rep);
+        return "children";
+    }
+
 
 
     //Information about play
@@ -110,6 +141,7 @@ public class webController {
         model.put("comment", comment);
         return "repertoireInfo";
     }
+    //Получение комментариев
     @PostMapping("/play/{id}")
     public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment) {
         Repertoire repertoire = repertoireService.getById(id);
