@@ -62,7 +62,6 @@ public class Repertoire {
     @JoinColumn(name = "picture_id")
     private Set<Picture> pictures = new HashSet<>();
 
-
     public void addGenre(Genre genre)
     {
         if (genres == null) genres = new HashSet<>();

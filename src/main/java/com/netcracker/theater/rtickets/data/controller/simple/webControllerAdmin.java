@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
+
 import com.netcracker.theater.rtickets.data.core.GroupsContainer;
 import com.netcracker.theater.rtickets.data.core.TagInfo;
 import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
@@ -26,7 +27,7 @@ import java.util.*;
 import java.util.*;
 
 @Controller
-public class webController {
+public class webControllerAdmin {
     @Autowired
     TheatreService theatreService;
     @Autowired
@@ -37,40 +38,34 @@ public class webController {
     CategoryService categoryService;
     @Autowired
     PerfomanceService perfomanceService;
-
     @Autowired
     CommentService commentService;
     @Autowired
-    UserService userService;
-    @Autowired
     RecommendationService recommendationService;
 
-    //Added by Alisa
-    @GetMapping("/recommendation")
-    public String recommendation(Map<String, Object> model) {
+    //Page with tags
+    @GetMapping("/adminTags")
+    public String adminTagsGet(Map<String, Object> model){
+        GroupsContainer groupsContainer = new GroupsContainer(categoryService.getAllCategories());
+        model.put("groupsContainer", groupsContainer);
+        model.put("categoryNames", groupsContainer.getMapContainer().keySet());
+        return "tagsOnStart1";
+    }
+    @PostMapping("/adminTags")
+    public String adminTagsPost(
+            @RequestBody(required = false) List<TagInfo> TagInfos,
+            Map<String, Object> model){
+        System.out.println(TagInfos);
+        for (TagInfo newTagType : TagInfos){
+            categoryService.updateType(newTagType.getTag(), newTagType.getParent());}
+        return "tagsOnStart1";
+    }
 
-        List<Recommendation> recommendations = recommendationService.getAllRecommendations();
-        model.put("recommendations", recommendations);
-        Recommendation rec = new Recommendation();
-        model.put("rec", rec);
-        return "recommendations";
+
+    @GetMapping("/lc")
+    public void lc()
+    {
+
     }
-    @GetMapping("/recommendation/NewYear")
-    public String recommendationNewYear(Map<String, Object> model) {
-        Recommendation recommendation = recommendationService.getRecommendationByName("NewYear");
-        List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
-        model.put("repertoires", repertoires);
-        Repertoire rep = new Repertoire();
-        model.put("rep", rep);
-        return "NewYear";
-    }
-    @GetMapping("/recommendation/children")
-    public String recommendationChildren(Map<String, Object> model) {
-        Recommendation recommendation = recommendationService.getRecommendationByName("children");
-        List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
-        model.put("repertoires", repertoires);
-        Repertoire rep = new Repertoire();
-        model.put("rep", rep);
-        return "children";
-    }
+
 }

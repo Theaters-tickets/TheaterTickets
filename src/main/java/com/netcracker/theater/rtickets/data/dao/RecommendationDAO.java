@@ -13,7 +13,7 @@ public interface RecommendationDAO extends JpaRepository<Recommendation, UUID> {
     @Query("select rec from Recommendation rec where rec.name = ?1")
     Recommendation getByName(String name);
 
-    @Query("select distinct rep from Repertoire rep " +
+    @Query(value = "select distinct rep from Repertoire rep " +
             "join rep.categories cat " +
             "join cat.recommendation rec " +
             "where rec = ?1")

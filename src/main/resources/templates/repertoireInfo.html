@@ -11,8 +11,12 @@
 </head>
 
 <style>
+    input,p, button,a,div{
+        color: inherit;
+        font-family: "Berlin Sans FB Demi";
+    }
+
     h1{
-        font-family: "Comic Sans MS";
         color: navy;
         font-size: 20px;
         text-align: center;
@@ -118,6 +122,7 @@
 </script>
 
 <body>
+<a href="/mainPage">Main page</a>
 <h1 th:text="${'Информация о спектакле '+ repertoire.name}">Info:</h1>
 <!-- <h2 th:text="Информация о спектакле ${repertoire.description}">Информация о спектакле</h2> -->
 <div class="content" th:utext="${repertoire.getDescription()}" />

@@ -26,13 +26,13 @@ public class Performance {
 
     private String date;
 
-    @ManyToMany(mappedBy = "performances", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "performances")
     private Set<Actor> actors = new HashSet<>();
 
-    @ManyToMany(mappedBy = "performances_attended", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "performances_attended")
     private Set<User> usersAttended = new HashSet<>();
 
-    @ManyToMany(mappedBy = "performances_planned", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "performances_planned")
     private Set<User> usersPlanned = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -119,12 +119,12 @@ public class Performance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Performance that = (Performance) o;
-        return Objects.equals(timeStart, that.timeStart) && Objects.equals(timeEnd, that.timeEnd) && Objects.equals(date, that.date) ;
+        return Objects.equals(timeStart, that.timeStart) && Objects.equals(timeEnd, that.timeEnd) && Objects.equals(date, that.date) && Objects.equals(actors, that.actors) && Objects.equals(usersAttended, that.usersAttended) && Objects.equals(usersPlanned, that.usersPlanned) && Objects.equals(patternDate, that.patternDate) && Objects.equals(patternTime, that.patternTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(timeStart, timeEnd, date, patternDate, patternTime);
+        return Objects.hash(timeStart, timeEnd, date, actors, usersAttended, usersPlanned, patternDate, patternTime);
     }
 
     @Override
