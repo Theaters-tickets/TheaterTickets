@@ -42,7 +42,7 @@ public class User {
     @JoinColumn(name = "user_id")
     private Set<Template> templates = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "attended_event",
             joinColumns = { @JoinColumn(name = "user_id") },
@@ -50,7 +50,7 @@ public class User {
     )
     private Set<Performance> performances_attended = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH })
     @JoinTable(
             name = "planned_event",
             joinColumns = { @JoinColumn(name = "user_id") },

@@ -35,6 +35,8 @@ public class ParserClass {
     private ActorService actorService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RecommendationService recommendationService;
 
     private static long CURRENT_TIME = Instant.now().getEpochSecond();
     private boolean check;
@@ -147,6 +149,11 @@ public class ParserClass {
 
 
                         //SAVE TAGS
+                        Recommendation recDefault = recommendationService.getRecommendationByName("Uncategorized");
+                        if (recDefault == null) {
+                            recDefault = new Recommendation("Uncategorized");
+                            recommendationService.saveRecommendation(recDefault);
+                        }
                         JSONArray tagsArr = (JSONArray)resultObject.get("tags");
                         for (Object tag : tagsArr) {
                             Category category = mapper.readValue("\"" + tag.toString() + "\"", Category.class);
@@ -159,6 +166,7 @@ public class ParserClass {
                                 }
                             }
                             if (check) {
+                                category.setRecommendation(recDefault);
                                 categoryService.saveCategory(category);
                                 repertoire.addCategory(category);
                             }

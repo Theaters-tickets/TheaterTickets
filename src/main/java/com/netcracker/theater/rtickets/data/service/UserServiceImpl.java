@@ -21,17 +21,23 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public List<User> getAllUsers() {
-        return userDAO.findAll();
-    }
+    public List<User> getAllUsers() { return userDAO.findAll(); }
 
     @Override
     @Transactional
-    public void saveUser(User user){
-        userDAO.save(user);
-    }
+    public void saveUser(User user) { userDAO.save(user); }
 
     @Override
-    public User getUser(UUID id){return userDAO.getById(id);}
+    @Transactional
+    public User getUser(UUID id) { return userDAO.findById(id).get(); }
+
+    @Override
+    @Transactional
+    public void deleteUser(UUID id) { userDAO.deleteById(id); }
+
+    @Override
+    @Transactional
+    public List<?> getFavoriteCategory(User user) { return userDAO.getFavoriteCategory(user); }
+
 
 }
