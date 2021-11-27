@@ -1,14 +1,16 @@
-package com.netcracker.theater.rtickets.data.controller.simple;
+package com.netcracker.theater.rtickets.data.core;
 
 import com.netcracker.theater.rtickets.data.entity.Category;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Data
 public class GroupsContainer {
 
-    HashMap<String, List<String>> mapContainer = new HashMap<>();
+    private HashMap<String, List<String>> mapContainer = new HashMap<>();
 
     public GroupsContainer(){}
 

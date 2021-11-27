@@ -43,7 +43,8 @@
     }
 
     .example-draggable {
-        background-color: #4AAE9B;
+        /*background-color: #4AAE9B;*/
+        background-color: aquamarine;
         font-weight: normal;
         margin-bottom: 10px;
         margin-top: 10px;
@@ -57,6 +58,19 @@
         padding: 10px;
         border: #454542 solid 2px;
     }
+    input,p,div,button,a{
+        color: inherit;
+        font-family: "Berlin Sans FB Demi";
+    }
+    body{
+        /* background-image: url(../static/img/backgroundTheatre.jpg); */
+        background-size: 100%;
+        background-color: #9e9e9e;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+    }
+
 </style>
 
 <script>
@@ -64,9 +78,9 @@
         event
             .dataTransfer
             .setData('text/plain', event.target.id);
-        console.log("Drag start");
-        console.log(event.currentTarget.id);
-        console.log(event.currentTarget);
+        //console.log("Drag start");
+        //console.log(event.currentTarget.id);
+        //console.log(event.currentTarget);
         event
             .currentTarget
             .style
@@ -84,7 +98,7 @@
         const draggableElement = document.getElementById(id);
         const dropzone = event.target;
 
-        console.log(event.target.className)
+        //console.log(event.target.className)
         if (event.target.className == "example-dropzone"){
             dropzone.appendChild(draggableElement);
             event
@@ -116,72 +130,52 @@
  */
         var jsonObject = {};
         var finalJSON = '[';
+        var counter = 0;
 
         const data = document.getElementsByClassName("example-draggable");
-        console.log(data.length);
+        //console.log(data.length);
         for (let i = 0; i < data.length; i++){
-            //jsonObject.id = data[i].id;
-            jsonObject.parent = data[i].parentElement.id;
-            jsonObject.tag = data[i].textContent;
-            var jsonString = JSON.stringify(jsonObject);
-            console.log(jsonString);
-            finalJSON+= jsonString;
-            finalJSON+=",";
+            if (data[i].parentElement.className=="example-dropzone") {
+                counter++;
+                //jsonObject.id = data[i].id;
+                jsonObject.parent = data[i].parentElement.id;
+                jsonObject.tag = data[i].textContent;
+                var jsonString = JSON.stringify(jsonObject);
+                //console.log(jsonString);
+                finalJSON += jsonString;
+                finalJSON += ",";
 
-
-        }
-        finalJSON = finalJSON.substring(0, finalJSON.length -1);
-        finalJSON+="]";
-        let request = new Request("/adminTags", {
-            method: 'POST',
-            body: finalJSON,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        // Отправляем (асинхронно!)
-        fetch(request).then(
-            function(response) {
-                // Запрос успешно выполнен
-                console.log(response);
-                // return response.json() и так далее см. документацию
-            },
-            function(error) {
-                // Запрос не получилось отправить
-                console.error(error);
             }
-        );
-
-        // Код после fetch выполнится ПЕРЕД получением ответа
-        // на запрос, потому что запрос выполняется асинхронно,
-        // отдельно от основного кода
-        console.log('Запрос отправляется');
-        console.log(finalJSON);
-
-
-
-    }
-
-    function getAllChildren(){
-        const dropzones = document.getElementsByClassName("example-dropzone");
-        for(let i = 0; i < dropzones.length; i++){
-            let childrens = dropzones[i].childNodes;
-            /* (childrens.forEach(value => console.log(value.textContent))); */
-            for (let j = 0; j < childrens.length; j++){
-                console.log(dropzones[i].childNodes[j].textContent);
-            }
-
         }
-        console.log("--------------");
+        if (counter>0) {
+            finalJSON = finalJSON.substring(0, finalJSON.length - 1);
+            finalJSON += "]";
+            let request = new Request("/adminTags", {
+                method: 'POST',
+                body: finalJSON,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Отправляем (асинхронно!)
+            fetch(request).then(
+                function (response) {
+                    // Запрос успешно выполнен
+                    console.log(response);
+                    // return response.json() и так далее см. документацию
+                },
+                function (error) {
+                    // Запрос не получилось отправить
+                    console.error(error);
+                }
+            );
+        }
     }
 </script>
 
 <body>
 <button onclick="save()">Save</button>
-
-
-
 
 <div class="wrapper">
     <div class="sidebar">
@@ -260,11 +254,10 @@
 
 
         <div name="group" th:each="name : ${categoryNames}">
-            <div th:text = "${name}"></div>
-            <div th:each="tag: ${groupsContainer.getMapContainer().get(name)}" th:id="${name}"
+            <div th:if="${name}=='Uncategorized'" th:text = "${name}"></div>
+            <div th:if="${name}=='Uncategorized'" th:each="tag: ${groupsContainer.getMapContainer().get(name)}" th:id="${name}"
                  ondragover="onDragOver(event);"
                  ondrop="onDrop(event);"
-                 class="example-dropzone";
             >
                 <div th:text="${tag}"
                      th:id="${'drag' + tag}"
@@ -277,34 +270,6 @@
         </div>
     </div>
 </div>
-
-
-<!--
-    <div class="wrapper">
-
-        <div class="sidebar">
-            <div>New tag</div>
-        </div>
-
-        <div class="main">
-            <div id="group" name="group" class="groupRow" th:each="group:${groupsContainer.container}">
-                Group type
-                <a th:text="${group.type}" />
-                <div id="tagsField" class="tagsField" th:each="tag:${group.tags}">
-                    <div id="exactTag" class="exactTag" th:text="${tag}" name="tag">Tag</div>
-                </div>
-                <br>
-            </div>
-        </div>
-    </div>
-
-
-
-<button onclick="save()">Save</button>
--->
-<button onclick="save()">Save</button>
-<button onclick="getAllChildren()">Get all</button>
-
 
 </body>
 </html>
