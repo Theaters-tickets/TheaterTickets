@@ -55,7 +55,7 @@ public class webControllerAdmin {
     public String adminTagsPost(
             @RequestBody(required = false) List<TagInfo> TagInfos,
             Map<String, Object> model){
-        System.out.println(TagInfos);
+        //System.out.println(TagInfos);
         for (TagInfo newTagType : TagInfos){
             categoryService.updateType(newTagType.getTag(), newTagType.getParent());}
         return "tagsOnStart1";

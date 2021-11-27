@@ -2,14 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <title>Поиск спекталя</title>
 
-
-<head>
-    <a href="/mainPage">Main page</a>
-    <title>Play searcher</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
-    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
-</head>
 <style>
 
     .wrapper {
@@ -28,6 +20,10 @@
     .main {
         width: 70%;
         height: auto;
+        max-height: 90vh;
+        border: #454542 solid 2px;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .sidebar {
@@ -49,13 +45,31 @@
     td{
         border-bottom: #454542 2px solid;
     }
+    .chooseContainer:hover, .link:hover{
+        background-color: #DFA612;
+        cursor: pointer;
+    }
+    #main{
+        border: #3C4667 2px solid ;
+        font-size: 20px;
+        color: #3C4667;
+        text-decoration-line: none;
+    }
 
 
 </style>
+<head>
+    <a id="main" class="link" href="/mainPage">Main page</a>
+    <title>Play searcher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+</head>
+
 <body>
 <div class="wrapper">
     <div class="sidebar">
-        <p>Фильтр</p>
+        <h1>Фильтр</h1>
         <form th:method="post">
             <input type="text" name="age" placeholder="Возраст ДО">
             <br>
@@ -63,16 +77,17 @@
             <br>
             <input type="text" name="name" placeholder="Название">
             <br>
-            <input type="text" name="date" placeholder="Дата">
+            <input type="date" name="date" placeholder="Дата">
             <button type="submit">Find!</button>
         </form>
     </div>
     <div class="main">
-        Спектакли
+        <h1>Спектакли</h1>
         <table class="styled-table">
-            <tr th:each="play : ${plays}">
-                <td style="width: 25%"><a  th:href="@{|/play/${play.id}|}"><span th:text="${play.name}"> Name </span></a></td>
-                <td style="width: 75%"><span th:text="${play.title}"> Description </span></td>
+            <tr th:each="play : ${plays}" class="chooseContainer"
+                th:onclick="'window.location.href = \'' + @{|/play/${play.id}|}+ '\''">
+                    <td  style="width: 25%"><a  th:href="@{|/play/${play.id}|}" style="text-decoration:none"><span th:text="${play.name}"> Name </span></a></td>
+                    <td style="width: 75%"><span th:text="${play.title}" style="text-decoration:none"> Description </span></td>
             </tr>
         </table>
     </div>

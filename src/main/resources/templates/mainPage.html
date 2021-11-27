@@ -134,7 +134,7 @@
         margin-top: -15px;
     }
 
-    .column3 {
+    .column3,.column33 {
         background: #9e9e9e;
         float: left;
         width: 33.33333333%;
@@ -169,7 +169,16 @@
         border: 0px;
         cursor: pointer;
     }
-
+    #TheatreThicket{
+        font-size: 40px;
+    }
+    .link:hover{
+        background-color: #DFA612;
+        cursor: pointer;
+    }
+    .link{
+        text-decoration:none
+    }
 
 
 </style>
@@ -196,11 +205,14 @@
 
 <header>
     <h1 class="fixedHeader">
-        <div class="column3">_</div>
-        <div class="column3">Thicket searcher</div>
-        <div class="column3">
-            <a href="/login">Login</a>
-            <a href="/registration">Registration</a>
+        <div class="column33">
+            <a class="link" href="/adminTags" th:if="${accessRights=='admin'}">Magic link</a>
+            <a class="link" href="/recommendation" th:if="${accessRights=='user'}">Magic link</a>
+        </div>
+        <div id="TheatreThicket" class="column33" >Theatre thicket</div>
+        <div class="column33">
+            <a class="link" href="/login" style="text-decoration:none">Login</a>
+            <a class="link" href="/registration" style="text-decoration:none">Registration</a>
         </div>
     </h1>
 </header>
@@ -209,20 +221,20 @@
 <br>
 <div id="mainBox">
     <button class="btn-search">
-        <a href=http://localhost:8080/search>Репертуар</a>
+        <a href=http://localhost:8080/search style="text-decoration:none">Репертуар</a>
     </button>
 </div>
 
 
-<h1 class="rowBottom">
+<h1 class="rowBottom" >
     <div class="color3">
         <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[0].id}|} + '\''"
              style="cursor: pointer;">
-            <img class="playImage" th:src="${images[0]}" th:href="@{|/play/${threeRandomRepertoire[0].id}|}">
+            <img class="playImage" th:src="${threeRandomRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}">
             <br>
             <a th:text="${threeRandomRepertoire[0].name}"
                th:href="@{|/play/${threeRandomRepertoire[0].id}|}"
-               style="cursor: pointer;">
+               style="cursor: pointer; text-decoration:none" >
                 First
             </a>
             <br>
@@ -230,17 +242,17 @@
                       th:text="${threeRandomRepertoire[0].title}">
                 Desc1
             </textarea>
-
         </div>
     </div>
-        <div class="color3">
+
+    <div class="color3">
     <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[1].id}|} + '\''"
          style="cursor: pointer;">
-        <img class="playImage" th:src="${images[1]}">
+        <img class="playImage" th:src="${threeRandomRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}">
         <br>
         <a th:text="${threeRandomRepertoire[1].name}"
            th:href="@{|/play/${threeRandomRepertoire[1].id}|}"
-           style="cursor: pointer;">
+           style="cursor: pointer; text-decoration:none">
             Second
         </a>
         <br>
@@ -253,11 +265,11 @@
 
     <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[2].id}|} + '\''"
          style="cursor: pointer;">
-        <img class="playImage" th:src="${images[2]}">
+        <img class="playImage" th:src="${threeRandomRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}">
         <br>
         <a th:text="${threeRandomRepertoire[2].name}"
            th:href="@{|/play/${threeRandomRepertoire[2].id}|}"
-           style="cursor: pointer;">
+           style="cursor: pointer; text-decoration:none">
             Third
         </a>
         <br>

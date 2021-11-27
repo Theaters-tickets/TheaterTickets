@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.HTML;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -45,7 +48,12 @@ public class webControllerUser {
     String getPlayById(@PathVariable("id") UUID id, Map<String, Object> model) {
         Repertoire repertoire = repertoireService.getById(id);
         model.put("repertoire", repertoire);
+        model.put("categories", repertoireService.getCategoriesByIdOfRepertoire(id)); //Added by Ilya categories of the repertoire
+        //model.put("theatre", repertoire.getPerformances().iterator().next().getTheatre()!=null ? repertoire.getPerformances().iterator().next().getTheatre() : "error");
+        model.put("similarRepertoire", repertoireService.getSimilarRepertoire(repertoire.getCategories(), 3));
 
+        //Added by Alisa
+        //Comments for repertoire
         List<Comment> comments = List.copyOf(repertoire.getComments());
         model.put("comments", comments);
         Comment comment = new Comment();

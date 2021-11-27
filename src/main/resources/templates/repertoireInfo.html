@@ -25,6 +25,9 @@
     .column3 {
         float: left;
         width: 33.33333333%;
+        font-family: "Berlin Sans FB Demi";
+        font-size: 15px;
+        color: #1b1b1b;
     }
 
     .imageContainer{
@@ -44,7 +47,30 @@
         height: 354px;
         overflow: hidden;
     }
-
+    .link:hover{
+        background-color: #DFA612;
+        cursor: pointer;
+    }
+    #main{
+        border: #3C4667 2px solid ;
+        font-size: 20px;
+        color: #3C4667;
+        text-decoration-line: none;
+    }
+    .column33 {
+        float: left;
+        width: 33.33333333%;
+        text-align: center;
+    }
+    .column33:hover{
+        cursor: pointer;
+        background-color: #DFA612;
+        text-align: center;
+    }
+    .playImage{
+        max-height: 350px;
+        max-width: 350px;
+    }
 
 </style>
 
@@ -122,7 +148,7 @@
 </script>
 
 <body>
-<a href="/mainPage">Main page</a>
+<a id="main" class="link" href="/mainPage" style="text-decoration:none">Main page</a>
 <h1 th:text="${'Информация о спектакле '+ repertoire.name}">Info:</h1>
 <!-- <h2 th:text="Информация о спектакле ${repertoire.description}">Информация о спектакле</h2> -->
 <div class="content" th:utext="${repertoire.getDescription()}" />
@@ -142,11 +168,16 @@
 </div>
 
 <h1 class="row">
-    <div class="column3" th:text="${repertoire.genres}">Genres</div>
+    <div class="column3" th:text="${categories}">Genres</div>
     <div class="column3" th:text="${repertoire.age_min + '+'}">Min_age</div>
-    <div class="column3">Here might be a theatre link and time</div>
+    <div class="column3">
+        <p th:if="${theatre =='error'}">Here might be a theatre link and time</p>
+    </div>
 </h1>
-
+<br>
+<br>
+<br>
+<br>
 <button th:onclick="goBack()">На главную</button>
 <input type="button" value="Назад" onclick="history.back()">
 
@@ -203,6 +234,23 @@
     </tr>
 </table>
 </p>
+
+<br>
+<p>Похожие спектакли</p>
+<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(0).getId()}|} + '\''">
+    <div th:text="${similarRepertoire.get(0).getName()}">First similar</div>
+    <img class="playImage" th:src="${similarRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}">
+</div>
+<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(1).getId()}|} + '\''">
+    <div th:text="${similarRepertoire.get(1).getName()}">Second similar</div>
+    <img class="playImage" th:src="${similarRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}">
+</div>
+<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(2).getId()}|} + '\''">
+    <div th:text="${similarRepertoire.get(2).getName()}">Third similar</div>
+    <img class="playImage" th:src="${similarRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}">
+</div>
+
+
 
 </body>
 </html>
