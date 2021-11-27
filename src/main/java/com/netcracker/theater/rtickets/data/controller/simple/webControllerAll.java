@@ -5,10 +5,7 @@ import com.netcracker.theater.rtickets.data.entity.User;
 import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +33,14 @@ public class webControllerAll {
     public String mainPage(
             Map<String, Object> model) {
         List<Repertoire> threeRandom = repertoireService.getThreeRandomRepertoire();
+        //This should be checked via spring security
+        //But now it's hardcoded for admin
+        model.put("accessRights", "admin");
+        //
         model.put("threeRandomRepertoire", threeRandom);
-        List<String> images = new ArrayList<>();
-        images.add(threeRandom.get(0).getPictures().iterator().next().getImage());
-        images.add(threeRandom.get(1).getPictures().iterator().next().getImage());
-        images.add(threeRandom.get(2).getPictures().iterator().next().getImage());
-        model.put("images", images);
         return "mainPage";
+
+
     }
 
     //Registration page

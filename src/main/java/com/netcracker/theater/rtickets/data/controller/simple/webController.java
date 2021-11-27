@@ -3,11 +3,8 @@ package com.netcracker.theater.rtickets.data.controller.simple;
 import com.netcracker.theater.rtickets.data.core.GroupsContainer;
 import com.netcracker.theater.rtickets.data.core.TagInfo;
 import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
-import com.netcracker.theater.rtickets.data.entity.Comment;
-import com.netcracker.theater.rtickets.data.entity.Recommendation;
-import com.netcracker.theater.rtickets.data.entity.Repertoire;
+import com.netcracker.theater.rtickets.data.entity.*;
 import com.netcracker.theater.rtickets.data.service.*;
-import com.netcracker.theater.rtickets.data.entity.User;
 import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +45,6 @@ public class webController {
     //Added by Alisa
     @GetMapping("/recommendation")
     public String recommendation(Map<String, Object> model) {
-
         List<Recommendation> recommendations = recommendationService.getAllRecommendations();
         model.put("recommendations", recommendations);
         Recommendation rec = new Recommendation();
@@ -73,4 +69,6 @@ public class webController {
         model.put("rep", rep);
         return "children";
     }
+
+
 }

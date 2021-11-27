@@ -1,12 +1,10 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
-import com.netcracker.theater.rtickets.data.entity.Category;
-import com.netcracker.theater.rtickets.data.entity.Performance;
-import com.netcracker.theater.rtickets.data.entity.Repertoire;
-import com.netcracker.theater.rtickets.data.service.CategoryService;
-import com.netcracker.theater.rtickets.data.service.PerfomanceService;
-import com.netcracker.theater.rtickets.data.service.RepertoireService;
+import com.netcracker.theater.rtickets.data.entity.*;
+import com.netcracker.theater.rtickets.data.service.*;
+import jdk.jfr.consumer.RecordedClass;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
@@ -17,10 +15,14 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         ApplicationContext context= SpringApplication.run(NetcrackerTheaterTicketsApplication.class);
+
         ParserClass parserClass = context.getBean(ParserClass.class);
         //TESTPARSER testparser = context.getBean(TESTPARSER.class);
 
+
+        //parserClass.parseTheatre();
         parserClass.parseRepertoire();
 
         /*CategoryService categoryService = context.getBean(CategoryService.class);

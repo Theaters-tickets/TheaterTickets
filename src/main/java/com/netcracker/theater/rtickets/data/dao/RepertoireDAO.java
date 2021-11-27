@@ -16,7 +16,7 @@ public interface RepertoireDAO extends JpaRepository<Repertoire, UUID> {
 
     //Added by Ilya
     //Query filter
-    @Query(value="select * from repertoire join performance on repertoire.id = performance.repertoire_id " +
+    @Query(value="select distinct repertoire.id, age_min, description, name, title from repertoire join performance on repertoire.id = performance.repertoire_id " +
             "where (performance.date like %:date%) " +
             "and  (repertoire.description like %:description%)" +
             "and  (repertoire.name like %:name%)" +
@@ -28,9 +28,21 @@ public interface RepertoireDAO extends JpaRepository<Repertoire, UUID> {
 
 
 
+
     //Added by Ilya
     //Random repertoire for main page
     @Query(value="SELECT * FROM repertoire" +
             " ORDER BY RAND() LIMIT 3", nativeQuery = true)
     public List<Repertoire> getThreeRandomRepertoire();
+
+    //Added by Ilya
+    //Similar repertoire by categories
+    @Query(value = "select repertoire.id,repertoire.age_min,repertoire.description,repertoire.name,repertoire.title \n" +
+            "from repertoire\n" +
+            "join repertoire_categories on repertoire_id = repertoire.id \n" +
+            "join category on category_id = category.id\n" +
+            "where category.type in (:categorieslike) ORDER by rand() Limit :amount",
+            nativeQuery = true)
+    public List<Repertoire> getSimilarRepertoire(@Param("categorieslike") List<String> categorieslike,
+                                                 @Param("amount") int amount);
 }

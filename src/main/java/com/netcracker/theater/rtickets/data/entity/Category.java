@@ -26,7 +26,7 @@ public class Category {
 
     //Added by Ilya
     @Column(columnDefinition = "varchar(255) default 'Uncategorized'")
-    String type;
+    String type = "Uncategorized";
 
     //Added by Alisa
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
