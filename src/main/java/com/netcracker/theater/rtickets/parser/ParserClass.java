@@ -93,6 +93,27 @@ public class ParserClass {
                         }
 
 
+
+
+                        //SAVE PERFORMANCE
+                        JSONArray dateArr = (JSONArray)resultObject.get("dates");
+                        for (Object date : dateArr) {
+                            if ((Long)((JSONObject)date).get("start") > CURRENT_TIME) {
+                                Performance performance = mapper.readValue(( (JSONObject) date).toString(), Performance.class);
+                                check = true;
+                                for (Performance perf : perfomanceService.getAllPerformance()) {
+                                    if (performance.equals(perf)) { //check fot unique value
+                                        performance = perf;
+                                        check = false;
+                                        break;
+                                    }
+                                }
+                                    performance.setTheatre(theatre);
+                                    perfomanceService.savePer(performance);
+                                    repertoire.addPerformance(performance);
+                            }
+                        }
+
                         //SAVE PARTICIPANTS
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         Set<Actor> actors = new HashSet<>();
@@ -116,33 +137,14 @@ public class ParserClass {
                             if (check) {
                                 roleActor.addActor(actor);
                                 roleActorService.saveRole(roleActor);
+                                Set<Performance> perfs = theatre.getPerformances();
+                                actor.setPerformances(perfs);
+                                actorService.saveActor(actor);
                             }
-                            actors.add(actor);
+                            actors.add(actorService.getActor(actor.getId()));
                         }
 
 
-                        //SAVE PERFORMANCE
-                        JSONArray dateArr = (JSONArray)resultObject.get("dates");
-                        for (Object date : dateArr) {
-                            if ((Long)((JSONObject)date).get("start") > CURRENT_TIME) {
-                                Performance performance = mapper.readValue(( (JSONObject) date).toString(), Performance.class);
-                                check = true;
-                                for (Performance perf : perfomanceService.getAllPerformance()) {
-                                    if (performance.equals(perf)) { //check fot unique value
-                                        performance = perf;
-                                        check = false;
-                                        break;
-                                    }
-                                }
-                                if (check) {
-                                    performance.setActors(actors);
-                                    perfomanceService.savePer(performance);
-                                    theatre.addPerformance(performance);
-                                    repertoire.addPerformance(performance);
-                                }
-                            }
-                        }
-                        theatreService.saveTheatre(theatre);
 
                         //SAVE TAGS
                         JSONArray tagsArr = (JSONArray)resultObject.get("tags");

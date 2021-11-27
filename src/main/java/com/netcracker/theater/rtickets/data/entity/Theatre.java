@@ -47,7 +47,7 @@ public class Theatre {
     private Long number;
 
 
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "theatre_id")
     private Set<Performance> performances = new HashSet<>();
 

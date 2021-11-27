@@ -24,7 +24,7 @@ public class Actor {
 
     private String last_name;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "performance_actor",
             joinColumns = { @JoinColumn(name = "actor_id") },
