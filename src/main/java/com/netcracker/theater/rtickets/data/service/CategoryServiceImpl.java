@@ -40,5 +40,11 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     @Transactional
-    public Category getCategoryByName(String name) { return categoryDAO.getByName(name); };
+    public Category getCategoryByName(String name) { return categoryDAO.getByName(name); }
+
+    @Override
+    @Transactional
+    public List<Category> getUncategorizedCategories(){
+        return categoryDAO.getUncategorizedCategories();
+    }
 }
