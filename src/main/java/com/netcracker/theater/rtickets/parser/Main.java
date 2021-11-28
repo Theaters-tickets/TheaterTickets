@@ -3,9 +3,11 @@ package com.netcracker.theater.rtickets.parser;
 import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
 import com.netcracker.theater.rtickets.data.entity.*;
 import com.netcracker.theater.rtickets.data.service.*;
+import javassist.expr.NewArray;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,10 +20,12 @@ public class Main {
         ParserClass parserClass = context.getBean(ParserClass.class);
         //TESTPARSER testparser = context.getBean(TESTPARSER.class);
 
+        //parserClass.parseTheatre();
+        parserClass.parseRecommendation();
         parserClass.parseRepertoire();
 
+
         /*
-        //CreateRecommendations createRecommendations = context.getBean(CreateRecommendations.class);
         RecommendationService recommendationService = context.getBean(RecommendationService.class);
         PerfomanceService perfomanceService = context.getBean(PerfomanceService.class);
         CategoryService categoryService = context.getBean(CategoryService.class);
@@ -30,42 +34,42 @@ public class Main {
 
         User user = userService.getUser(UUID.fromString("f7083cdf-b5de-4e08-bf29-508d988de50d"));
         System.out.println(userService.getFavoriteCategory(user));
+        */
 
 
 
 
 
         /*
-        Recommendation recommendationNewYear = new Recommendation("NewYear");
-        Recommendation recommendationChildren = new Recommendation("children");
-        Recommendation recommendation = new Recommendation("default");
-        for (Category catg : categoryService.getAllCategories()) {
-            if ((catg.getName().equals("рождество")) || (catg.getName().equals("новый год 2022")) || (catg.getName().equals("новогодние ёлки и спектакли"))
-                    || (catg.getName().equals("новый год с детьми"))
-            ) {
-                recommendationNewYear.addCategory(catg);
-                recommendationNewYear.setPicture(new Picture("/img/NewYear.jpg"));
-                continue;
-            }
-            if ((catg.getName().equals("детские спектакли")) || (catg.getName().equals("детям")) || (catg.getName().equals("для детей"))
-                    || (catg.getName().equals("малыши")) || (catg.getName().equals("выходные с детьми"))
-                    || (catg.getName().equals("дошкольники"))|| (catg.getName().equals("школьники"))
-                    || (catg.getName().equals("подростки"))|| (catg.getName().equals("всей семьей"))
-            ) {
-                recommendationChildren.addCategory(catg);
-                recommendationChildren.setPicture(new Picture("/img/children.jpg"));
-                continue;
-            }
-            else {
-                recommendation.addCategory(catg);
-            }
-
-        }
+        Recommendation recommendation = new Recommendation("NewYear", "Новый год");
+        recommendation.setPicture(new Picture("/img/NewYear.jpg"));
         recommendationService.saveRecommendation(recommendation);
-        recommendationService.saveRecommendation(recommendationNewYear);
-        recommendationService.saveRecommendation(recommendationChildren);
+        recommendation = new Recommendation("classic", "Классика");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("drama", "Драма");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("comedy", "Комедия");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("children", "Детям");
+        recommendation.setPicture(new Picture("/img/children.jpg"));
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("adult", "Для взрослых");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("balet", "Балет");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("celebration", "Праздник");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("unique", "Уникальный эвент");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("modernArt", "Современное искусство");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("excursion", "Экскурсия");
+        recommendationService.saveRecommendation(recommendation);
+        recommendation = new Recommendation("music", "Музыка");
+        recommendationService.saveRecommendation(recommendation);
+        */
 
-         */
+
 
         //System.out.println(recommendationService.getRepertoire(recommendationService.getRecommendationByName("NewYear")));
 

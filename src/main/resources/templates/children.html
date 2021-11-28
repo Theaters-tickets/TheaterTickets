@@ -85,13 +85,13 @@
         </tr>
 
         <tr th:each="rep : ${repertoires}">
-            <td>
+            <td th:if="${rep.getOnePicture()}">
                 <a class="repname" th:text="${rep.name}"
                    th:href="@{|/play/${rep.id}|}">
                     Second
                 </a>
                 <div class="title" th:text="${rep.title}"></div>
-                <img th:src= "${rep.getPictures().iterator().next().getImage()}"height="250px" width="400px">
+                <img th:src= "${rep.getPictures().stream().findFirst().get().getImage()}" height="250px" width="400px">
             </td>
         </tr>
     </table>

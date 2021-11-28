@@ -21,6 +21,9 @@ public class Recommendation {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "ruName")
+    private String ruName;
+
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "recommendation_id")
     private Set<Category> categories;
@@ -32,8 +35,9 @@ public class Recommendation {
 
     public Recommendation() {};
 
-    public Recommendation(String name) {
+    public Recommendation(String name, String ruName) {
         this.name = name;
+        this.ruName = ruName;
     }
 
 

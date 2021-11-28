@@ -19,4 +19,8 @@ public interface RecommendationService {
     Recommendation getRecommendationByName(String name);
 
     List<Repertoire> getRepertoire(Recommendation recommendation);
+
+    List<String> getAllNames();
+
+    Recommendation getRecommendationBySlug(String name);
 }

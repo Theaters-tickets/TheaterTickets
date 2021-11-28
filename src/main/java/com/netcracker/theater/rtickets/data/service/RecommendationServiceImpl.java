@@ -38,4 +38,12 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Override
     @Transactional
     public List<Repertoire> getRepertoire(Recommendation recommendation) { return recommendationDAO.getRepertoires(recommendation); }
+
+    @Override
+    @Transactional
+    public List<String> getAllNames() { return recommendationDAO.getAllNames(); }
+
+    @Override
+    @Transactional
+    public Recommendation getRecommendationBySlug(String name) { return recommendationDAO.getBySlug(name); }
 }

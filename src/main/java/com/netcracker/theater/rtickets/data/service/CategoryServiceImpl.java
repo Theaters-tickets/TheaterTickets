@@ -36,6 +36,9 @@ public class CategoryServiceImpl implements CategoryService{
         for (Category category : toUpdate){
             category.setType(type);
         }
-
     }
+
+    @Override
+    @Transactional
+    public Category getCategoryByName(String name) { return categoryDAO.getByName(name); };
 }

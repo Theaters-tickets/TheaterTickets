@@ -206,9 +206,9 @@
         </div>
         <div class="example-parent" id="container2">
             <div class="example-dropzone"
-                 id="Семейное"
+                 id="Детям"
                  ondragover="onDragOver(event);"
-                 ondrop="onDrop(event);"> Семейное
+                 ondrop="onDrop(event);"> Детям
             </div>
             <div class="example-dropzone"
                  id="Для взрослых"
@@ -245,9 +245,9 @@
                  ondrop="onDrop(event);"> Экскурсия
             </div>
             <div class="example-dropzone"
-                 id="Парам"
+                 id="Новый год"
                  ondragover="onDragOver(event);"
-                 ondrop="onDrop(event);"> Парам
+                 ondrop="onDrop(event);"> Новый год
             </div>
             <div class="example-dropzone"
                  id="Музыка"
@@ -260,14 +260,14 @@
     <div class="main">
 
 
-        <div name="group" th:each="name : ${categoryNames}">
-            <div th:if="${name}=='Uncategorized'" th:text = "${name}"></div>
-            <div th:if="${name}=='Uncategorized'" th:each="tag: ${groupsContainer.getMapContainer().get(name)}" th:id="${name}"
+        <div name="group" th:each=" rec : ${groupsContainer}">
+            <div th:if="${rec.getRuName()}=='Uncategorized'" th:text = "${rec.getRuName()}"></div>
+            <div th:if="${rec.getRuName()}=='Uncategorized'" th:each="tag: ${rec.getCategories()}" th:id="${rec.getRuName()}"
                  ondragover="onDragOver(event);"
                  ondrop="onDrop(event);"
             >
-                <div th:text="${tag}"
-                     th:id="${'drag' + tag}"
+                <div th:text="${tag.name}"
+                     th:id="${'drag' + tag.name}"
                      class="example-draggable"
                      draggable="true"
                      ondragstart="onDragStart(event);">

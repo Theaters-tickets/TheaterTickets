@@ -28,12 +28,6 @@ public class Picture {
     @Column
     private String source_link;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Repertoire repertoire;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Theatre theatre;
-
     public Picture() {
     }
 
