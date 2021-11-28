@@ -1,13 +1,17 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
 
+import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
 import com.netcracker.theater.rtickets.data.core.GroupsContainer;
 import com.netcracker.theater.rtickets.data.core.TagInfo;
 import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
 import com.netcracker.theater.rtickets.data.entity.*;
 import com.netcracker.theater.rtickets.data.service.*;
 import com.netcracker.theater.rtickets.data.service.*;
+import com.netcracker.theater.rtickets.parser.ParserClass;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +43,8 @@ public class webControllerAdmin {
     CommentService commentService;
     @Autowired
     RecommendationService recommendationService;
+    @Autowired
+    ParserClass parserClass;
 
     //Page with tags
     @GetMapping("/adminTags")
@@ -73,6 +79,32 @@ public class webControllerAdmin {
     public void lc()
     {
 
+    }
+
+
+    @GetMapping("/status")
+    public String statusInfo(Map<String, Object> model){
+        model.put("repertoire", repertoireService.getAllRepertoire());
+        model.put("theatre", theatreService.getAllTheatre());
+        model.put("category", categoryService.getAllCategories());
+        model.put("uncategorizedCategory", categoryService.getUncategorizedCategories());
+        return "status";
+    }
+
+    @PostMapping("/status")
+    public String startParser(@RequestParam("parserType") String parserType,
+                              Map<String, Object> model){
+        model.put("repertoire", repertoireService.getAllRepertoire());
+        model.put("theatre", theatreService.getAllTheatre());
+        model.put("category", categoryService.getAllCategories());
+        model.put("uncategorizedCategory", categoryService.getUncategorizedCategories());
+        if (parserType.equals("repertoire")){
+            parserClass.parseRepertoire();
+        }
+        if (parserType.equals("theatre")){
+            parserClass.parseTheatre();
+        }
+        return "status";
     }
 
 }
