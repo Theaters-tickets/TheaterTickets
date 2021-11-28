@@ -38,4 +38,10 @@ public class CategoryServiceImpl implements CategoryService{
         }
 
     }
+
+    @Override
+    @Transactional
+    public List<Category> getUncategorizedCategories(){
+        return categoryDAO.getUncategorizedCategories();
+    }
 }

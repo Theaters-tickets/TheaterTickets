@@ -206,8 +206,9 @@
 <header>
     <h1 class="fixedHeader">
         <div class="column33">
-            <a class="link" href="/adminTags" th:if="${accessRights=='admin'}">Magic link</a>
-            <a class="link" href="/recommendation" th:if="${accessRights=='user'}">Magic link</a>
+            <a class="link" href="/adminTags" th:if="${accessRights=='admin'}" th:text="AdminTags">Magic link</a>
+            <a class="link" href="/status" th:if="${accessRights=='admin'}" th:text="Status">Magic link</a>
+            <a class="link" href="/recommendation" th:if="${accessRights=='user'}" th:text="Recommendation">Magic link</a>
         </div>
         <div id="TheatreThicket" class="column33" >Theatre thicket</div>
         <div class="column33">

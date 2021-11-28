@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    #main{
+        border: #3C4667 2px solid ;
+        font-size: 20px;
+        color: #3C4667;
+        text-decoration-line: none;
+        cursor: pointer;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<a id="main" href="/mainPage">Main page</a>
+<div th:text="'Currently '+${repertoire.size()} + ' repertoire in base'">Repertoire</div>
+<div th:text="'Currently '+${theatre.size()} + ' theatre in base'">Theatre</div>
+<div th:text="'Currently '+${category.size()} + ' category in base'">Category</div>
+<div th:text="'Currently '+${uncategorizedCategory.size()} + ' uncategorizedCategory in base'">uncategorizedCategory</div>
+
+<form action="#" th:action="@{/status}" method="post">
+    <div>Parse</div>
+    <button value="repertoire" name="parserType" type="submit">Parse rep</button>
+    <button value="theatre" name="parserType" type="submit">Parse theatre</button>
+</form>
+
+</body>
+</html>

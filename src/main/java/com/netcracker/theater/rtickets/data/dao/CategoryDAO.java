@@ -15,4 +15,9 @@ public interface CategoryDAO extends JpaRepository<Category, UUID> {
     //To get category with same name as in frontend
     @Query(value = "SELECT * from Category where (category.name = :name)", nativeQuery = true)
     public List<Category> getCategoryWithName(@Param("name") String name);
+
+    //Added by Ilya
+    //All uncategorized categories
+    @Query(value="Select * from category where category.type ='Uncategorized'", nativeQuery = true)
+    public List<Category> getUncategorizedCategories();
 }
