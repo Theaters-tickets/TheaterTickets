@@ -44,7 +44,9 @@ public class RepertoireServiceImpl implements RepertoireService{
     @Override
     @Transactional
     public List<Repertoire> filterRepertoire(String date, String description, String name, String age){
-
+        if (date.equals("") && description.equals("") && name.equals("") && age.equals("99")){
+            return repertoireDAO.findAll();
+        }
         if (date == ""){
             String strDate = "";
         }
