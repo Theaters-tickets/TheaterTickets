@@ -16,4 +16,6 @@ public interface CategoryService {
     void updateType(String name, String type);
 
     Category getCategoryByName(String name);
+
+    List<Category> getUncategorizedCategories();
 }
