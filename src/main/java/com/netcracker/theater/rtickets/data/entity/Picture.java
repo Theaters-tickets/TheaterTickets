@@ -28,15 +28,6 @@ public class Picture {
     @Column
     private String source_link;
 
-    @Column
-    private int score;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Repertoire repertoire;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Theatre theatre;
-
     public Picture() {
     }
 
@@ -59,8 +50,7 @@ public class Picture {
     public String toString() {
         return "Picture{" +
                 "id=" + id +
-                ", comment='" + image + '\'' +
-                ", score=" + score +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

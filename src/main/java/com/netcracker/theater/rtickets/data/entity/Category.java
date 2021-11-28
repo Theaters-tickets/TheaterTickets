@@ -18,19 +18,18 @@ public class Category {
     @Column(name = "id", length = 16, unique = true, nullable = false)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private Set<Repertoire> repertoires = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Recommendation recommendation;
 
     @Column
     private String name;
 
     //Added by Ilya
-    @Column(columnDefinition = "varchar(255) default 'Uncategorized'")
+    @Column
     String type = "Uncategorized";
-
-    //Added by Alisa
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    private Set<Repertoire> repertoires = new HashSet<>();
 
     public Category() {
     }

@@ -15,17 +15,13 @@
     }
     .white-box {
         width: 65vw;
-        height: 100vh;
         background-color: white;
-        color: black;
         margin: auto;
-        top:0;
         right:0;
-        bottom:0;
         left:0;
+        position: absolute;
+        z-index: 5;
     }
-
-
     table {
         width: 75vw;
     }
@@ -34,9 +30,6 @@
         vertical-align: middle;
     }
 
-    table.fixed {
-        table-layout: fixed;
-    }
     table.fixed td {
         overflow: hidden;
     }
@@ -44,17 +37,32 @@
         margin-left: auto;
         margin-right: auto;
     }
-    #main{
-        border: #3C4667 2px solid ;
-        font-size: 20px;
+    a:link {
+        color: #2B3247;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
         color: #3C4667;
-        text-decoration-line: none;
-        cursor: pointer;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #000000;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: #3C4667;
+        background-color: transparent;
+        text-decoration: underline;
     }
 </style>
 
 <body>
-<a id="main" href="/mainPage">Main page</a>
     <div class="white-box">
         <header>
             <h1 class>
@@ -67,9 +75,12 @@
             </tr>
 
             <tr th:each="rec : ${recommendations}">
-                <td>
+                <td th:if="${rec.getRuName()} !='Uncategorized'">
                     <a th:href="@{|/recommendation/${rec.getName()}|}" >
-                    <div class="picture"><img th:src= "${rec.picture.getImage()}"height="200px" width="400px"></img></div>
+                    <div class="picture">
+                        <img th:src= "${rec.picture.getImage()}"height="200px" width="400px"></img>
+                        <div th:text="${rec.getRuName()}"></div>
+                    </div>
                     </a>
                 </td>
             </tr>

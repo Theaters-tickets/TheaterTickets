@@ -53,7 +53,7 @@ public class webController {
     }
     @GetMapping("/recommendation/NewYear")
     public String recommendationNewYear(Map<String, Object> model) {
-        Recommendation recommendation = recommendationService.getRecommendationByName("NewYear");
+        Recommendation recommendation = recommendationService.getRecommendationBySlug("NewYear");
         List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
         model.put("repertoires", repertoires);
         Repertoire rep = new Repertoire();
@@ -62,7 +62,7 @@ public class webController {
     }
     @GetMapping("/recommendation/children")
     public String recommendationChildren(Map<String, Object> model) {
-        Recommendation recommendation = recommendationService.getRecommendationByName("children");
+        Recommendation recommendation = recommendationService.getRecommendationBySlug("children");
         List<Repertoire> repertoires = recommendationService.getRepertoire(recommendation);
         model.put("repertoires", repertoires);
         Repertoire rep = new Repertoire();

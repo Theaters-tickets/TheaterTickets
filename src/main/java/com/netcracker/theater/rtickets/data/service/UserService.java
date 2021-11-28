@@ -14,4 +14,10 @@ public interface UserService {
     void saveUser(User user);
 
     User getUser(UUID id);
+
+    void deleteUser(UUID id);
+
+    List<?> getFavoriteCategory(User user);
+
+
 }

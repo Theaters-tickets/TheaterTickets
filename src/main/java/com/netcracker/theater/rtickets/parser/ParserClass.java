@@ -36,6 +36,8 @@ public class ParserClass {
     private ActorService actorService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RecommendationService recommendationService;
 
     private static long CURRENT_TIME = Instant.now().getEpochSecond();
     private boolean check;
@@ -70,7 +72,6 @@ public class ParserClass {
                         if (check) {
                             repertoireService.saveRep(repertoire);
                         }
-
 
                         //SAVE THEATRE
                         JSONObject resultObject = (JSONObject)result;
@@ -109,17 +110,19 @@ public class ParserClass {
                                         break;
                                     }
                                 }
+                                if (check = true) {
                                     performance.setTheatre(theatre);
+                                    performance.setRepertoire(repertoire);
                                     perfomanceService.savePer(performance);
-                                    repertoire.addPerformance(performance);
+                                }
                             }
                         }
+                        theatreService.saveTheatre(theatre);
 
                         //SAVE PARTICIPANTS
                         //TODO Alisa, fix me pls
                         /* Error here!!!
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
-                        Set<Actor> actors = new HashSet<>();
                         for (Object participant : participantsArr) {
                             RoleActor roleActor = roleActorService.getRoleByName(((JSONObject)((JSONObject) participant).get("role")).get("slug").toString());
                             if (roleActor == null) {
@@ -138,13 +141,12 @@ public class ParserClass {
                                 }
                             }
                             if (check) {
-                                roleActor.addActor(actor);
-                                roleActorService.saveRole(roleActor);
-                                Set<Performance> perfs = theatre.getPerformances();
+                                Set<Performance> perfs = repertoire.getPerformances();
                                 actor.setPerformances(perfs);
                                 actorService.saveActor(actor);
+                                roleActor.addActor(actor);
+                                roleActorService.saveRole(roleActor);
                             }
-                            actors.add(actorService.getActor(actor.getId()));
                         }
 
                          */
@@ -152,6 +154,11 @@ public class ParserClass {
 
 
                         //SAVE TAGS
+                        Recommendation recDefault = recommendationService.getRecommendationBySlug("Uncategorized");
+                        if (recDefault == null) {
+                            recDefault = new Recommendation("Uncategorized", "Uncategorized");
+                            recommendationService.saveRecommendation(recDefault);
+                        }
                         JSONArray tagsArr = (JSONArray)resultObject.get("tags");
                         for (Object tag : tagsArr) {
                             Category category = mapper.readValue("\"" + tag.toString() + "\"", Category.class);
@@ -164,6 +171,7 @@ public class ParserClass {
                                 }
                             }
                             if (check) {
+                                category.setRecommendation(recDefault);
                                 categoryService.saveCategory(category);
                                 repertoire.addCategory(category);
                             }
@@ -219,6 +227,49 @@ public class ParserClass {
             e.printStackTrace();
         }
         System.out.println("OK!");
+    }
+
+    public void parseRecommendation() {
+         if (recommendationService.getAllRecommendations().isEmpty()) {
+             Recommendation recommendation = new Recommendation("Uncategorized", "Uncategorized");
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("NewYear", "Новый год");
+             recommendation.setPicture(new Picture("/img/NewYear.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("classic", "Классика");
+             recommendation.setPicture(new Picture("/img/classic.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("drama", "Драма");
+             recommendation.setPicture(new Picture("/img/drama.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("comedy", "Комедия");
+             recommendation.setPicture(new Picture("/img/comedy.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("children", "Детям");
+             recommendation.setPicture(new Picture("/img/children.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("adult", "Для взрослых");
+             recommendation.setPicture(new Picture("/img/adult.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("ballet", "Балет");
+             recommendation.setPicture(new Picture("/img/ballet.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("celebration", "Праздник");
+             recommendation.setPicture(new Picture("/img/celebration.png"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("unique", "Уникальный эвент");
+
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("modernArt", "Современное искусство");
+             recommendation.setPicture(new Picture("/img/modernArt.png"));
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("excursion", "Экскурсия");
+
+             recommendationService.saveRecommendation(recommendation);
+             recommendation = new Recommendation("music", "Музыка");
+             recommendation.setPicture(new Picture("/img/music.jpg"));
+             recommendationService.saveRecommendation(recommendation);
+         }
     }
 
 

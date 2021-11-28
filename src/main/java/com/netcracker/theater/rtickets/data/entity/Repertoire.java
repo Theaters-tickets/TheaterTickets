@@ -46,7 +46,7 @@ public class Repertoire {
     @JoinColumn(name = "repertoire_id")
     private Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "repertoire_id")
     private Set<Performance> performances = new HashSet<>();
 
@@ -59,7 +59,7 @@ public class Repertoire {
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "picture_id")
+    @JoinColumn(name = "repertoire_id")
     private Set<Picture> pictures = new HashSet<>();
 
     public void addGenre(Genre genre)
@@ -158,6 +158,12 @@ public class Repertoire {
             sum += comm.getScore();
         }
         return Math.round(sum/comments.size()* 100.0) / 100.0;
+    }
+    @JsonIgnore
+    public Picture getOnePicture() {
+        if (!pictures.isEmpty()) {
+            return pictures.iterator().next();
+        } else {return null;}
     }
 
     public Repertoire(String name, String age_min, String title) {
