@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.netcracker.theater.rtickets.data.entity.*;
 import com.netcracker.theater.rtickets.data.service.*;
+import com.sun.xml.bind.v2.TODO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -115,6 +116,8 @@ public class ParserClass {
                         }
 
                         //SAVE PARTICIPANTS
+                        //TODO Alisa, fix me pls
+                        /* Error here!!!
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         Set<Actor> actors = new HashSet<>();
                         for (Object participant : participantsArr) {
@@ -143,6 +146,8 @@ public class ParserClass {
                             }
                             actors.add(actorService.getActor(actor.getId()));
                         }
+
+                         */
 
 
 
