@@ -1,32 +1,19 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
 
-import com.netcracker.theater.rtickets.data.core.GroupsContainer;
-import com.netcracker.theater.rtickets.data.core.TagInfo;
-import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
 import com.netcracker.theater.rtickets.data.entity.Comment;
 import com.netcracker.theater.rtickets.data.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.service.*;
 import com.netcracker.theater.rtickets.data.entity.User;
-import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.swing.text.html.HTML;
-import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import java.util.List;
-import java.util.*;
-import java.util.*;
 
 @Controller
 public class webControllerUser {
@@ -58,6 +45,8 @@ public class webControllerUser {
         model.put("comments", comments);
         Comment comment = new Comment();
         model.put("comment", comment);
+        User user = new User("ussser", "1234");
+        model.put("user", user);
         return "repertoireInfo";
     }
     @PostMapping("/play/{id}")
