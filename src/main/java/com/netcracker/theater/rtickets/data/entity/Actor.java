@@ -70,12 +70,12 @@ public class Actor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Actor actor = (Actor) o;
-        return Objects.equals(name, actor.name) && Objects.equals(last_name, actor.last_name) && Objects.equals(performances, actor.performances) && Objects.equals(pictures, actor.pictures);
+        return Objects.equals(name, actor.name) && Objects.equals(last_name, actor.last_name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, last_name, performances, pictures);
+        return Objects.hash(name, last_name);
     }
 
     @Override

@@ -45,4 +45,11 @@ public interface RepertoireDAO extends JpaRepository<Repertoire, UUID> {
             nativeQuery = true)
     public List<Repertoire> getSimilarRepertoire(@Param("categorieslike") List<String> categorieslike,
                                                  @Param("amount") int amount);
+
+    /*@Query(value = "select distinct rep from Repertoire rep " +
+            "join rep.categories cat " +
+            "where cat = ?1 " +
+            "order by rand() Limit :amount")
+    public List<Repertoire> getSimilarRepertoires(@Param("categorieslike") List<String> categorieslike,
+                                                 @Param("amount") int amount); */
 }

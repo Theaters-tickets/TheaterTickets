@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<style>
+  body{
+    background-color: #9E9E9E;
+    background: url(../img/childrenBackground.jpg);
+    height: auto;
+  }
+  header{
+    text-align: center
+  }
+  .white-box {
+    width: 65vw;
+    min-height: 100vh;
+    background-color: white;
+    color: black;
+    margin: auto;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+  }
+
+
+  table {
+    width: 65vw;
+    table-layout: fixed;
+  }
+  th,td {
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+  table.fixed td {
+    overflow: hidden;
+  }
+  a:link {
+    color: #158872;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #3C4667;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  .repname {
+    font-size: 20pt;
+  }
+  .title {
+    width: 65vw;
+    margin: auto;
+  }
+
+  a:hover {
+    color: #000000;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  a:active {
+    color: #3C4667;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+</style>
+
+<body>
+<div class="white-box">
+
+  <header>
+    <h1 class>
+      Детские спектакли
+    </h1>
+  </header>
+  <table class="table-rec">
+    <tr th:if="${#lists.isEmpty(repertoires)}">
+      <td colspan="5">Спектаклей пока нет...!</td>
+    </tr>
+
+    <tr th:each="rep : ${repertoires}">
+      <td th:if="${rep.getOnePicture()}">
+        <a class="repname" th:text="${rep.name}"
+           th:href="@{|/play/${rep.id}|}">
+          Second
+        </a>
+        <div class="title" th:text="${rep.title}"></div>
+        <img th:src= "${rep.getPictures().stream().findFirst().get().getImage()}" height="250px" width="400px">
+      </td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>

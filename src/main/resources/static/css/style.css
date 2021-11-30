@@ -1,160 +1,291 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: "Geometria", Arial;
+}
 
-
-.table-comment{
-    color: #010101;
-    margin-left: auto;
-    margin-right: auto;
-    background: #FFFFFF;
-    padding: 20px 20px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    table-layout: auto;
+/* Register - Login */
+.login-form,
+.register-form{
+    background-image: url(https://img2.akspic.ru/originals/0/7/1/3/53170-zemlya-atmosfera-razvlechenie-polnoch-teatr-1920x1080.jpg);
     width: 100%;
-}
-
-.table-comment thead tr {
-    overflow: hidden;
-    white-space: nowrap;
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-}
-.table-comment td {
-    padding: 12px 15px;
-}
-.table-p {
-    margin-top: 30px;
-}
-
-.container{
-    margin-left: auto;
-    margin-right: auto;
-    top: 20px;
-    position: relative;
-    width: 400px;
-    background: #FFFFFF;
-    padding: 20px 30px;
-    border: 1px solid #444;
-    border-radius: 5px;
+    height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
-    width: 60%;
-}
-.container .post{
-    display: none;
-}
-.container .text{
-    font-size: 25px;
-    color: #666;
-    font-weight: 500;
-    width: 55%;
-
-}
-.container .edit{
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    font-size: 12px;
-    color: #666;
-    font-weight: 500;
-    cursor: pointer;
-}
-.container .edit:hover{
-    text-decoration: underline;
-}
-.container .star-widget input{
-    display: none;
-}
-.star-widget label{
-    font-size: 40px;
-    color: #444;
-    padding: 10px;
-    float: right;
-    transition: all 0.2s ease;
-}
-input:not(:checked) ~ label:hover,
-input:not(:checked) ~ label:hover ~ label{
-    color: #fd4;
-}
-input:checked ~ label{
-    color: #fd4;
-}
-input#rate-5:checked ~ label{
-    color: #fe7;
-    text-shadow: 0 0 20px #952;
-}
-#rate-1:checked ~ form header:before{
-    content: "Ужасно";
-}
-#rate-2:checked ~ form header:before{
-    content: "Плохо";
-}
-#rate-3:checked ~ form header:before{
-    content: "Удовлетворительно";
-}
-#rate-4:checked ~ form header:before{
-    content: "Хорошо";
-}
-#rate-5:checked ~ form header:before{
-    content: "Отлично!";
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-input:checked ~ form{
-    display: block;
+.login-box,
+.register-box{
+    width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 8px 80px;
 }
-form header{
-    width: 100%;
-    font-size: 25px;
-    color: #fe7;
-    font-weight: 500;
-    margin: 5px 0 20px 0;
+
+.login-header,
+.register-header{
+    margin: 40px 0;
     text-align: center;
-    transition: all 0.2s ease;
 }
-form .textarea{
-    height: 100px;
+
+.login-input,
+.register-input{
+    display: block;
+    padding: 16px 20px;
+    width: 100%;
+    border: 1px solid rgb(175, 173, 173);
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 16px;
+}
+
+.register-input-check{
+    margin-right: 8px;
+}
+
+.login-control,
+.register-control{
+    cursor: pointer;
+    margin: 40px 0;
+    width: 100%;
+    padding: 16px 0;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 18px;
+    border: unset;
+    color: white;
+    transition: opacity ease 0.3s;
+    background: linear-gradient(90deg,rgb(43, 2, 26), rgb(247, 7, 7));
+}
+
+.login-control:hover,
+.register-control:hover{
+    opacity: 0.8;
+}
+.login-link,
+.register-link{
+    color: black;
+}
+
+.login-nav-register,
+.register-nav-login{
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* Main Page */
+header{
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    background-color: rgba(197, 20, 20, 0.7);
+}
+
+.header-title-link{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 16px;
+    opacity: 0.7;
+    transition: opacity ease 0.3s;
+}
+.header-title-link:hover{
+    opacity: 1;
+}
+
+.header-link{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 16px;
+    opacity: 0.7;
+    transition: opacity ease 0.3s;
+    border-left:1px solid rgba(255,255,255,0.2) ;
+}
+
+.header-link:hover{
+    opacity: 1;
+}
+
+
+.header-block-links{
+    display: flex;
+    justify-content: flex-end;
+}
+
+i.header-icon{
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.header-text{
+    font-size: 14px;
+}
+
+/* Content */
+.section-about{
+    background-image: url(https://img2.akspic.ru/originals/0/7/1/3/53170-zemlya-atmosfera-razvlechenie-polnoch-teatr-1920x1080.jpg);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.section-about__text{
+    font-size: 30px;
+    opacity: 0.3;
+    transition: opacity ease 0.3s;
+    color: white;
+    margin-bottom: 40px;
+    text-decoration: none;
+}
+.section-about__text:hover{
+    opacity: 1;
+}
+
+.section-content{
+    padding: 70px 0 40px 0;
+    background-color: rgb(199, 197, 197);
+}
+
+
+.repertoire-block{
+    position: relative;
+    width: 100%;
+    background-color: white;
+    height: 455px;
+}
+
+.repertoire-image{
     width: 100%;
     overflow: hidden;
+    height: 256px;
 }
-form .textarea textarea{
-    height: 100%;
-    width: 100%;
-    outline: none;
-    color: #eee;
-    border: 1px solid #333;
-    background: #222;
-    padding: 10px;
-    font-size: 17px;
-    resize: none;
-}
-.textarea textarea:focus{
-    border-color: #444;
-}
-form .btn{
-    height: 45px;
-    width: 100%;
-    margin: 15px 0;
-}
-form .btn button{
-    height: 100%;
-    width: 100%;
-    border: 1px solid #444;
-    outline: none;
-    background: #222;
-    color: #999;
-    font-size: 17px;
-    font-weight: 500;
-    text-transform: uppercase;
+
+.repertoire-image img{
     cursor: pointer;
-    transition: all 0.3s ease;
+    width: 100%;
+    transition: transform ease 0.3s;
 }
-form .btn button:hover{
-    background: #1b1b1b;
+.repertoire-image:hover img{
+    transform: scale(1.1);
 }
-.stars{
-    height: 300px;
-    width: 300px;
+
+.repertoire-title{
+    padding: 24px 0;
+    text-align: center;
+}
+
+.repertoire-description{
+    text-align: center;
+    padding: 0 10px 40px 10px;
+    font-size: 14px;
+}
+
+.repertoire-favorite{
+    position: absolute;
+    top: 10px;
+    left: -6px;
+    background-color: #ff4a2e;
+    padding: 0 4px;
+    border-radius:0 3px 3px 0;
+    color: white;
+    font-size: 14px;
+}
+
+.repertoire-favorite::before{
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 0;
+    border-top: 5px solid #df4129;
+    border-left: 5px solid transparent;
+}
+
+.section-contact{
+    padding: 40px 0;
+}
+
+.contact{
+    width: 800px;
+    margin: 0 auto;
+}
+
+.contact-title{
+    text-align: center;
+    padding: 20px;
+}
+
+.contact-description{
+    text-align: center;
+    color: rgb(190, 190, 190);
+    padding-bottom: 60px;
+}
+
+.contact-about{
+    margin: 10px 0;
+}
+.contact-form-sub{
+    display: flex;
+}
+
+.contact-form__mail,
+.contact-form__name{
+    width: 50%;
+    padding: 8px 16px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.contact-form__name{
+    margin-right: 6px;
+}
+
+.contact-form__mail{
+    margin-left: 6px;
+}
+
+.contact-form__message{
+    width: 100%;
+    padding: 8px 16px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
+    margin-top: 16px;
+}
+
+.contact-form__submit{
+    cursor: pointer;
+    float: right;
+    padding: 8px 16px;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 16px;
+    color: white;
+    transition: opacity ease 0.3s;
+}
+
+.contact-form__submit:hover{
+    opacity: 0.8;
 }

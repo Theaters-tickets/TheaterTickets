@@ -1,293 +1,127 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<title>Поиск спекталя</title>
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Main page!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
-    <!--script type="text/javascript" th:src="@{/scripts/script.js}"></script-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fonts/fontawesome-free-5.15.4-web/css/all.min.css">
 </head>
-
-
-<style>
-    a, a:visited, a:hover, a:active {
-        color: inherit;
-    }
-
-    h1{
-        /*font-family: "Comic Sans MS"; */
-        font-family: "Berlin Sans FB Demi";
-        color: navy;
-        font-size: 20px;
-        text-align: center;
-    }
-
-    strong {
-        font-weight: 700;
-        background-color: yellow;
-    }
-
-    table {
-        table-layout: fixed;
-        width: 100%;
-        border-collapse: collapse;
-        border: 3px solid purple;
-    }
-
-    thead th:nth-child(1) {
-        width: 30%;
-    }
-
-    thead th:nth-child(2) {
-        width: 20%;
-    }
-
-    thead th:nth-child(3) {
-        width: 15%;
-    }
-
-    thead th:nth-child(4) {
-        width: 35%;
-    }
-
-    th, td {
-        padding: 20px;
-    }
-
-
-
-    .block-left{width:20%;overflow:auto;float:left;}
-    .block-right{width:80%;overflow:auto;}
-
-
-
-
-
-    #mainBox {
-        font-family: "Berlin Sans FB Demi";
-        text-align: center;
-        line-height: 200px;
-
-    }
-    .btn-search {
-        background: #e6cd96;
-        background-image: -webkit-linear-gradient(top, #e6cd96, #777d69);
-        background-image: -moz-linear-gradient(top, #e6cd96, #777d69);
-        background-image: -ms-linear-gradient(top, #e6cd96, #777d69);
-        background-image: -o-linear-gradient(top, #e6cd96, #777d69);
-        background-image: linear-gradient(to bottom, #e6cd96, #777d69);
-        border-radius: 28px;
-        font-family: Georgia;
-        color: #ffffff;
-        font-size: 20px;
-        padding: 10px 20px 10px 20px;
-        border: solid #9e9e9e 2px;
-        text-decoration: none;
-    }
-    .btn-search:hover {
-        background: #52574c;
-        background-image: -webkit-linear-gradient(top, #52574c, #454542);
-        background-image: -moz-linear-gradient(top, #52574c, #454542);
-        background-image: -ms-linear-gradient(top, #52574c, #454542);
-        background-image: -o-linear-gradient(top, #52574c, #454542);
-        background-image: linear-gradient(to bottom, #52574c, #454542);
-        text-decoration: none;
-    }
-
-    html{
-        width: auto;
-        height: auto;
-    }
-
-    body{
-        /* background-image: url(../static/img/backgroundTheatre.jpg); */
-        background-size: 100%;
-        background-color: #9e9e9e;
-        background-size: cover;
-        margin: 0;
-        padding: 0;
-    }
-
-    .fixedFooter {
-        background: #9e9e9e;
-        position: fixed;
-        left:0px;
-        bottom:0px;
-        height:30px;
-        width:100%;
-        margin-bottom: 0px;
-    }
-
-    .fixedHeader {
-        background: #9e9e9e;
-        position: fixed;
-        left:0px;
-        top:0px;
-        height:30px;
-        width:100%;
-        margin-top: 0px;
-    }
-
-    header{
-        margin-top: -15px;
-    }
-
-    .column3,.column33 {
-        background: #9e9e9e;
-        float: left;
-        width: 33.33333333%;
-    }
-
-    .rowBottom{
-        background-color: #9e9e9e;
-        height: max-content;
-    }
-
-    .textarea{
-        resize: none;
-        background: transparent;
-        border-color: transparent;
-        text-align: center;
-        overflow: hidden;
-        font-family: "Berlin Sans FB Demi";
-        color: navy;
-    }
-
-    .playImage{
-        max-height: 350px;
-        max-width: 350px;
-    }
-    .column3:hover {
-        background-color: #DFA612;
-        background-color: #DFA612;
-        border: 0px;
-    }
-    .textarea:hover{
-        background-color: inherit;
-        border: 0px;
-        cursor: pointer;
-    }
-    #TheatreThicket{
-        font-size: 40px;
-    }
-    .link:hover{
-        background-color: #DFA612;
-        cursor: pointer;
-    }
-    .link{
-        text-decoration:none
-    }
-
-
-</style>
-<script>
-    window.onerror = function(msg, url, line, col, error) {
-        // Note that col & error are new to the HTML 5 spec and may not be
-        // supported in every browser.  It worked for me in Chrome.
-        var extra = !col ? '' : '\ncolumn: ' + col;
-        extra += !error ? '' : '\nerror: ' + error;
-
-        // You can view the information in an alert to see things working like this:
-        alert("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
-
-        // TODO: Report this error via ajax so you can keep track
-        //       of what pages have JS issues
-
-        var suppressErrorAlert = true;
-        // If you return true, then error alerts (like in older versions of
-        // Internet Explorer) will be suppressed.
-        return suppressErrorAlert;
-    };
-</script>
-
-
-<header>
-    <h1 class="fixedHeader">
-        <div class="column33">
-            <a class="link" href="/adminTags" th:if="${accessRights=='admin'}" th:text="AdminTags">Magic link</a>
-            <a class="link" href="/status" th:if="${accessRights=='admin'}" th:text="Status">Magic link</a>
-            <a class="link" href="/recommendation" th:text="Recommendation">Magic link</a>
-        </div>
-        <div id="TheatreThicket" class="column33" >Theatre thicket</div>
-        <div class="column33">
-            <a class="link" href="/login" style="text-decoration:none">Login</a>
-            <a class="link" href="/registration" style="text-decoration:none">Registration</a>
-        </div>
-    </h1>
-</header>
 <body>
+<header>
+    <div class="grid wide">
+        <div class="row">
+            <div class="col m-4">
+                <a href="#" class="header-title-link"><h1>Theater tickets</h1></a>
+            </div>
 
-<br>
-<div id="mainBox">
-    <button class="btn-search">
-        <a th:href="@{/search}" style="text-decoration:none">Репертуар</a>
-    </button>
+            <div class="col m-8 header-block-links">
+                <a class="header-link" href="/adminTags" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-user-tie"></i>
+                    <span class="header-text">AdminTags</span>
+                </a>
+                <a class="header-link" href="/status" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-info-circle"></i>
+                    <span class="header-text">Status</span>
+                </a>
+                <a class="header-link" href="/recommendation" >
+                    <i class="header-icon far fa-comments"></i>
+                    <span class="header-text">Recommendation</span>
+                </a>
+                <a class="header-link" href="/login">
+                    <i class="header-icon fas fa-sign-in-alt"></i>
+                    <span class="header-text">Login</span>
+                </a>
+                <a class="header-link" href="/registration">
+                    <i class="header-icon far fa-edit"></i>
+                    <span class="header-text">Register</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="content">
+    <div class="section-about">
+        <a th:href="@{/search}" id="text" class="section-about__text">Поиск спектаклей</a>
+    </div>
+    <div class="section-content">
+        <div class="grid wide">
+            <div class="row">
+                <div class="col m-4 repertoire">
+                    <div class="repertoire-block">
+                        <div class="repertoire-image" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[0].id}|} + '\''">
+                            <img class="repertoire-image" th:src="${threeRandomRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}" alt="">
+                        </div>
+                        <h2 class="repertoire-title" th:text="${threeRandomRepertoire[0].name}"></h2>
+                        <p class="repertoire-description" th:text="${threeRandomRepertoire[0].title}"></p>
+                        <span class="repertoire-favorite">
+                                <i class="fas fa-check repertoire-favorite-icon"></i>
+                                <span class="repertoire-favorite-text">Лучшее</span>
+                            </span>
+                    </div>
+                </div>
+                <div class="col m-4 repertoire">
+                    <div class="repertoire-block">
+                        <div class="repertoire-image" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[1].id}|} + '\''">
+                            <img class="repertoire-image" th:src="${threeRandomRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}" alt="">
+                        </div>
+
+                        <h2 class="repertoire-title" th:text="${threeRandomRepertoire[1].name}"></h2>
+                        <p class="repertoire-description" th:text="${threeRandomRepertoire[1].title}"></p>
+                        <span class="repertoire-favorite">
+                                <i class="fas fa-check repertoire-favorite-icon"></i>
+                                <span class="repertoire-favorite-text">Лучшее</span>
+                            </span>
+                    </div>
+                </div>
+                <div class="col m-4 repertoire">
+                    <div class="repertoire-block">
+                        <div class="repertoire-image" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[2].id}|} + '\''">
+                            <img th:src="${threeRandomRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}" alt="">
+                        </div>
+                        <h2 class="repertoire-title" th:text="${threeRandomRepertoire[2].name}"></h2>
+                        <p class="repertoire-description" th:text="${threeRandomRepertoire[2].title}"></p>
+                        <span class="repertoire-favorite">
+                                <i class="fas fa-check repertoire-favorite-icon"></i>
+                                <span class="repertoire-favorite-text">Лучшее</span>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-contact">
+        <div class="grid contact">
+            <h2 class="contact-title">Контакты</h2>
+            <p class="contact-description"><i> Остались вопросы? Напишите нам!</i></p>
+            <div class="row">
+                <div class="col m-6">
+                    <div class="contact-about">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Saint-Peterburg
+                    </div>
+                    <div class="contact-about">
+                        <i class="fas fa-phone"></i>
+                        Phone: <a href="tel:+7 (800) 555-35-35">+7 (800) 555-35-35</a>
+                    </div>
+                    <div class="contact-about">
+                        <i class="fas fa-envelope"></i>
+                        Email: <a href="malto:mail@mail.com">mail@mail.com</a>
+                    </div>
+                </div>
+                <div class="col m-6">
+                    <div> Проект разработан для курса Netcracker, 2021  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<h1 class="rowBottom" >
-    <div class="color3">
-        <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[0].id}|} + '\''"
-             style="cursor: pointer;">
-            <img class="playImage" th:src="${threeRandomRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}">
-            <br>
-            <a th:text="${threeRandomRepertoire[0].name}"
-               th:href="@{|/play/${threeRandomRepertoire[0].id}|}"
-               style="cursor: pointer; text-decoration:none" >
-                First
-            </a>
-            <br>
-            <textarea disabled class="textarea" cols="50" rows="12"
-                      th:text="${threeRandomRepertoire[0].title}">
-                Desc1
-            </textarea>
-        </div>
-    </div>
-
-    <div class="color3">
-    <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[1].id}|} + '\''"
-         style="cursor: pointer;">
-        <img class="playImage" th:src="${threeRandomRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}">
-        <br>
-        <a th:text="${threeRandomRepertoire[1].name}"
-           th:href="@{|/play/${threeRandomRepertoire[1].id}|}"
-           style="cursor: pointer; text-decoration:none">
-            Second
-        </a>
-        <br>
-        <textarea disabled class="textarea" cols="50" rows="12"
-                  th:text="${threeRandomRepertoire[1].title}">
-            Desc2
-        </textarea>
-    </div>
-
-
-    <div class="column3" th:onclick="'window.location.href = \'' + @{|/play/${threeRandomRepertoire[2].id}|} + '\''"
-         style="cursor: pointer;">
-        <img class="playImage" th:src="${threeRandomRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}">
-        <br>
-        <a th:text="${threeRandomRepertoire[2].name}"
-           th:href="@{|/play/${threeRandomRepertoire[2].id}|}"
-           style="cursor: pointer; text-decoration:none">
-            Third
-        </a>
-        <br>
-        <!-- <a th:text="${threeRandomRepertoire[2].title}">Desc3</a> -->
-        <textarea disabled class="textarea" cols="50" rows="12"
-                  th:text="${threeRandomRepertoire[2].title}">
-            Desc3
-        </textarea>
-    </div>
-        </div>
-</h1>
-
-<!--<a th:href="@{http://localhost:8080/theatres}"><button>Театры</button></a> -->
-</body>
-
 <footer>
-    <h1 class="fixedFooter">Contacts</h1>
-</footer>
 
+</footer>
+</body>
 </html>

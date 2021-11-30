@@ -3,8 +3,7 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/repertoireStyle.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
@@ -36,15 +35,13 @@
         width: fit-content;
     }
     .card{
-        width:350px;
-        height: 350px;
-        background-color: #cccccc;
-        border: 2px solid black;
+        width:400px;
+        height:250px;
         text-align: center;
     }
     .viewPort{
-        width: 354px;
-        height: 354px;
+        width: 400px;
+        height: 250px;
         overflow: hidden;
     }
     .link:hover{
@@ -71,6 +68,10 @@
         max-height: 350px;
         max-width: 350px;
     }
+    .username{
+        color: blue;
+        font-size: large;
+    }
 
 </style>
 
@@ -86,7 +87,7 @@
         const lastCardClone = images.children[images.children.length - 1].cloneNode(true);
 
         images.style.transitionDuration = "0.0s";
-        images.style.transform = `translate(-354px)`;
+        images.style.transform = `translate(-400px)`;
 
         images.insertBefore(lastCardClone, images.children[0]);
         images.appendChild(firstCardClone);
@@ -99,11 +100,11 @@
                 document.getElementById("photosAmount").textContent=currentCard;
                 console.log(currentCard);
                 images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${currentCard * 354}px)`;
+                images.style.transform = `translate(-${currentCard * 400}px)`;
 
                 if (currentCard === images.children.length - 1){
                     images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-354px)`;
+                    images.style.transform = `translate(-400px)`;
                     currentCard = 1;
                 }
                 document.getElementById("photosAmount").textContent=currentCard;
@@ -117,10 +118,10 @@
                 document.getElementById("photosAmount").textContent=currentCard;
                 console.log(currentCard);
                 images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${currentCard * 354}px)`;
+                images.style.transform = `translate(-${currentCard * 400}px)`;
                 if (currentCard === 0){
                     images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-${(images.children.length - 2) * 354}px)`;
+                    images.style.transform = `translate(-${(images.children.length - 2) * 400}px)`;
                     currentCard = images.children.length - 2;
                 }
                 document.getElementById("photosAmount").textContent=currentCard;
@@ -162,7 +163,7 @@
 <div class="viewPort">
     <div class="imageContainer">
         <tr th:each="img : ${repertoire.getPictures()}" class="tableImage">
-            <div class="card"><img th:src="${img.getImage()}" height="350px" width="350px"></img>1</div>
+            <div class="card"><img th:src="${img.getImage()}" height="250px" width="400px"></div>
         </tr>
     </div>
 </div>
@@ -178,11 +179,13 @@
 <br>
 <br>
 <br>
+<h1 th:text="'Рейтинг пользователей:'+ ${repertoire.getRating()}">Рейтинг:</h1>
+
 <button th:onclick="goBack()">На главную</button>
 <input type="button" value="Назад" onclick="history.back()">
 
 
-<h1 th:text="'Рейтинг пользователей:'+ ${repertoire.getRating()}">Рейтинг:</h1>
+
 <div class="container">
     <div class="post">
         <div class="text">Спасибо за оценку!</div>
@@ -217,20 +220,19 @@
 <table class="table-comment">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>text</th>
-            <th>stars</th>
-            <th>time</th>
+            <th>Комментарии</th>
         </tr>
     </thead>
     <tr th:if="${#lists.isEmpty(comments)}">
         <td colspan="5">Добавьте первый комментарий...!</td>
     </tr>
     <tr th:each="comment : ${comments}">
-        <td th:text="${comment.id}"></td>
-        <td th:text="${comment.text}"></td>
-        <td th:text="${comment.score}"></td>
-        <td th:text="${comment.createdAt}"></td>
+        <td>
+            <div class="username" th:text="${user.login}"></div>
+            <div th:text="${comment.getFormattedDate()}"></div>
+            <div th:text="${comment.text}" ></div>
+        </td>
+
     </tr>
 </table>
 </p>
