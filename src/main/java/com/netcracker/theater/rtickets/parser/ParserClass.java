@@ -119,6 +119,7 @@ public class ParserClass {
                         theatreService.saveTheatre(theatre);
 
                         //SAVE PARTICIPANTS
+                        /*
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         for (Object participant : participantsArr) {
                             RoleActor roleActor = roleActorService.getRoleByName(((JSONObject)((JSONObject) participant).get("role")).get("slug").toString());
@@ -145,6 +146,8 @@ public class ParserClass {
                                 roleActorService.saveRole(roleActor);
                             }
                         }
+
+                         */
 
 
 

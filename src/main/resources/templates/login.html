@@ -22,16 +22,6 @@
 </style>
 
 <script>
-    function login(){
-        var jsonObject = {};
-
-        const dataLogin = document.getElementById("login");
-        const dataPassword = document.getElementById("psw");
-
-        jsonObject.login = dataLogin.value;
-        jsonObject.password = dataPassword.value;
-
-    }
 </script>
 
 
@@ -41,9 +31,10 @@
     <form th:action="@{/login}" method="post">
     <div class="login-box">
          <h1 class="login-header">LOGIN</h1>
-         <input type="text" class="login-input" placeholder="Your Email" name="username">
-         <input type="password" class="login-input" placeholder="Password" name="password">
-         <a href="#" class="login-link">Forgot your password?</a>
+         <input id="login" type="text" class="login-input" placeholder="Your Email" name="username">
+         <input id="password" type="password" class="login-input" placeholder="Password" name="password">
+         <a th:text="${status}">Status</a>
+         <!--a href="#" class="login-link">Forgot your password?</a-->
          <button class="login-control" type="submit" onclick="login()">Войти</button>
          <p class="login-nav-register">Don't have an account? <a class="login-link" href="/registration">Register</a></p>
     </div>

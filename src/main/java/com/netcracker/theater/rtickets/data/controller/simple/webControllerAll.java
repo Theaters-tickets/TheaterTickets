@@ -6,6 +6,7 @@ import com.netcracker.theater.rtickets.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.model.IModel;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class webControllerAll {
     @GetMapping("/mainPage")
     public String mainPage(
             Map<String, Object> model) {
+
         List<Repertoire> threeRandom = repertoireService.getThreeRandomRepertoire();
         //This should be checked via spring security
         //But now it's hardcoded for admin
@@ -48,16 +50,12 @@ public class webControllerAll {
         return "registration";
     }
     @PostMapping("/registration")
-    public void postRegistration(
-            @RequestBody User user)
+    public void postRegistration(Map<String, Object> model,
+                                 @RequestBody User user)
     {
-        try {
-            userService.saveUser(user);
-        }
-        //Error if user with same login
-        catch (Exception e){
-            System.out.println(e.getCause());
-        }
+        //Todo add check for uniqueness
+        userService.saveUser(user);
+
     }
 
     //Login page
@@ -76,5 +74,34 @@ public class webControllerAll {
             model.put("status", "ERROR");
         }
         return "login";
+    }
+
+
+    @GetMapping("/account")
+    public String getAccount(Map<String, Object> model){
+        //Todo synthesise with authorization
+        User user = userService.getUserByLogin("user1");
+        model.put("currentUser", user);
+        return "account";
+    }
+
+    @PostMapping("/account")
+    public String postAccount(@RequestParam(value="name") String name,
+                              @RequestParam(value="lastName") String lastName,
+                              @RequestParam(value="password") String password,
+                              Map<String, Object> model){
+        //Todo synthesise with authorization
+        User user = userService.getUserByLogin("user1");
+        if (user.getPassword().equals(password)){
+            userService.updateUser(user, name, lastName);
+            model.put("status", "Changed!");
+        }
+        else{
+            model.put("status", "Error!");
+        }
+        //Todo update user by values
+        model.put("currentUser", user);
+
+        return "account";
     }
 }

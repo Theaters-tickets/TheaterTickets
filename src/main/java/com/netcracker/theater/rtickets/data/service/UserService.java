@@ -19,5 +19,12 @@ public interface UserService {
 
     List<?> getFavoriteCategory(User user);
 
+    //Added by Ilya
+    //Getting user by name for security
+    User getUserByLogin(String login);
+
+    //Added by Ilya
+    //To update user
+    public void updateUser(User user, String name, String lastName);
 
 }
