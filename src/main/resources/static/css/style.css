@@ -84,7 +84,7 @@ body{
     margin: 40px 0;
 }
 
-/* Main Page */
+/* Header */
 header{
     width: 100%;
     z-index: 1;
@@ -93,16 +93,25 @@ header{
 }
 
 .header-title-link{
-    display: block;
+    display: flex;
     text-align: center;
     text-decoration: none;
-    color: white;
-    padding: 16px;
+    color: white; 
     opacity: 0.7;
     transition: opacity ease 0.3s;
+    height: 75px;
 }
+
+.header-title-link img{
+    height: 100%;
+}
+
 .header-title-link:hover{
     opacity: 1;
+}
+
+.header-title-link__text{
+    line-height: 75px;
 }
 
 .header-link{
@@ -136,6 +145,36 @@ i.header-icon{
     font-size: 14px;
 }
 
+/* Footer */
+footer{
+    margin-top: 40px;
+    border-top: 5px solid rgb(39, 39, 39);
+    background-color: rgb(65, 65, 65);
+    color: white;
+}
+
+.footer-contact{
+    padding: 40px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-contact-copyright{
+    margin-right: 30px;
+}
+
+.footer-contact-link i{
+    font-size: 35px;
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-contact-link:hover i{
+    opacity: 0.8;
+}
+/* Main page */
+
 /* Content */
 .section-about{
     background-image: url(https://img2.akspic.ru/originals/0/7/1/3/53170-zemlya-atmosfera-razvlechenie-polnoch-teatr-1920x1080.jpg);
@@ -150,19 +189,22 @@ i.header-icon{
 }
 
 .section-about__text{
+    position: relative;
     font-size: 30px;
-    opacity: 0.3;
+    opacity: 0.5;
     transition: opacity ease 0.3s;
     color: white;
-    margin-bottom: 40px;
+    bottom: 40px;
     text-decoration: none;
+    animation: fadeIn-up ease 1s;
 }
+
 .section-about__text:hover{
     opacity: 1;
 }
 
 .section-content{
-    padding: 70px 0 40px 0;
+    padding: 70px 0 20px 0;
     background-color: rgb(199, 197, 197);
 }
 
@@ -172,6 +214,7 @@ i.header-icon{
     width: 100%;
     background-color: white;
     height: 455px;
+    border-radius: 10px;
 }
 
 .repertoire-image{
@@ -220,6 +263,26 @@ i.header-icon{
     border-left: 5px solid transparent;
 }
 
+.section-content__repertoires{
+    text-align: center;
+    padding: 30px 0;
+}
+
+.section-content__repertoires-btn{
+    padding: 8px 20px;
+    background: linear-gradient(90deg,black, red);
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    transition: all ease 0.3s;
+}
+
+.section-content__repertoires-btn:hover{
+    opacity: 0.8;
+}
+
 .section-contact{
     padding: 40px 0;
 }
@@ -242,6 +305,11 @@ i.header-icon{
 
 .contact-about{
     margin: 10px 0;
+}
+
+.contact-about-icon{
+    width: 20px;
+    text-align: center;
 }
 .contact-form-sub{
     display: flex;
@@ -270,7 +338,7 @@ i.header-icon{
     outline: none;
     border: 1px solid rgba(0,0,0,0.2);
     border-radius: 5px;
-    margin-top: 16px;
+    margin-top: 12px;
 }
 
 .contact-form__submit{
@@ -281,11 +349,475 @@ i.header-icon{
     border: 1px solid rgba(0,0,0,0.2);
     background-color: black;
     border-radius: 5px;
-    margin-top: 16px;
+    margin-top: 12px;
     color: white;
     transition: opacity ease 0.3s;
 }
 
 .contact-form__submit:hover{
     opacity: 0.8;
+}
+
+/* Repertoire info */
+.container-repertoire-info{
+    overflow: hidden;
+    background-image: url("https://image.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148907305.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding-top: 75px;
+    padding-bottom: 60px;
+}
+.repertoire-info-title{
+    text-align: center;
+    padding: 40px;
+}
+
+.repertoire-info-slideshow{
+    padding: 0 0;
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn-from-left ease 1s;
+    border-radius: 10px;
+}
+
+.repertoire-info-slideshow:hover .repertoire-info__about{
+    transform: translateY(0);
+}
+.repertoire-info-item{
+    transition: transform ease 0.5s;
+    width: 100%;
+    display: flex;
+}
+.repertoire-info-image{
+    width: 100%;
+    height: 400px;
+    cursor: pointer;
+}
+.repertoire-info-info{
+    animation: fadeIn-from-right ease 1s;
+}
+.repertoire-info-info__description{
+    text-align: justify;
+}
+
+.repertoire-info__about{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    transform: translateY(100%);
+    transition: all ease 0.5s;
+}
+
+.repertoire-info__description{
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.repertoire-info-info__allow{
+    text-align: center;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.btn-next{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    text-align: center;
+    width: 35px;
+    height: 50px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    border: none;
+    background-color: rgb(167, 167, 167);
+}
+
+.btn-prev{
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    text-align: center;
+    width: 35px;
+    height: 50px;
+    border-radius: 0 5px 5px 0;
+    outline: none;
+    background-color: rgb(167, 167, 167);
+}
+
+.btn-next:hover,
+.btn-prev:hover{
+    background-color: black;
+    color: white;
+}
+
+.btn-icon-prev,
+.btn-icon-next{
+    font-size: 18px;
+    transition: transform ease 0.3s;
+}
+
+
+.btn-next:hover .btn-icon-next{
+    transform: translateX(5px)
+}
+
+.btn-prev:hover .btn-icon-prev{
+    transform: translateX(-5px)
+}
+
+/* Modal */
+.modal{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.modal-layout{
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    animation: fadeIn ease 0.5s;
+}
+
+.modal-content{
+    position: absolute;
+    width: 70%;
+    height: 80%;
+    animation: zoom ease 0.7s;
+}
+
+.modal-content img{
+    width: 100%;
+    height: 100%;
+}
+
+.modal-close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.modal-close__icon{
+    font-size: 30px;
+    transition: all ease 0.3s;
+}
+
+.modal-close:hover .modal-close__icon{
+    transform: rotate(90deg);
+    color: rgb(247, 7, 7);
+}
+
+/* Animation modal */
+@keyframes zoom{
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0.7;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn-up{
+    from{
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to{
+        opacity: 0.5;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn-from-left{
+    from{
+        opacity: 0.3;
+        transform: translateX(-100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn-from-right{
+    from{
+        opacity: 0.3;
+        transform: translateX(100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.container-rating{
+    padding: 40px 0 60px 0;
+}
+
+.container-rating-stars__user{
+    text-align: center;
+    padding: 30px;
+}
+
+.container-rating-stars__score{
+    font-size: 24px;
+    color: rgb(255, 174, 0);
+}
+
+.container-rating-stars__image{
+    width: 100%;
+}
+.container-rating-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.container-rating-form__stars{
+    display: flex;
+    padding: 40px 0;
+    color: rgb(197, 197, 197);
+}
+
+.container-rating-form__stars-icon{
+    cursor: pointer;
+    margin: 0 4px;
+    font-size: 40px;
+}
+
+.container-rating-form__stars-icon--active{
+    color: rgb(255, 174, 0);
+}
+
+.container-rating-form__comment{
+    width: 70%;
+}
+
+.container-rating-form__comment-input{
+    width: 100%;
+    height: 100px;
+    padding: 16px;
+    outline: none;
+    background-color: rgb(63, 63, 63);
+    color: white;
+    resize: none;
+}
+
+.container-rating-form__submit{
+    width: 70%;
+    margin: 4px 0;
+    text-align: center;
+    border: none;
+    padding: 10px 0;
+    background-color: rgb(63, 63, 63);
+    color: rgb(197, 197, 197);
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+
+.container-rating-form__submit:hover{
+    color: white;
+}
+
+.container-comment{
+    margin: 30px 0;
+}
+
+.container-comment__title{
+    padding: 12px 16px;
+    background-color: teal;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.container-comment__user{
+    margin-top: 10px;
+}
+
+.container-comment__user-image img{
+    width: 100%;
+}
+
+.container-comment__user-sub-block{
+    display: flex;
+    padding: 12px 0;
+}
+
+.container-comment__user-name{
+    margin-right: 8px;
+}
+
+.container-comment__user-comment{
+    padding: 12px 0;
+}
+
+.container-recommend{
+    padding: 40px 0;
+}
+
+.container-recommend__title{
+    font-size: 30px;
+    font-weight: 600;
+    border-bottom: 1px solid black;
+}
+
+.container-recommend__repertoire{
+    position: relative;
+    text-decoration: none;
+    color: black;
+    margin-top: 50px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    bottom: 0;
+}
+
+.container-recommend__repertoire:hover{
+    bottom: 10px;
+}
+
+.container-recommend__repertoire-title{
+    min-width: 80px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 8px 4px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: white;
+}
+
+.container-recommend__repertoire-image{
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+/* Main Page */
+.container .post{
+    display: none;
+}
+.container .text{
+    font-size: 25px;
+    color: #666;
+    font-weight: 500;
+    width: 55%;
+
+}
+.container .edit{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    cursor: pointer;
+}
+.container .edit:hover{
+    text-decoration: underline;
+}
+.container .star-widget input{
+    display: none;
+}
+.star-widget label{
+    right: 10px;
+    font-size: 50px;
+    color: #444;
+    padding: 20px;
+    float: right;
+    transition: all 0.2s ease;
+}
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label{
+    color: #fd4;
+}
+input:checked ~ label{
+    color: #fd4;
+}
+input#rate-5:checked ~ label{
+    color: #fe7;
+    text-shadow: 0 0 20px #952;
+}
+input:checked ~ form{
+    display: block;
+}
+
+form .textarea{
+    height: 170px;
+    width: 100%;
+    overflow: hidden;
+}
+form .textarea textarea{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #eee;
+    border: 1px solid #333;
+    background: #222;
+    padding: 10px;
+    font-size: 17px;
+    resize: none;
+}
+.textarea textarea:focus{
+    border-color: #444;
+}
+form .btn{
+    height: 45px;
+    width: 100%;
+    margin: 15px 0;
+}
+form .btn button{
+    height: 100%;
+    width: 100%;
+    border: 1px solid #444;
+    outline: none;
+    background: #222;
+    color: #999;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+form .btn button:hover{
+    background: #1b1b1b;
+}
+.stars{
+    height: 500px;
+    width: 500px;
 }

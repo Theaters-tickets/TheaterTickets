@@ -47,6 +47,7 @@ public class webControllerUser {
         model.put("comment", comment);
         User user = new User("ussser", "1234");
         model.put("user", user);
+        model.put("accessRights", "admin");
         return "repertoireInfo";
     }
     @PostMapping("/play/{id}")

@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fonts/fontawesome-free-5.15.4-web/css/all.min.css">
     <title>Title</title>
-    <link href="/css/recStyle.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 
 <style>
     body{
-        background-color: #9E9E9E;
-    }
-    header{
-        text-align: center
+        background-color: #C7C5C5;
     }
     .white-box {
         width: 65vw;
@@ -19,8 +22,9 @@
         margin: auto;
         right:0;
         left:0;
+        top:70px;
         position: absolute;
-        z-index: 5;
+        z-index: 1;
     }
     table {
         width: 75vw;
@@ -37,39 +41,43 @@
         margin-left: auto;
         margin-right: auto;
     }
-    a:link {
-        color: #2B3247;
-        background-color: transparent;
-        text-decoration: none;
-    }
-
-    a:visited {
-        color: #3C4667;
-        background-color: #DFA612;
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: #000000;
-        background-color: transparent;
-        text-decoration: underline;
-    }
-
-    a:active {
-        color: #3C4667;
-        background-color: transparent;
-        text-decoration: underline;
-    }
 </style>
 
 <body>
-<a id="main" href="/mainPage">Main page</a>
+<header>
+    <div class="grid wide">
+        <div class="row">
+            <div class="col m-4">
+                <a href="/mainPage" class="header-title-link"><h1>Theater tickets</h1></a>
+            </div>
+
+            <div class="col m-8 header-block-links">
+                <a class="header-link" href="/adminTags" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-user-tie"></i>
+                    <span class="header-text">AdminTags</span>
+                </a>
+                <a class="header-link" href="/status" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-info-circle"></i>
+                    <span class="header-text">Status</span>
+                </a>
+                <a class="header-link" href="/recommendation" >
+                    <i class="header-icon far fa-comments"></i>
+                    <span class="header-text">Recommendation</span>
+                </a>
+                <a class="header-link" href="/login">
+                    <i class="header-icon fas fa-sign-in-alt"></i>
+                    <span class="header-text">Login</span>
+                </a>
+                <a class="header-link" href="/registration">
+                    <i class="header-icon far fa-edit"></i>
+                    <span class="header-text">Register</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="content">
     <div class="white-box">
-        <header>
-            <h1 class>
-                Рекоммендации
-            </h1>
-        </header>
         <table class="table-rec">
             <tr th:if="${#lists.isEmpty(recommendations)}">
                 <td colspan="5">Спектаклей пока нет...!</td>
@@ -86,8 +94,7 @@
                 </td>
             </tr>
         </table>
-
-
     </div>
+</div>
 </body>
 </html>

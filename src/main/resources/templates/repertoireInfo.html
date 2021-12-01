@@ -1,258 +1,273 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="/css/repertoireStyle.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repertoire</title>
+    <link rel="stylesheet" href="/css/grid.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/fonts/fontawesome-free-5.15.4-web/css/all.min.css">
 </head>
-
-<style>
-    input,p, button,a,div{
-        color: inherit;
-        font-family: "Berlin Sans FB Demi";
-    }
-
-    h1{
-        color: navy;
-        font-size: 20px;
-        text-align: center;
-    }
-
-    .column3 {
-        float: left;
-        width: 33.33333333%;
-        font-family: "Berlin Sans FB Demi";
-        font-size: 15px;
-        color: #1b1b1b;
-    }
-
-    .imageContainer{
-        display: flex;
-        flex-direction: row;
-        width: fit-content;
-    }
-    .card{
-        width:400px;
-        height:250px;
-        text-align: center;
-    }
-    .viewPort{
-        width: 400px;
-        height: 250px;
-        overflow: hidden;
-    }
-    .link:hover{
-        background-color: #DFA612;
-        cursor: pointer;
-    }
-    #main{
-        border: #3C4667 2px solid ;
-        font-size: 20px;
-        color: #3C4667;
-        text-decoration-line: none;
-    }
-    .column33 {
-        float: left;
-        width: 33.33333333%;
-        text-align: center;
-    }
-    .column33:hover{
-        cursor: pointer;
-        background-color: #DFA612;
-        text-align: center;
-    }
-    .playImage{
-        max-height: 350px;
-        max-width: 350px;
-    }
-    .username{
-        color: blue;
-        font-size: large;
-    }
-
-</style>
-
-<script>
-
-    window.onload=function() {
-        const next = document.getElementById("next");
-        const prev = document.getElementById("prev");
-        const images = document.querySelector(".imageContainer")
-
-
-        const firstCardClone = images.children[0].cloneNode(true);
-        const lastCardClone = images.children[images.children.length - 1].cloneNode(true);
-
-        images.style.transitionDuration = "0.0s";
-        images.style.transform = `translate(-400px)`;
-
-        images.insertBefore(lastCardClone, images.children[0]);
-        images.appendChild(firstCardClone);
-
-        let currentCard = 1;
-
-        next.addEventListener('click', () => {
-            if (currentCard < images.children.length - 1) {
-                currentCard++;
-                document.getElementById("photosAmount").textContent=currentCard;
-                console.log(currentCard);
-                images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${currentCard * 400}px)`;
-
-                if (currentCard === images.children.length - 1){
-                    images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-400px)`;
-                    currentCard = 1;
-                }
-                document.getElementById("photosAmount").textContent=currentCard;
-            }
-            else
-                return
-        });
-        prev.addEventListener('click', () => {
-            if (currentCard > 0) {
-                currentCard--;
-                document.getElementById("photosAmount").textContent=currentCard;
-                console.log(currentCard);
-                images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${currentCard * 400}px)`;
-                if (currentCard === 0){
-                    images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-${(images.children.length - 2) * 400}px)`;
-                    currentCard = images.children.length - 2;
-                }
-                document.getElementById("photosAmount").textContent=currentCard;
-            }
-            else
-                return
-        });
-    }
-
-    //Script added
-    const btn = document.querySelector(".save-comment");
-    const post = document.querySelector(".post");
-    const widget = document.querySelector(".star-widget");
-    const editBtn = document.querySelector(".edit");
-    btn.onclick = ()=>{
-        widget.style.display = "none";
-        post.style.display = "block";
-        editBtn.onclick = ()=>{
-            widget.style.display = "block";
-            post.style.display = "none";
-        }
-        return false;
-    }
-
-</script>
-
 <body>
-<a id="main" class="link" href="/mainPage" style="text-decoration:none">Main page</a>
-<h1 th:text="${'Информация о спектакле '+ repertoire.name}">Info:</h1>
-<!-- <h2 th:text="Информация о спектакле ${repertoire.description}">Информация о спектакле</h2> -->
-<div class="content" th:utext="${repertoire.getDescription()}" />
+<header>
+    <div class="grid wide">
+        <div class="row">
+            <div class="col m-4">
+                <a href="/mainPage" class="header-title-link">
+                    <img src="/img/logo.png" alt="">
+                    <h1 class="header-title-link__text">Theater tickets</h1>
+                </a>
+            </div>
 
-<button id="prev">Prev</button>
-<button id="next">Next</button>
-
-<a id="photosAmount">1</a>
-<a th:text="${'/ ' + repertoire.pictures.size()}">/1</a>
-
-<div class="viewPort">
-    <div class="imageContainer">
-        <tr th:each="img : ${repertoire.getPictures()}" class="tableImage">
-            <div class="card"><img th:src="${img.getImage()}" height="250px" width="400px"></div>
-        </tr>
+            <div class="col m-8 header-block-links">
+                <a class="header-link"  href="/adminTags" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-user-tie"></i>
+                    <span class="header-text">AdminTags</span>
+                </a>
+                <a class="header-link" href="/status" th:if="${accessRights=='admin'}">
+                    <i class="header-icon fas fa-info-circle"></i>
+                    <span class="header-text">Status</span>
+                </a>
+                <a class="header-link" href="/recommendation">
+                    <i class="header-icon far fa-comments"></i>
+                    <span class="header-text">Recommendation</span>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
-
-<h1 class="row">
-    <div class="column3" th:text="${categories}">Genres</div>
-    <div class="column3" th:text="${repertoire.age_min + '+'}">Min_age</div>
-    <div class="column3">
-        <p th:if="${theatre =='error'}">Here might be a theatre link and time</p>
-    </div>
-</h1>
-<br>
-<br>
-<br>
-<br>
-<h1 th:text="'Рейтинг пользователей:'+ ${repertoire.getRating()}">Рейтинг:</h1>
-
-<button th:onclick="goBack()">На главную</button>
-<input type="button" value="Назад" onclick="history.back()">
-
-
+</header>
 
 <div class="container">
-    <div class="post">
-        <div class="text">Спасибо за оценку!</div>
-        <div class="edit">Редактировать</div>
+    <div class="container-repertoire-info">
+        <div class="grid wide">
+            <h2 class="repertoire-info-title" th:text="${'Информация о спектакле '+ repertoire.name}"></h2>
+            <div class="row">
+                <div class="col l-5 repertoire-info-slideshow">
+                    <div class="repertoire-info-item">
+                        <tr th:each="img : ${repertoire.getPictures()}">
+                            <img class="repertoire-info-image" th:src="${img.getImage()}" alt="">
+                        </tr>
+                    </div>
+                    <button onclick="next()" class="btn-next">
+                        <i class="fas fa-angle-right btn-icon-next"></i>
+                    </button>
+                    <button onclick="prev()" class="btn-prev">
+                        <i class="fas fa-angle-left btn-icon-prev"></i>
+                    </button>
+                    <div class="repertoire-info__about">
+                        <p class="repertoire-info__description" th:text="${categories}">
+                        </p>
+                    </div>
+                </div>
+                <div class="col l-7 repertoire-info-info" style="padding-left: 20px;">
+                    <p class="repertoire-info-info__description" th:utext="${repertoire.getDescription()}" >
+                    </p>
+                    <br>
+                    <p class="repertoire-info-info__allow" th:text="${repertoire.age_min + '+'}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-rating">
+        <div class="grid wide">
+            <div class="row">
+                <div class="col l-5">
+                    <div class="star-widget" th:object="${comment}">
+                        <form method="post" th:object="${comment}">
+                            <input th:field="*{score}" th:value="5" type="radio" name="rate" id="rate-5">
+                            <label for="rate-5" class="fas fa-star"></label>
+                            <input th:field="*{score}" th:value="4" type="radio" name="rate" id="rate-4">
+                            <label for="rate-4" class="fas fa-star"></label>
+                            <input th:field="*{score}" th:value="3" type="radio" name="rate" id="rate-3">
+                            <label for="rate-3" class="fas fa-star"></label>
+                            <input th:field="*{score}" th:value="2" type="radio" name="rate" id="rate-2">
+                            <label for="rate-2" class="fas fa-star"></label>
+                            <input th:field="*{score}" th:value="1" type="radio" name="rate" id="rate-1">
+                            <label for="rate-1" class="fas fa-star"></label>
+                            <header></header>
+                            <div class="textarea">
+                                <textarea th:field="*{text}" cols="30" placeholder="Оставьте комментарий.." class="form-control">
+                                </textarea>
+                            </div>
+                            <div class="btn">
+                                <button id ="save-comment" type="submit">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col l-7">
+                    <div class="container-rating-stars">
+                        <h3 class="container-rating-stars__user">Рейтинг пользователей: <span class="container-rating-stars__score" th:text="${repertoire.getRating()}"></span></h3>
+                        <img src="https://rating.ringostat.ru/wp-content/themes/ratings/dist/images/about.svg" alt="" class="container-rating-stars__image">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="star-widget" th:object="${comment}">
-        <form method="post" th:object="${comment}">
-            <input th:field="*{score}" th:value="5" type="radio" name="rate" id="rate-5">
-            <label for="rate-5" class="fas fa-star"></label>
-            <input th:field="*{score}" th:value="4" type="radio" name="rate" id="rate-4">
-            <label for="rate-4" class="fas fa-star"></label>
-            <input th:field="*{score}" th:value="3" type="radio" name="rate" id="rate-3">
-            <label for="rate-3" class="fas fa-star"></label>
-            <input th:field="*{score}" th:value="2" type="radio" name="rate" id="rate-2">
-            <label for="rate-2" class="fas fa-star"></label>
-            <input th:field="*{score}" th:value="1" type="radio" name="rate" id="rate-1">
-            <label for="rate-1" class="fas fa-star"></label>
-            <header></header>
-            <div class="textarea">
-                <textarea th:field="*{text}" cols="30" placeholder="Оставьте комментарий.."
-                          class="form-control"></textarea>
+    <div class="container-comment">
+        <div class="grid wide">
+            <h2 class="container-comment__title">
+                Комментарий
+            </h2>
+            <div class="row container-comment__user">
+                <div class="col l-1 container-comment__user-image">
+                    <img src="static/avatars/avatar-default.png" alt="">
+                </div>
+                <div class="col l-11 container-comment__user-block">
+                    <div class="container-comment__user-sub-block">
+                        <h4 class="container-comment__user-name">
+                            User1's full name
+                        </h4>
+                        <span class="container-comment__user-time"><i>2 days ago</i></span>
+                    </div>
+                    <p class="container-comment__user-comment">
+                        Comment1...
+                    </p>
+                </div>
             </div>
-            <div class="btn">
-                <button id ="save-comment" type="submit">Отправить</button>
+            <div class="row container-comment__user">
+                <div class="col l-1 container-comment__user-image">
+                    <img src="static/avatars/avatar-default.png" alt="">
+                </div>
+                <div class="col l-11 container-comment__user-block">
+                    <div class="container-comment__user-sub-block">
+                        <h4 class="container-comment__user-name">
+                            User2's full name
+                        </h4>
+                        <span class="container-comment__user-time"><i>2 days ago</i></span>
+                    </div>
+                    <p class="container-comment__user-comment">
+                        Comment2...
+                    </p>
+                </div>
             </div>
-        </form>
+        </div>
+    </div>
+
+    <div class="container-recommend">
+        <div class="grid wide">
+            <h2 class="container-recommend__title">Похожие</h2>
+            <div class="row">
+                <a href="#" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title">
+                        Cпектакль
+                    </h4>
+                    <img src="https://sun9-76.userapi.com/impg/El0mTohm0Wzqt7OAljkJ7v34FEKOG20CUr7bmA/fejhxT2aAxQ.jpg?size=807x538&quality=95&sign=59d4aba83a5e27044fff7fbba2396a2f&type=album" alt="" class="container-recommend__repertoire-image">
+                </a>
+                <a href="#" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title">
+                        Лебединое озеро
+                    </h4>
+                    <img src="https://sun9-68.userapi.com/impg/1Pwr2xcCAMJ9FxipjhkMxoxVLTve0yvOPBSQWA/BS18w87nc5E.jpg?size=1024x683&quality=96&sign=f688b12dcdc0abee57ec78adb1445d89&type=album" alt="" class="container-recommend__repertoire-image">
+                </a>
+                <a href="#" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title">
+                        Балет
+                    </h4>
+                    <img src="https://sun9-87.userapi.com/impg/P1ASwvblcdMCvvbiLXXsT5Sr_PmNz6YkDWZ_DQ/HAiIWxw47hk.jpg?size=1280x720&quality=96&sign=c4d6addfb3159b431f7275c8a5437e80&type=album" alt="" class="container-recommend__repertoire-image">
+                </a>
+                <a href="#" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title">
+                        Преступление и наказание
+                    </h4>
+                    <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="" class="container-recommend__repertoire-image">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal-layout"></div>
+        <div class="modal-content">
+            <div class="modal-close">
+                <i class="modal-close__icon far fa-times-circle"></i></i>
+            </div>
+            <img id="modal-content__image" src="" alt="">
+        </div>
     </div>
 </div>
+<footer>
+    <div class="grid wide">
+        <div class="row footer-contact">
+            <span class="footer-contact-copyright">© 2021 Theater tickets</span>
+            <a href="#" class="footer-contact-link">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" class="footer-contact-link">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#" class="footer-contact-link">
+                <i class="fab fa-instagram-square"></i>
+            </a>
+            <a href="#" class="footer-contact-link">
+                <i class="fab fa-skype"></i>
+            </a>
+        </div>
+    </div>
+</footer>
 
-<p class="table-p">
-<table class="table-comment">
-    <thead>
-        <tr>
-            <th>Комментарии</th>
-        </tr>
-    </thead>
-    <tr th:if="${#lists.isEmpty(comments)}">
-        <td colspan="5">Добавьте первый комментарий...!</td>
-    </tr>
-    <tr th:each="comment : ${comments}">
-        <td>
-            <div class="username" th:text="${user.login}"></div>
-            <div th:text="${comment.getFormattedDate()}"></div>
-            <div th:text="${comment.text}" ></div>
-        </td>
-
-    </tr>
-</table>
-</p>
-
-<br>
-<p>Похожие спектакли</p>
-<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(0).getId()}|} + '\''">
-    <div th:text="${similarRepertoire.get(0).getName()}">First similar</div>
-    <img class="playImage" th:src="${similarRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}">
-</div>
-<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(1).getId()}|} + '\''">
-    <div th:text="${similarRepertoire.get(1).getName()}">Second similar</div>
-    <img class="playImage" th:src="${similarRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}">
-</div>
-<div class="column33" th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(2).getId()}|} + '\''">
-    <div th:text="${similarRepertoire.get(2).getName()}">Third similar</div>
-    <img class="playImage" th:src="${similarRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}">
-</div>
+<script>
+    // Slide show
+    const WIDTH_IMAGE = document.querySelector(".repertoire-info-image").clientWidth
+    const slides = document.querySelector(".repertoire-info-item")
+    const imageAll = document.querySelectorAll(".repertoire-info-image")
+    var index = 0
 
 
+    function next(){
+        if(index === imageAll.length - 1){
+            index = 0
+        }else{
+            index++
+        }
+        slides.style.transform = `translateX(-${index*WIDTH_IMAGE}px)`
+    }
 
+    function prev(){
+        if(index === 0){
+            index = imageAll.length - 1
+        }else{
+            index--
+        }
+        slides.style.transform = `translateX(-${index*WIDTH_IMAGE}px)`
+    }
+
+    // Modal
+
+    const modalClose = document.querySelector(".modal-close")
+    const modal = document.querySelector(".modal")
+    const modalLayout = document.querySelector(".modal-layout")
+    const modalImage = document.querySelector("#modal-content__image")
+
+    modalClose.addEventListener("click", ()=>{
+        modal.style.display = "none"
+    })
+
+    modalLayout.addEventListener("click", ()=>{
+        modal.style.display = "none"
+    })
+
+    imageAll.forEach(image => {
+        image.addEventListener("click", (e)=>{
+            modalImage.src = image.src
+            modal.style.display = "flex"
+        })
+    })
+
+    // Rating
+    const stars = document.querySelectorAll(".container-rating-form__stars-icon")
+
+    for(var i = 0; i < stars.length; i++)
+    {
+        stars[i].addEventListener("click", (e)=> {
+            var dataId = e.target.getAttribute("data-id")
+            for(var j = 0; j < dataId; j++){
+                stars[j].classList.add("container-rating-form__stars-icon--active")
+            }
+        })
+    }
+</script>
 </body>
 </html>
