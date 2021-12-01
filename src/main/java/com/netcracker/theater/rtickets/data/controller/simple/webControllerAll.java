@@ -80,7 +80,7 @@ public class webControllerAll {
     @GetMapping("/account")
     public String getAccount(Map<String, Object> model){
         //Todo synthesise with authorization
-        User user = userService.getUserByLogin("user1");
+        User user = userService.getUserByLogin("user");
         model.put("currentUser", user);
         return "account";
     }
@@ -91,7 +91,7 @@ public class webControllerAll {
                               @RequestParam(value="password") String password,
                               Map<String, Object> model){
         //Todo synthesise with authorization
-        User user = userService.getUserByLogin("user1");
+        User user = userService.getUserByLogin("user");
         if (user.getPassword().equals(password)){
             userService.updateUser(user, name, lastName);
             model.put("status", "Changed!");

@@ -82,6 +82,10 @@ public class User {
         templates.add(template);
     }
 
+    public String getDotsPassword() {
+        return password.replaceAll(".", "*");
+    }
+
     public User() {
     }
 

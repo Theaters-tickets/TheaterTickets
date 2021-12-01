@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repertoire</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animation.css">
     <link rel="stylesheet" href="/fonts/fontawesome-free-5.15.4-web/css/all.min.css">
 </head>
 <body>
@@ -21,17 +23,21 @@
             </div>
 
             <div class="col m-8 header-block-links">
-                <a class="header-link"  href="/adminTags" th:if="${accessRights=='admin'}">
-                    <i class="header-icon fas fa-user-tie"></i>
+                <a class="header-link" href="/adminTags">
+                    <i class="header-icon fas fa-tags"></i>
                     <span class="header-text">AdminTags</span>
                 </a>
-                <a class="header-link" href="/status" th:if="${accessRights=='admin'}">
+                <a class="header-link" href="/status">
                     <i class="header-icon fas fa-info-circle"></i>
                     <span class="header-text">Status</span>
                 </a>
                 <a class="header-link" href="/recommendation">
-                    <i class="header-icon far fa-comments"></i>
+                    <i class="header-icon fas fa-check"></i>
                     <span class="header-text">Recommendation</span>
+                </a>
+                <a class="header-link" href="/account">
+                    <i class="header-icon fas fa-user-circle"></i>
+                    <span class="header-text">User's name</span>
                 </a>
             </div>
         </div>
@@ -67,6 +73,9 @@
                     <p class="repertoire-info-info__allow" th:text="${repertoire.age_min + '+'}"></p>
                 </div>
             </div>
+            <button class="repertoire-info__btn-visit" value="planned" name="addRep" type="submit">Хочу посетить</button>
+            <button class="repertoire-info__btn-visited" value="attended" name="addRep" type="submit">Уже посетил</button>
+
         </div>
     </div>
     <div class="container-rating">
@@ -91,7 +100,7 @@
                                 </textarea>
                             </div>
                             <div class="btn">
-                                <button id ="save-comment" type="submit">Отправить</button>
+                                <button id ="save-comment" value="comment" name="addRep" type="submit">Отправить</button>
                             </div>
                         </form>
                     </div>
@@ -111,37 +120,24 @@
             <h2 class="container-comment__title">
                 Комментарий
             </h2>
-            <div class="row container-comment__user">
-                <div class="col l-1 container-comment__user-image">
-                    <img src="static/avatars/avatar-default.png" alt="">
-                </div>
-                <div class="col l-11 container-comment__user-block">
-                    <div class="container-comment__user-sub-block">
-                        <h4 class="container-comment__user-name">
-                            User1's full name
-                        </h4>
-                        <span class="container-comment__user-time"><i>2 days ago</i></span>
+            <tr th:if="${#lists.isEmpty(comments)}">
+                <td colspan="5">Добавьте первый комментарий...!</td>
+            </tr>
+            <div th:if="!${#lists.isEmpty(comments)}" class="row container-comment__user">
+                <tr th:each="comment : ${comments}">
+                    <div class="col l-1 container-comment__user-image">
+                        <img src="/avatars/avatar-default.png" alt="">
                     </div>
-                    <p class="container-comment__user-comment">
-                        Comment1...
-                    </p>
-                </div>
-            </div>
-            <div class="row container-comment__user">
-                <div class="col l-1 container-comment__user-image">
-                    <img src="static/avatars/avatar-default.png" alt="">
-                </div>
-                <div class="col l-11 container-comment__user-block">
-                    <div class="container-comment__user-sub-block">
-                        <h4 class="container-comment__user-name">
-                            User2's full name
-                        </h4>
-                        <span class="container-comment__user-time"><i>2 days ago</i></span>
+                    <div class="col l-11 container-comment__user-block">
+                        <div class="container-comment__user-sub-block">
+                            <h4 class="container-comment__user-name" th:text="${user.login}">
+                            </h4>
+                            <span class="container-comment__user-time" th:text="${comment.getFormattedDate()}"><i></i></span>
+                        </div>
+                        <p class="container-comment__user-comment" th:text="${comment.text}" >
+                        </p>
                     </div>
-                    <p class="container-comment__user-comment">
-                        Comment2...
-                    </p>
-                </div>
+                </tr>
             </div>
         </div>
     </div>
@@ -150,29 +146,21 @@
         <div class="grid wide">
             <h2 class="container-recommend__title">Похожие</h2>
             <div class="row">
-                <a href="#" class="col l-3 container-recommend__repertoire">
-                    <h4 class="container-recommend__repertoire-title">
-                        Cпектакль
-                    </h4>
-                    <img src="https://sun9-76.userapi.com/impg/El0mTohm0Wzqt7OAljkJ7v34FEKOG20CUr7bmA/fejhxT2aAxQ.jpg?size=807x538&quality=95&sign=59d4aba83a5e27044fff7fbba2396a2f&type=album" alt="" class="container-recommend__repertoire-image">
+                <a th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(0).getId()}|} + '\''" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title" th:text="${similarRepertoire.get(0).getName()}"></h4>
+                    <img  th:src="${similarRepertoire.get(0).getPictures().stream().findFirst().get().getImage()}" alt="" class="container-recommend__repertoire-image">
                 </a>
-                <a href="#" class="col l-3 container-recommend__repertoire">
-                    <h4 class="container-recommend__repertoire-title">
-                        Лебединое озеро
-                    </h4>
-                    <img src="https://sun9-68.userapi.com/impg/1Pwr2xcCAMJ9FxipjhkMxoxVLTve0yvOPBSQWA/BS18w87nc5E.jpg?size=1024x683&quality=96&sign=f688b12dcdc0abee57ec78adb1445d89&type=album" alt="" class="container-recommend__repertoire-image">
+                <a th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(1).getId()}|} + '\''" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title"  th:text="${similarRepertoire.get(1).getName()}"></h4>
+                    <img th:src="${similarRepertoire.get(1).getPictures().stream().findFirst().get().getImage()}" alt="" class="container-recommend__repertoire-image">
                 </a>
-                <a href="#" class="col l-3 container-recommend__repertoire">
-                    <h4 class="container-recommend__repertoire-title">
-                        Балет
-                    </h4>
-                    <img src="https://sun9-87.userapi.com/impg/P1ASwvblcdMCvvbiLXXsT5Sr_PmNz6YkDWZ_DQ/HAiIWxw47hk.jpg?size=1280x720&quality=96&sign=c4d6addfb3159b431f7275c8a5437e80&type=album" alt="" class="container-recommend__repertoire-image">
+                <a th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(2).getId()}|} + '\''" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title" th:text="${similarRepertoire.get(2).getName()}"></h4>
+                    <img th:src="${similarRepertoire.get(2).getPictures().stream().findFirst().get().getImage()}" alt="" class="container-recommend__repertoire-image">
                 </a>
-                <a href="#" class="col l-3 container-recommend__repertoire">
-                    <h4 class="container-recommend__repertoire-title">
-                        Преступление и наказание
-                    </h4>
-                    <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="" class="container-recommend__repertoire-image">
+                <a th:onclick="'window.location.href = \'' + @{|/play/${similarRepertoire.get(3).getId()}|} + '\''" class="col l-3 container-recommend__repertoire">
+                    <h4 class="container-recommend__repertoire-title" th:text="${similarRepertoire.get(3).getName()}"></h4>
+                    <img th:src="${similarRepertoire.get(3).getPictures().stream().findFirst().get().getImage()}"  alt="" class="container-recommend__repertoire-image">
                 </a>
             </div>
         </div>

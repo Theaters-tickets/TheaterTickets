@@ -13,25 +13,24 @@
 <header>
     <div class="grid wide">
         <div class="row">
-            <div class="col m-4">
-                <a href="#" class="header-title-link"><h1>Theater tickets</h1></a>
+            <div class="col l-4">
+                <a href="#" class="header-title-link">
+                    <img src="/img/logo.png" alt="">
+                    <h1 class="header-title-link__text">Theater tickets</h1>
+                </a>
             </div>
 
-            <div class="col m-8 header-block-links">
-                <a class="header-link" href="/account">
-                    <i class="header-icon fas fa-user-tie"></i>
-                    <span class="header-text">To Account</span>
-                </a>
-                <a class="header-link" href="/adminTags" th:if="${accessRights=='admin'}">
-                    <i class="header-icon fas fa-user-tie"></i>
+            <div class="col l-8 header-block-links" th:if="${accessRights=='admin'}">
+                <a class="header-link" href="/adminTags">
+                    <i class="header-icon fas fa-tags"></i>
                     <span class="header-text">AdminTags</span>
                 </a>
-                <a class="header-link" href="/status" th:if="${accessRights=='admin'}">
+                <a class="header-link" href="/status">
                     <i class="header-icon fas fa-info-circle"></i>
                     <span class="header-text">Status</span>
                 </a>
-                <a class="header-link" href="/recommendation" >
-                    <i class="header-icon far fa-comments"></i>
+                <a class="header-link" href="/recommendation">
+                    <i class="header-icon fas fa-check"></i>
                     <span class="header-text">Recommendation</span>
                 </a>
                 <a class="header-link" href="/login">

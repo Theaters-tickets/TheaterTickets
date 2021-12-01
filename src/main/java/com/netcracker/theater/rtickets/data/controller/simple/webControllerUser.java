@@ -27,6 +27,8 @@ public class webControllerUser {
     PerfomanceService perfomanceService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    UserService userService;
 
     //Information about play
     @GetMapping("/play/{id}")
@@ -35,7 +37,7 @@ public class webControllerUser {
         model.put("repertoire", repertoire);
         model.put("categories", repertoireService.getCategoriesByIdOfRepertoire(id)); //Added by Ilya categories of the repertoire
         //model.put("theatre", repertoire.getPerformances().iterator().next().getTheatre()!=null ? repertoire.getPerformances().iterator().next().getTheatre() : "error");
-        model.put("similarRepertoire", repertoireService.getSimilarRepertoire(repertoire.getCategories(), 3));
+        model.put("similarRepertoire", repertoireService.getSimilarRepertoire(repertoire.getCategories(), 4));
 
         //Added by Alisa
         //Comments for repertoire
@@ -45,7 +47,7 @@ public class webControllerUser {
         model.put("comments", comments);
         Comment comment = new Comment();
         model.put("comment", comment);
-        User user = new User("ussser", "1234");
+        User user = userService.getUserByLogin("user");
         model.put("user", user);
         model.put("accessRights", "admin");
         return "repertoireInfo";

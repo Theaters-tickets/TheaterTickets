@@ -26,12 +26,14 @@
         var jsonObject = {};
 
         const dataLogin = document.getElementById("login");
+        const dataName = document.getElementById("name");
         const dataPassword = document.getElementById("psw");
         const dataPasswordRepeat = document.getElementById("psw-repeat");
 
         if (dataPassword.value == dataPasswordRepeat.value) {
             jsonObject.login = dataLogin.value;
             jsonObject.password = dataPassword.value;
+            jsonObject.name = dataName.value;
 
 
             var jsonString = JSON.stringify(jsonObject);
@@ -74,7 +76,7 @@
         <div class="register-box">
             <h1 class="register-header">CREATE ACCOUNT</h1>
             <input type="text" class="register-input" placeholder="Your Login" name="login" id="login" required>
-            <input type="text" class="register-input" placeholder="Your Email" name="email" id="email" required>
+            <input type="text" class="register-input" placeholder="Your Name" name="name" id="name" required>
             <input type="password" class="register-input" placeholder="Password" name="password" id="psw" required>
             <input type="password" class="register-input" placeholder="Confirm Password" name="passwordRepeat" id="psw-repeat" required>
             <!--p><input type="checkbox" class="register-input-check">I agree all statements in <a class="register-link" href="#">Terms of service</a></p-->

@@ -9,6 +9,10 @@ html{
 body{
     font-family: "Geometria", Arial;
 }
+a{
+    text-decoration: none;
+    color: black;
+}
 
 /* Register - Login */
 .login-form,
@@ -168,6 +172,7 @@ footer{
     margin-right: 10px;
     color: white;
     text-decoration: none;
+    transition: all ease 0.2s;
 }
 
 .footer-contact-link:hover i{
@@ -196,7 +201,7 @@ footer{
     color: white;
     bottom: 40px;
     text-decoration: none;
-    animation: fadeIn-up ease 1s;
+    animation: fadeIn-down ease 1s;
 }
 
 .section-about__text:hover{
@@ -351,11 +356,12 @@ footer{
     border-radius: 5px;
     margin-top: 12px;
     color: white;
-    transition: opacity ease 0.3s;
+    transition: all ease 0.3s;
 }
 
 .contact-form__submit:hover{
     opacity: 0.8;
+    transform: scale(1.1);
 }
 
 /* Repertoire info */
@@ -367,13 +373,16 @@ footer{
     background-repeat: no-repeat;
     width: 100%;
     padding-top: 75px;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
 }
 .repertoire-info-title{
     text-align: center;
-    padding: 40px;
+    padding: 70px 0 40px 0;
 }
 
+.repertoire-info-title span{
+    color: rgb(41, 41, 158);
+}
 .repertoire-info-slideshow{
     padding: 0 0;
     overflow: hidden;
@@ -392,7 +401,6 @@ footer{
 }
 .repertoire-info-image{
     width: 100%;
-    height: 400px;
     cursor: pointer;
 }
 .repertoire-info-info{
@@ -400,6 +408,35 @@ footer{
 }
 .repertoire-info-info__description{
     text-align: justify;
+}
+
+
+
+.repertoire-info__btn-visit{
+    padding: 8px 16px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(211, 211, 211);
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    float: right;
+}
+
+.repertoire-info__btn-visited{
+    padding: 8px 16px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(211, 211, 211);
+    cursor: pointer;
+    background-color: white;
+    float: right;
+    margin-right: 20px;
+}
+
+.repertoire-info__btn-visit:hover,
+.repertoire-info__btn-visited:hover{
+    background-color: #ff7f6c;
 }
 
 .repertoire-info__about{
@@ -527,60 +564,8 @@ footer{
     color: rgb(247, 7, 7);
 }
 
-/* Animation modal */
-@keyframes zoom{
-    from{
-        transform: scale(0);
-    }
-    to{
-        transform: scale(1);
-    }
-}
-
-@keyframes fadeIn{
-    from{
-        opacity: 0.7;
-    }
-    to{
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn-up{
-    from{
-        opacity: 0;
-        transform: translateY(-100px);
-    }
-    to{
-        opacity: 0.5;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn-from-left{
-    from{
-        opacity: 0.3;
-        transform: translateX(-100%);
-    }
-    to{
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeIn-from-right{
-    from{
-        opacity: 0.3;
-        transform: translateX(100%);
-    }
-    to{
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 .container-rating{
-    padding: 40px 0 60px 0;
+    margin: 60px 0 60px 0;
 }
 
 .container-rating-stars__user{
@@ -650,7 +635,8 @@ footer{
 }
 
 .container-comment{
-    margin: 30px 0;
+    padding: 40px 0;
+    margin-top: 30px;
 }
 
 .container-comment__title{
@@ -682,6 +668,7 @@ footer{
 }
 
 .container-recommend{
+    margin-top: 30px;
     padding: 40px 0;
 }
 
@@ -724,11 +711,140 @@ footer{
     margin-bottom: 20px;
 }
 
+/* Profile */
+
+.profile{
+    overflow: hidden;
+}
+
+.profile-sidebar{
+    position: fixed;
+    width: 25%;
+    height: 100vh;
+    background-color:#f8f6f2;
+}
+.profile-sidebar__user{
+    position: relative;
+    display: flex;
+    padding: 40px 16px;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgb(163, 163, 163);
+}
+
+.profile-sidebar__user-out{
+    position: absolute;
+    font-size: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+}
+
+.profile-sidebar__user-item{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.profile-sidebar__user img{
+    width: 20%;
+    margin-right: 20px;
+}
+
+.profile-sidebar__user-name{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.profile-sidebar__info{
+    margin-top: 20px;
+}
+
+.profile-sidebar__info-favorites,
+.profile-sidebar__info-account{
+    padding: 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.profile-sidebar__info-favorites:hover,
+.profile-sidebar__info-account:hover{
+    color: rgb(80, 80, 255);
+}
+
+.profile-sidebar__info-icon{
+    font-size: 18px;
+    margin-right: 12px;
+}
+
+#info-list-account-icon,
+#info-list-favorite-icon{
+    transition: all ease 0.2s;
+}
+
+.profile-sidebar__info-list{
+    margin-left: 80px;
+    color: black;
+    display: none;
+    transform-origin: top left;
+    animation: zoom ease 0.5s;
+}
+
+.profile-sidebar__info-item{
+    cursor: pointer;
+    padding: 4px 0;
+}
+.profile-sidebar__info-item:hover{
+    color: rgb(80, 80, 255);
+}
+
+.profile-favorites{
+    padding-bottom: 60px;
+}
+
+.profile-favorites-block{
+    padding: 20px;
+    background-color: #f6f1e9;
+    margin-left: 24px;
+    margin-right: 24px;
+    border-radius: 15px;
+    border: 1px dashed rgb(163, 163, 163);
+    margin-top: 30px;
+}
+
+.profile-favorites-block:target{
+    background-color: #ffe8c1;
+}
+
+.profile-favorites__title{
+    text-align: center;
+    padding: 40px 0 ;
+}
+
+.profile-favorites__title span{
+    margin-left: 16px;
+    font-size: 40px;
+    color: rgb(167, 26, 26);
+}
+
+.profile-favorites__img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.profile-favorites__favorite-title{
+    margin-bottom: 20px;
+}
 
 
 
 
-/* Main Page */
+
+
+
+/* Stars*/
 .container .post{
     display: none;
 }

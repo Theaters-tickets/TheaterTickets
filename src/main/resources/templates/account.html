@@ -2,44 +2,158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/grid.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="/fonts/fontawesome-free-5.15.4-web/css/all.min.css">
 </head>
 <body>
-<style>
-    #main{
-        border: #3C4667 2px solid ;
-        font-size: 20px;
-        color: #3C4667;
-        text-decoration-line: none;
-        cursor: pointer;
-    }
-</style>
-<script>
-    function clear(selection){
-        let obj = document.getElementById(selection);
-        obj.innerText = "";
-    }
-</script>
-<a id="main" href="/mainPage">Main page</a>
-
-<div th:text="'Hello '+${currentUser.login}">Hello</div>
-<div>
-    <a th:text="${currentUser.getName()}">name</a>
-    <a th:text="${currentUser.getLast_name()}">last_name</a>
-    <br>
-    <a th:text="${currentUser.getBirthday()}">birthday</a>
+<div class="grid profile">
+    <div class="row">
+        <div class="col l-3">
+            <div class="profile-sidebar">
+                <div class="profile-sidebar__user">
+                    <img src="static/avatars/user.svg" alt="">
+                    <div class="profile-sidebar__user-item">
+                        <div class="profile-sidebar__user-name" th:text="${currentUser.name}"></div>
+                        <div class="profile-sidebar__user-login" th:text="${currentUser.login}"></div>
+                    </div>
+                    <a href="#"><i class="profile-sidebar__user-out fas fa-sign-out-alt"></i></a>
+                </div>
+                <div class="profile-sidebar__info">
+                    <div class="profile-sidebar__info-account">
+                        <div class="profile-sidebar__info-account-block">
+                            <i class="profile-sidebar__info-icon fas fa-address-book"></i>
+                            Аккаунт
+                        </div>
+                        <i id="info-list-account-icon" class="fas fa-chevron-right"></i>
+                    </div>
+                    <ul id="info-list-account" class="profile-sidebar__info-list">
+                        <li class="profile-sidebar__info-item" th:text="'Login: ' + ${currentUser.login}"></li>
+                        <li class="profile-sidebar__info-item" th:text="'Password: ' + ${currentUser.getDotsPassword()}"></li>
+                    </ul>
+                    <div class="profile-sidebar__info-favorites">
+                        <div class="profile-sidebar__info-account-block">
+                            <i class="profile-sidebar__info-icon fas fa-heart"></i>
+                            Избранные
+                        </div>
+                        <i id="info-list-favorite-icon" class="fas fa-chevron-right"></i>
+                    </div>
+                    <ul id="info-list-favorite" class="profile-sidebar__info-list">
+                        <a href="#1"><li class="profile-sidebar__info-item">Repertoire 1</li></a>
+                        <a href="#2"><li class="profile-sidebar__info-item">Repertoire 2</li></a>
+                        <a href="#3"><li class="profile-sidebar__info-item">Repertoire 3</li></a>
+                        <a href="#4"><li class="profile-sidebar__info-item">Repertoire 4</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col l-9 profile-favorites">
+            <h1 class="profile-favorites__title">Ваши избранные<span><i class="fas fa-heart"></i></span> </h1>
+            <a href="#" id="1" class="row profile-favorites-block">
+                <div class="col l-4">
+                    <div class="profile-favorites__img">
+                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
+                    </div>
+                </div>
+                <div class="col l-8">
+                    <div class="profile-favorites__favorite">
+                        <h2 class="profile-favorites__favorite-title">
+                            Преступление и наказание 1
+                        </h2>
+                        <p class="profile-favorites__favorite-description">
+                            Краткое описание...
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" id="2" class="row profile-favorites-block">
+                <div class="col l-4">
+                    <div class="profile-favorites__img">
+                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
+                    </div>
+                </div>
+                <div class="col l-8">
+                    <div class="profile-favorites__favorite">
+                        <h2 class="profile-favorites__favorite-title">
+                            Преступление и наказание 2
+                        </h2>
+                        <p class="profile-favorites__favorite-description">
+                            Краткое описание...
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" id="3" class="row profile-favorites-block">
+                <div class="col l-4">
+                    <div class="profile-favorites__img">
+                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
+                    </div>
+                </div>
+                <div class="col l-8">
+                    <div class="profile-favorites__favorite">
+                        <h2 class="profile-favorites__favorite-title">
+                            Преступление и наказание 3
+                        </h2>
+                        <p class="profile-favorites__favorite-description">
+                            Краткое описание...
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" id="4" class="row profile-favorites-block">
+                <div class="col l-4">
+                    <div class="profile-favorites__img">
+                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
+                    </div>
+                </div>
+                <div class="col l-8">
+                    <div class="profile-favorites__favorite">
+                        <h2 class="profile-favorites__favorite-title">
+                            Преступление и наказание 4
+                        </h2>
+                        <p class="profile-favorites__favorite-description">
+                            Краткое описание...
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
-<div>Specify data</div>
-<br><br><br><br><br><br>
-<form th:method="post" th:id="inputForm" name="inputForm">
-    <input type="text" th:id="name" name="name" th:value="${currentUser.getName()}">
-    <br>
-    <input type="text" th:id="lastName" name="lastName" th:value="${currentUser.getLast_name()}">
-    <br>
-    <input type="password" name="password" placeholder="Пароль">
-    <br>
-    <button type="submit">Сменить данные!</button>
-</form>
-<div th:text="${status}">Status</div>
+
+<script>
+    const profileInfoAccount = document.querySelector(".profile-sidebar__info-account")
+    const profileInfoFavorite = document.querySelector(".profile-sidebar__info-favorites")
+
+    const infoListAccount = document.querySelector("#info-list-account")
+    const infoListFavorite = document.querySelector("#info-list-favorite")
+    const iconListAccount = document.querySelector("#info-list-account-icon")
+    const iconListFavorite = document.querySelector("#info-list-favorite-icon")
+
+
+    profileInfoAccount.addEventListener("click", ()=>{
+        if(infoListAccount.style.display === "block"){
+            infoListAccount.style.display = "none"
+            iconListAccount.style.transform = "rotate(0deg)"
+        }else{
+            infoListAccount.style.display = "block"
+            iconListAccount.style.transform = "rotate(90deg)"
+        }
+    })
+
+    profileInfoFavorite.addEventListener("click", ()=>{
+        if(infoListFavorite.style.display === "block"){
+            infoListFavorite.style.display = "none"
+            iconListFavorite.style.transform = "rotate(0deg)"
+        }else{
+            infoListFavorite.style.display = "block"
+            iconListFavorite.style.transform = "rotate(90deg)"
+        }
+    })
+</script>
 </body>
 </html>
