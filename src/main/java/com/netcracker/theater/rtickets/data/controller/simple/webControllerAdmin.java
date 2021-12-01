@@ -100,9 +100,13 @@ public class webControllerAdmin {
         model.put("uncategorizedCategory", categoryService.getUncategorizedCategories());
         if (parserType.equals("repertoire")){
             parserClass.parseRepertoire();
+            //parserClass.parseRecommendation();
         }
         if (parserType.equals("theatre")){
             parserClass.parseTheatre();
+        }
+        if (parserType.equals("recommendation")){
+            parserClass.parseRecommendation();
         }
         return "status";
     }

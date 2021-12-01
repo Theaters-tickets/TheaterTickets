@@ -39,5 +39,16 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public List<?> getFavoriteCategory(User user) { return userDAO.getFavoriteCategory(user); }
 
+    //Added for security purposes
+    @Override
+    @Transactional
+    public User getUserByLogin(String login) {return userDAO.getUserByLogin(login);}
 
+    @Override
+    @Transactional
+    public void updateUser(User user, String name, String lastName){
+        name = name.equals("") ? user.getName() : name;
+        lastName = lastName.equals("") ? user.getLast_name() : lastName;
+        userDAO.updateUser(user.getLogin(),name, lastName);
+    }
 }

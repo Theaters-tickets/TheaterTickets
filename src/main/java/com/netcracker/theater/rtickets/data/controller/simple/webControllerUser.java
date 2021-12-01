@@ -11,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class webControllerUser {
@@ -41,7 +39,9 @@ public class webControllerUser {
 
         //Added by Alisa
         //Comments for repertoire
-        List<Comment> comments = List.copyOf(repertoire.getComments());
+        List<Comment> comments = new ArrayList<>();
+        comments.addAll(repertoire.getComments());
+
         model.put("comments", comments);
         Comment comment = new Comment();
         model.put("comment", comment);

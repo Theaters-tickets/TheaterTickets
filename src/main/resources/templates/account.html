@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    #main{
+        border: #3C4667 2px solid ;
+        font-size: 20px;
+        color: #3C4667;
+        text-decoration-line: none;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function clear(selection){
+        let obj = document.getElementById(selection);
+        obj.innerText = "";
+    }
+</script>
+<a id="main" href="/mainPage">Main page</a>
+
+<div th:text="'Hello '+${currentUser.login}">Hello</div>
+<div>
+    <a th:text="${currentUser.getName()}">name</a>
+    <a th:text="${currentUser.getLast_name()}">last_name</a>
+    <br>
+    <a th:text="${currentUser.getBirthday()}">birthday</a>
+</div>
+<div>Specify data</div>
+<br><br><br><br><br><br>
+<form th:method="post" th:id="inputForm" name="inputForm">
+    <input type="text" th:id="name" name="name" th:value="${currentUser.getName()}">
+    <br>
+    <input type="text" th:id="lastName" name="lastName" th:value="${currentUser.getLast_name()}">
+    <br>
+    <input type="password" name="password" placeholder="Пароль">
+    <br>
+    <button type="submit">Сменить данные!</button>
+</form>
+<div th:text="${status}">Status</div>
+</body>
+</html>
