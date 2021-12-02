@@ -1,15 +1,8 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
-import com.netcracker.theater.rtickets.data.entity.*;
-import com.netcracker.theater.rtickets.data.service.*;
-import javassist.expr.NewArray;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 
 public class Main {

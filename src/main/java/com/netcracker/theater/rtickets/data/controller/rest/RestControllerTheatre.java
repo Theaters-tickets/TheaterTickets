@@ -1,8 +1,8 @@
 package com.netcracker.theater.rtickets.data.controller.rest;
 
-import com.netcracker.theater.rtickets.data.entity.Theatre;
-import com.netcracker.theater.rtickets.data.service.GenresService;
-import com.netcracker.theater.rtickets.data.service.TheatreService;
+import com.netcracker.theater.rtickets.data.storage.entity.Theatre;
+import com.netcracker.theater.rtickets.data.core.service.GenresService;
+import com.netcracker.theater.rtickets.data.core.service.TheatreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

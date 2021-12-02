@@ -1,6 +1,6 @@
 package com.netcracker.theater.rtickets.data.core;
 
-import com.netcracker.theater.rtickets.data.entity.Category;
+import com.netcracker.theater.rtickets.data.storage.entity.Category;
 import lombok.Data;
 
 import java.util.ArrayList;

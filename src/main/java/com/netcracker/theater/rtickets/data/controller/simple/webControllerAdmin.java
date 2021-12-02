@@ -1,31 +1,17 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
 
-import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
-import com.netcracker.theater.rtickets.data.core.GroupsContainer;
 import com.netcracker.theater.rtickets.data.core.TagInfo;
-import com.netcracker.theater.rtickets.data.dao.RepertoireDAO;
-import com.netcracker.theater.rtickets.data.entity.*;
-import com.netcracker.theater.rtickets.data.service.*;
-import com.netcracker.theater.rtickets.data.service.*;
+import com.netcracker.theater.rtickets.data.storage.entity.*;
+import com.netcracker.theater.rtickets.data.core.service.*;
 import com.netcracker.theater.rtickets.parser.ParserClass;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.swing.text.html.HTML;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 import java.util.List;
-import java.util.*;
-import java.util.*;
 
 @Controller
 public class webControllerAdmin {
