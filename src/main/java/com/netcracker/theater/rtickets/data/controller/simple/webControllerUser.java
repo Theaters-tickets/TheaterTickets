@@ -1,10 +1,10 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
 
-import com.netcracker.theater.rtickets.data.entity.Comment;
-import com.netcracker.theater.rtickets.data.entity.Repertoire;
-import com.netcracker.theater.rtickets.data.service.*;
-import com.netcracker.theater.rtickets.data.entity.User;
+import com.netcracker.theater.rtickets.data.storage.entity.Comment;
+import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
+import com.netcracker.theater.rtickets.data.core.service.*;
+import com.netcracker.theater.rtickets.data.storage.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

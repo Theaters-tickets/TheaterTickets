@@ -3,8 +3,8 @@ package com.netcracker.theater.rtickets.parser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.netcracker.theater.rtickets.data.entity.*;
-import com.netcracker.theater.rtickets.data.service.*;
+import com.netcracker.theater.rtickets.data.storage.entity.*;
+import com.netcracker.theater.rtickets.data.core.service.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,9 +15,7 @@ import org.springframework.stereotype.Component;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 @Configurable
 @Component
