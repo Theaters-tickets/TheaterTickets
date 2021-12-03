@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
 import java.util.Scanner;
+import java.util.Set;
 
 @Configurable
 @Component
@@ -117,7 +118,6 @@ public class ParserClass {
                         theatreService.saveTheatre(theatre);
 
                         //SAVE PARTICIPANTS
-                        /*
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         for (Object participant : participantsArr) {
                             RoleActor roleActor = roleActorService.getRoleByName(((JSONObject)((JSONObject) participant).get("role")).get("slug").toString());
@@ -137,6 +137,8 @@ public class ParserClass {
                                 }
                             }
                             if (check) {
+
+
                                 Set<Performance> perfs = repertoire.getPerformances();
                                 actor.setPerformances(perfs);
                                 actorService.saveActor(actor);
@@ -145,7 +147,7 @@ public class ParserClass {
                             }
                         }
 
-                         */
+
 
 
 

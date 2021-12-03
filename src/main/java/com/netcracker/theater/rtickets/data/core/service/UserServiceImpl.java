@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.core.service;
 
+import com.netcracker.theater.rtickets.data.storage.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.storage.repository.RoleAdminDAO;
 import com.netcracker.theater.rtickets.data.storage.repository.UserDAO;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public List<?> getFavoriteCategory(User user) { return userDAO.getFavoriteCategory(user); }
+    public List<Recommendation> getUsersRecommendations(User user) { return userDAO.getUsersRecommendations(user); }
 
     //Added for security purposes
     @Override

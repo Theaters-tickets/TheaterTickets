@@ -400,6 +400,7 @@ footer{
     display: flex;
 }
 .repertoire-info-image{
+    height: 350px;
     width: 100%;
     cursor: pointer;
 }

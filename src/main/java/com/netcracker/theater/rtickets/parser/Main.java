@@ -1,6 +1,12 @@
 package com.netcracker.theater.rtickets.parser;
 
 import com.netcracker.theater.rtickets.NetcrackerTheaterTicketsApplication;
+import com.netcracker.theater.rtickets.data.core.service.CommentService;
+import com.netcracker.theater.rtickets.data.core.service.RepertoireService;
+import com.netcracker.theater.rtickets.data.core.service.UserService;
+import com.netcracker.theater.rtickets.data.storage.entity.Comment;
+import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
+import com.netcracker.theater.rtickets.data.storage.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
@@ -20,14 +26,6 @@ public class Main {
         CommentService commentService = context.getBean(CommentService.class);
         RepertoireService repertoireService = context.getBean(RepertoireService.class);
         Repertoire rep = repertoireService.getAllRepertoire().iterator().next();
-        User user = userService.getUserByLogin("user");
-        Comment comment = new Comment("tryy", 5);
-        commentService.saveComment(comment);
-        comment.setUser(user);
-        comment.setRepertoire(rep);
-        commentService.saveComment(comment);
-        System.out.println(commentService.getAllComments());
-
 
 
         //System.out.println("attended: " + user.getPerformances_attended());
