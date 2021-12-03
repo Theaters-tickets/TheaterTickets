@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.dao;
 
+import com.netcracker.theater.rtickets.data.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,7 +15,7 @@ public interface UserDAO extends JpaRepository<User, UUID> {
             " where (((?1  member of p.usersAttended) or (?1  member of p.usersPlanned)) " +
             "and (tags.recommendation.name not like 'default'))" +
             "group by tags order by count(tags) desc")
-    List<?> getFavoriteCategory(User user);
+    List<Recommendation> getUsersRecommendations(User user);
 
     //Added by Ilya
     @Query(value = "select * from user where user.login = :login", nativeQuery = true)

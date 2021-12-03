@@ -3,6 +3,7 @@ package com.netcracker.theater.rtickets.data.service;
 import com.netcracker.theater.rtickets.data.dao.CategoryDAO;
 import com.netcracker.theater.rtickets.data.dao.UserDAO;
 import com.netcracker.theater.rtickets.data.entity.Category;
+import com.netcracker.theater.rtickets.data.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public List<?> getFavoriteCategory(User user) { return userDAO.getFavoriteCategory(user); }
+    public List<Recommendation> getUsersRecommendations(User user) { return userDAO.getUsersRecommendations(user); }
 
     //Added for security purposes
     @Override

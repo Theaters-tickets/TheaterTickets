@@ -41,15 +41,6 @@ public class Performance {
     @ManyToOne(fetch = FetchType.LAZY)
     private Theatre theatre;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(
-            name = "attended_event",
-            joinColumns = { @JoinColumn(name = "performance_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    private Set<User> users = new HashSet<>();
-
-
     @Transient
     SimpleDateFormat patternDate = new SimpleDateFormat("dd.MM.yyyy");
     @Transient

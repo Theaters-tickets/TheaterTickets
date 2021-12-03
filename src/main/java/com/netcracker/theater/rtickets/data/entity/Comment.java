@@ -30,6 +30,9 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Repertoire repertoire;
+
 
     public String getText() {
         return text;
@@ -80,6 +83,9 @@ public class Comment {
                 "id=" + id +
                 ", text='" + text + '\'' +
                 ", score=" + score +
+                ", user=" + user +
+                ", rep=" + repertoire +
+
                 '}';
     }
 }

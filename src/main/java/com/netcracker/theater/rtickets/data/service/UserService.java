@@ -1,6 +1,7 @@
 package com.netcracker.theater.rtickets.data.service;
 
 import com.netcracker.theater.rtickets.data.entity.Actor;
+import com.netcracker.theater.rtickets.data.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.entity.User;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface UserService {
 
     void deleteUser(UUID id);
 
-    List<?> getFavoriteCategory(User user);
+    List<Recommendation> getUsersRecommendations(User user);
 
     //Added by Ilya
     //Getting user by name for security
