@@ -33,7 +33,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserServiceImpl userService;
 
+    @Override
+    @Transactional
+    public void deleteUserById(UUID id) {
+        userDAO.deleteById(id);
+    }
 
+    @Override
+    public Set<User> findByParameters(String login, String password, String email) {
+        Set<User> resultSet = userDAO.findByParameters(login,password,email);
+        return resultSet;
+    }
 
     public User findByLogin(String login)
     {
