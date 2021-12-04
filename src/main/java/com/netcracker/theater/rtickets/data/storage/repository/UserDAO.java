@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,5 +41,5 @@ public interface UserDAO extends JpaRepository<User, UUID> {
                                @Param("email") String email);
 
 
-    User findByLogin(String login);
+    Optional<User> findByLogin(String login);
 }

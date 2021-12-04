@@ -48,21 +48,24 @@ public class webControllerAll {
 
     //Registration page
     @GetMapping("/registration")
-    public String getRegistration(Map<String, Object> model){
+    public String getRegistration(Map<String, Object> model)
+    {
         return "registration";
     }
+
     @PostMapping("/registration")
     public void postRegistration(Map<String, Object> model,
                                  @RequestBody User user)
     {
-        //Todo add check for uniqueness
         userService.saveUser(user);
-
     }
 
     //Login page
     @GetMapping("/login")
-    public String getLogin(Map<String, Object> model){ return "login";}
+    public String getLogin(Map<String, Object> model)
+    {
+        return "login";
+    }
 
     @PostMapping("/login")
     public String postLogin(

@@ -2,6 +2,7 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
 
 @Entity
 @Data
@@ -46,11 +48,12 @@ public class Theatre {
     @Column(name = "number")
     private Long number;
 
-
+    @Builder.Default
     @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "theatre_id")
     private Set<Performance> performances = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "theatre_id")
     private Set<Picture> pictures = new HashSet<>();
@@ -179,18 +182,4 @@ public class Theatre {
         return Objects.hash(name, address, description, subway, phone, timetable, title, number, performances, pictures);
     }
 
-    @Override
-    public String toString() {
-        return "Theatre{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", description='" + description + '\'' +
-                ", subway='" + subway + '\'' +
-                ", phone='" + phone + '\'' +
-                ", timetable='" + timetable + '\'' +
-                ", title='" + title + '\'' +
-                ", number='" + number + '\'' +
-                '}';
-    }
 }

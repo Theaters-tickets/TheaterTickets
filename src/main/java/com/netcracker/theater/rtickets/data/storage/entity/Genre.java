@@ -1,8 +1,7 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "genre")
@@ -29,8 +31,7 @@ public class Genre {
     private List<Repertoire> repertoires;
 
 
-    public Genre() {
-    }
+
 
     public Genre(String name) {
         this.name = name;
@@ -53,11 +54,5 @@ public class Genre {
 
     }
 
-    @Override
-    public String toString() {
-        return "Ge{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
 }
