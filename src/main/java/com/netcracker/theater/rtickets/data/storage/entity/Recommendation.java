@@ -1,10 +1,16 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "recommendation")
@@ -30,7 +36,7 @@ public class Recommendation {
     @JoinColumn(name = "picture_id", referencedColumnName = "id")
     private Picture picture = new Picture("/img/default.jpg");
 
-    public Recommendation() {}
+
 
     public Recommendation(String name, String ruName) {
         this.name = name;
@@ -55,14 +61,6 @@ public class Recommendation {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Recommendation{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 
 

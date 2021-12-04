@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
 import java.util.Scanner;
+import java.util.Set;
 
 @Configurable
 @Component
@@ -48,7 +49,7 @@ public class ParserClass {
         Long theatreNumber = 0L;
         int pageCount = 0;
         try {
-            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=1635240332&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images,dates,place,participants");
+            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=" + CURRENT_TIME + "&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images,dates,place,participants");
             ObjectMapper mapper = new ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             //while (true) {
@@ -58,8 +59,13 @@ public class ParserClass {
                     throw new RuntimeException();
                 } else {
                     JSONArray results = (JSONArray) obj.get("results");
+                    Repertoire repertoire = new Repertoire();
                     for (Object result : results) {
-                        Repertoire repertoire = mapper.readValue(result.toString(), Repertoire.class);
+                        try {
+                            repertoire = mapper.readValue(result.toString(), Repertoire.class);
+                        } catch (Exception ex) {
+                            System.out.println("Exception in parsing");
+                        }
                         check = true;
                         for (Repertoire rep : repertoireService.getAllRepertoire()) {
                             if (rep.equals(repertoire)) { //check fot unique value
@@ -119,7 +125,6 @@ public class ParserClass {
                         theatreService.saveTheatre(theatre);
 
                         //SAVE PARTICIPANTS
-                        /*
                         JSONArray participantsArr = (JSONArray)resultObject.get("participants");
                         for (Object participant : participantsArr) {
                             RoleActor roleActor = roleActorService.getRoleByName(((JSONObject)((JSONObject) participant).get("role")).get("slug").toString());
@@ -139,6 +144,8 @@ public class ParserClass {
                                 }
                             }
                             if (check) {
+
+
                                 Set<Performance> perfs = repertoire.getPerformances();
                                 actor.setPerformances(perfs);
                                 actorService.saveActor(actor);
@@ -147,7 +154,7 @@ public class ParserClass {
                             }
                         }
 
-                         */
+
 
 
 

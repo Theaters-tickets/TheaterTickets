@@ -2,7 +2,10 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +13,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "actor")
@@ -24,6 +30,7 @@ public class Actor {
 
     private String last_name;
 
+    @Builder.Default
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "performance_actor",
@@ -32,12 +39,12 @@ public class Actor {
     )
     private Set<Performance> performances = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "actor_id")
     private Set<Picture> pictures = new HashSet<>();
 
-    public Actor() {
-    }
+
 
     public Actor(String name, String last_name) {
         this.name = name;
@@ -77,12 +84,5 @@ public class Actor {
         return Objects.hash(name, last_name);
     }
 
-    @Override
-    public String toString() {
-        return "Actor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                '}';
-    }
+
 }

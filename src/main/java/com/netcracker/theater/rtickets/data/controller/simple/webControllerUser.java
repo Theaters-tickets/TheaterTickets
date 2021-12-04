@@ -52,13 +52,31 @@ public class webControllerUser {
         model.put("accessRights", "admin");
         return "repertoireInfo";
     }
-    @PostMapping("/play/{id}")
+    @PostMapping( params = "savecomment", value = "/play/{id}")
     public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment) {
-        Repertoire repertoire = repertoireService.getById(id);
-        repertoire.addComment(comment);
-        repertoireService.saveRep(repertoire);
+        //Repertoire repertoire = repertoireService.getById(id);
+        //repertoire.addComment(comment);
+        //repertoireService.saveRep(repertoire);
+        //commentService.saveComment(comment);
+        comment.setUser(userService.getUserByLogin("user"));
+        comment.setRepertoire(repertoireService.getById(id));
+        commentService.saveComment(comment);
         return "redirect:/play/{id}";
     }
+    @PostMapping( params = "planned", value = "/play/{id}")
+    public String savePlanned(@PathVariable("id") UUID id, Model model, @ModelAttribute User user) {
+        Repertoire v = repertoireService.getById(id);
+        user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
+        userService.saveUser(user);
+        return "redirect:/play/{id}";
+    }
+    @PostMapping( params = "attended", value = "/play/{id}")
+    public String saveAttended(@PathVariable("id") UUID id, Model model, @ModelAttribute User user) {
+        user.addPerformancesAttended(repertoireService.getById(id).getPerformances().iterator().next());
+        userService.saveUser(user);
+        return "redirect:/play/{id}";
+    }
+
 
     //Search page
     @GetMapping("/search")

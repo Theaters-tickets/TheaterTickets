@@ -33,10 +33,13 @@ public class webController {
     //Added by Alisa
     @GetMapping("/recommendation")
     public String recommendation(Map<String, Object> model) {
-        List<Recommendation> recommendations = recommendationService.getAllRecommendations();
+        User user = userService.getUserByLogin("user");
+        model.put("user", user);
+        List<Recommendation> recommendations = userService.getUsersRecommendations(user);
         model.put("recommendations", recommendations);
         Recommendation rec = new Recommendation();
         model.put("rec", rec);
+
         return "recommendations";
     }
     @GetMapping("/recommendation/NewYear")

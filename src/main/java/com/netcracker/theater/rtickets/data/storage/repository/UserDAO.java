@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.storage.repository;
 
+import com.netcracker.theater.rtickets.data.storage.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,7 +17,7 @@ public interface UserDAO extends JpaRepository<User, UUID> {
             " where (((?1  member of p.usersAttended) or (?1  member of p.usersPlanned)) " +
             "and (tags.recommendation.name not like 'default'))" +
             "group by tags order by count(tags) desc")
-    List<?> getFavoriteCategory(User user);
+    List<Recommendation> getUsersRecommendations(User user);
 
     //Added by Ilya
     //todo delete
@@ -41,5 +43,5 @@ public interface UserDAO extends JpaRepository<User, UUID> {
                                @Param("email") String email);
 
 
-    User findByLogin(String login);
+    Optional<User> findByLogin(String login);
 }

@@ -1,10 +1,16 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "parameter")
@@ -20,20 +26,11 @@ public class Parameter {
     @Column
     private String criterion;
 
-    public Parameter() {
-    }
 
     public Parameter(String name, String criterion) {
         this.name = name;
         this.criterion = criterion;
     }
 
-    @Override
-    public String toString() {
-        return "Parameter{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", criterion='" + criterion + '\'' +
-                '}';
-    }
+
 }

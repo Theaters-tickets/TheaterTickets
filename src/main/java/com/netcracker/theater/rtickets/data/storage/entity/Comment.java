@@ -1,6 +1,9 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "comment")
@@ -27,8 +33,11 @@ public class Comment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Repertoire repertoire;
 
 
     public String getText() {
@@ -64,21 +73,9 @@ public class Comment {
     }
 
 
-
-    public Comment() {
-    }
-
     public Comment(String text, int score) {
         this.text = text;
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", score=" + score +
-                '}';
-    }
 }

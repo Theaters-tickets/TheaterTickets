@@ -2,13 +2,19 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Map;
 import java.util.UUID;
 
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "picture")
@@ -28,8 +34,7 @@ public class Picture {
     @Column
     private String source_link;
 
-    public Picture() {
-    }
+
 
     public Picture(String image) {
         this.image = image;
@@ -46,11 +51,5 @@ public class Picture {
         source_link = source.get("link");
     }
 
-    @Override
-    public String toString() {
-        return "Picture{" +
-                "id=" + id +
-                ", image='" + image + '\'' +
-                '}';
-    }
+
 }

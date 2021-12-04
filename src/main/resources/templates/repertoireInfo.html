@@ -73,8 +73,10 @@
                     <p class="repertoire-info-info__allow" th:text="${repertoire.age_min + '+'}"></p>
                 </div>
             </div>
-            <button class="repertoire-info__btn-visit" value="planned" name="addRep" type="submit">Хочу посетить</button>
-            <button class="repertoire-info__btn-visited" value="attended" name="addRep" type="submit">Уже посетил</button>
+            <form method="post">
+                <button class="repertoire-info__btn-visit" value="planned" name="planned" type="submit">Хочу посетить</button>
+                <button class="repertoire-info__btn-visited" value="attended" name="attended" type="submit">Уже посетил</button>
+            </form>
 
         </div>
     </div>
@@ -100,7 +102,7 @@
                                 </textarea>
                             </div>
                             <div class="btn">
-                                <button id ="save-comment" value="comment" name="addRep" type="submit">Отправить</button>
+                                <button id ="save-comment" value="savecomment" name="savecomment" type="submit">Отправить</button>
                             </div>
                         </form>
                     </div>
@@ -130,7 +132,7 @@
                     </div>
                     <div class="col l-11 container-comment__user-block">
                         <div class="container-comment__user-sub-block">
-                            <h4 class="container-comment__user-name" th:text="${user.login}">
+                            <h4 class="container-comment__user-name" th:text="${comment.getUser().getLogin()}">
                             </h4>
                             <span class="container-comment__user-time" th:text="${comment.getFormattedDate()}"><i></i></span>
                         </div>

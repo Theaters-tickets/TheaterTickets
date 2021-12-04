@@ -1,7 +1,10 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +12,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "category")
@@ -31,8 +37,7 @@ public class Category {
     @Column
     String type = "Uncategorized";
 
-    public Category() {
-    }
+
 
     public Category(String name) {
         this.name = name;
@@ -68,12 +73,4 @@ public class Category {
     }
 
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                '}';
-    }
 }

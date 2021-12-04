@@ -45,15 +45,21 @@ public class User {
 
     private Date ban;
 
+    @ManyToOne
+    private RoleAdmin roleAdmin;
+
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private Set<Comment> comments = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private Set<Template> templates = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH})
+    @Builder.Default
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "attended_event",
             joinColumns = { @JoinColumn(name = "user_id") },
@@ -61,7 +67,8 @@ public class User {
     )
     private Set<Performance> performances_attended = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH })
+    @Builder.Default
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "planned_event",
             joinColumns = { @JoinColumn(name = "user_id") },

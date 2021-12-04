@@ -1,12 +1,18 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "template")
@@ -22,6 +28,7 @@ public class Template {
     @Column
     private String criterion;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "template_id")
     private Set<Parameter> parameters = new HashSet<>();
@@ -35,8 +42,6 @@ public class Template {
         parameters.add(parameter);
     }
 
-    public Template() {
-    }
 
     public Template(String name, String criterion) {
         this.name = name;
@@ -49,12 +54,5 @@ public class Template {
         this.parameters = parameters;
     }
 
-    @Override
-    public String toString() {
-        return "Template{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", criterion='" + criterion + '\'' +
-                '}';
-    }
+
 }

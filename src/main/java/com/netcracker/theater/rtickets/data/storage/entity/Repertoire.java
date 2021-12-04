@@ -2,7 +2,10 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +13,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "repertoire")
@@ -29,6 +35,7 @@ public class Repertoire {
     @Column(name = "title", length = 5000)
     private String title;
 
+    @Lob
     @Column(name = "description", length = 100000)
     private String description;
 
@@ -40,14 +47,17 @@ public class Repertoire {
     )
     private Set<Genre> genres;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "repertoire_id")
     private Set<Comment> comments = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "repertoire_id")
     private Set<Performance> performances = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "repertoire_categories",
@@ -56,6 +66,7 @@ public class Repertoire {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "repertoire_id")
     private Set<Picture> pictures = new HashSet<>();
@@ -144,8 +155,7 @@ public class Repertoire {
         return Objects.hash(name, age_min, title, description);
     }
 
-    public Repertoire() {
-    }
+
 
     public double getRating() {
         double sum = 0;
@@ -181,13 +191,5 @@ public class Repertoire {
         this.pictures = pictures;
     }
 
-    @Override
-    public String toString() {
-        return "Repertoire{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age_min=" + age_min +
-                ", title='" + title + '\'' +
-                '}';
-    }
+
 }

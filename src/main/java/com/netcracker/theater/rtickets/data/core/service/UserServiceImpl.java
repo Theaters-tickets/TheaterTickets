@@ -1,23 +1,23 @@
 package com.netcracker.theater.rtickets.data.core.service;
 
+import com.netcracker.theater.rtickets.data.storage.entity.Recommendation;
+import com.netcracker.theater.rtickets.data.storage.entity.RoleAdmin;
+import com.netcracker.theater.rtickets.data.storage.entity.User;
 import com.netcracker.theater.rtickets.data.storage.repository.RoleAdminDAO;
 import com.netcracker.theater.rtickets.data.storage.repository.UserDAO;
-import com.netcracker.theater.rtickets.data.storage.entity.User;
-import com.netcracker.theater.rtickets.data.storage.entity.UserRole;
-import com.netcracker.theater.rtickets.data.storage.repository.UsersRolesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
 
-//Added by Ilya
-//For registration
+
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -28,15 +28,45 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RoleAdminDAO roleAdminDAO;
 
     @Autowired
-    private UsersRolesDAO usersRolesDAO;
+    private RoleAdminService roleAdminService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+
+
+    public User findByLogin(String login)
+    {
+        Optional<User> user = userDAO.findByLogin(login);
+        return user.orElse(null);
+    }
 
     @Override
     @Transactional
-    public List<User> getAllUsers() { return userDAO.findAll(); }
+    public List<User> getAllUsers()
+    {
+        return userDAO.findAll();
+    }
+
 
     @Override
     @Transactional
-    public void saveUser(User user) { userDAO.save(user); }
+    public void saveUser(User man)
+    {
+        User user = this.findByLogin(man.getLogin());
+        if (user == null)
+            this.saveMan(man, "ROLE_USER");
+    }
+
+
+
+    @Override
+    @Transactional
+    public void saveAdmin(User man) {
+        User user = this.findByLogin(man.getLogin());
+        if (user == null)
+            this.saveMan(man, "ROLE_ADMIN");
+    }
 
     @Override
     @Transactional
@@ -45,13 +75,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return optional.orElse(null);
     }
 
+    @Transactional
+    private void saveMan(User man, String roleAdmin)
+    {
+        RoleAdmin role = roleAdminService.findByRole(roleAdmin);
+        if (role != null)
+        {
+            userDAO.save(User.builder()
+                    .roleAdmin(role)
+                    .login(man.getLogin())
+                    .password(new BCryptPasswordEncoder().encode(man.getPassword()))
+                    .name(man.getName())
+                    .enabled(true)
+                    .build());
+        }
+    }
+
     @Override
     @Transactional
     public void deleteUser(UUID id) { userDAO.deleteById(id); }
 
     @Override
     @Transactional
-    public List<?> getFavoriteCategory(User user) { return userDAO.getFavoriteCategory(user); }
+    public List<Recommendation> getUsersRecommendations(User user) { return userDAO.getUsersRecommendations(user); }
 
     //Added for security purposes
     @Override
@@ -68,26 +114,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = this.userDAO.findByLogin(login);
+        User user = this.findByLogin(login);
 
-        if (user == null) {
-            System.out.println("User not found! " + login);
-            //throw new UsernameNotFoundException("User " + login + " was not found in the database");
-            return null;
-        }
-        System.out.println("Found User: " + user);
+        if (user == null)  return null;
 
-        Set<UserRole> roleNames = usersRolesDAO.findByUser_id(user.getId());
+        RoleAdmin roleNames1 = user.getRoleAdmin();
 
+        GrantedAuthority authority = new SimpleGrantedAuthority(roleNames1.getRole());
         List<GrantedAuthority> grantList = new ArrayList<>();
-        if (roleNames != null) {
-            for (UserRole role : roleNames) {
-                GrantedAuthority authority = new SimpleGrantedAuthority(role.getRole().getName());
-                grantList.add(authority);
-            }
-        }
-
-        return new org.springframework.security.core.userdetails.User
-                (user.getLogin(),user.getPassword(), grantList);
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),user.getPassword(), Arrays.asList(authority));
     }
 }
