@@ -62,31 +62,31 @@ public class User {
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
-            name = "attended_event",
+            name = "repertoire_attended",
             joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "performance_id") }
+            inverseJoinColumns = { @JoinColumn(name = "repertoire_id") }
     )
-    private Set<Performance> performances_attended = new HashSet<>();
+    private Set<Repertoire> repertoire_attended = new HashSet<>();
 
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
-            name = "planned_event",
+            name = "repertoire_planned",
             joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "performance_id") }
+            inverseJoinColumns = { @JoinColumn(name = "repertoire_id") }
     )
-    private Set<Performance> performances_planned = new HashSet<>();
+    private Set<Repertoire> repertoire_planned = new HashSet<>();
 
-    public void addPerformancesAttended(Performance performance)
+    public void addRepertoireAttended(Repertoire repertoire)
     {
-        if (performances_attended == null) performances_attended = new HashSet<>();
-        performances_attended.add(performance);
+        if (repertoire_attended == null) repertoire_attended = new HashSet<>();
+        repertoire_attended.add(repertoire);
     }
 
-    public void addPerformancesPlanned(Performance performance)
+    public void addRepertoirePlanned(Repertoire repertoire)
     {
-        if (performances_planned == null) performances_planned = new HashSet<>();
-        performances_planned.add(performance);
+        if (repertoire_planned == null) repertoire_planned = new HashSet<>();
+        repertoire_planned.add(repertoire);
     }
 
     public void addComment(Comment comment)

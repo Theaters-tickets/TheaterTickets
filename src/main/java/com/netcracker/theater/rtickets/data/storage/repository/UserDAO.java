@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface UserDAO extends JpaRepository<User, UUID> {
-    @Query("select tags.recommendation as rec from Performance p join p.repertoire.categories tags" +
-            " where (((?1  member of p.usersAttended) or (?1  member of p.usersPlanned)) " +
+    @Query("select distinct tags.recommendation as rec from Repertoire rep join rep.categories tags" +
+            " where (((?1  member of rep.usersAttended) or (?1  member of rep.usersPlanned)) " +
             "and (tags.recommendation.name not like 'default'))" +
             "group by tags order by count(tags) desc")
     List<Recommendation> getUsersRecommendations(User user);

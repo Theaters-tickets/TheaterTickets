@@ -43,9 +43,9 @@
                         <i id="info-list-favorite-icon" class="fas fa-chevron-right"></i>
                     </div>
                     <ul id="info-list-favorite" class="profile-sidebar__info-list">
-                        <tr th:each="perf : ${plannedPerf}">
-                            <a th:href="@{|/play/${perf.repertoire.id}|}">
-                                <li class="profile-sidebar__info-item" th:text="${perf.repertoire.name}"></li>
+                        <tr th:each="rep : ${plannedRep}">
+                            <a th:href="@{|/play/${rep.id}|}">
+                                <li class="profile-sidebar__info-item" th:text="${rep.name}"></li>
                             </a>
                         </tr>
                     </ul>
@@ -54,21 +54,21 @@
         </div>
         <div class="col l-9 profile-favorites">
             <h1 class="profile-favorites__title">Ваши избранные<span><i class="fas fa-heart"></i></span> </h1>
-            <tr th:if="${#lists.isEmpty(plannedPerf)}">
+            <tr th:if="${#lists.isEmpty(plannedRep)}">
                 <a href="#" class="row profile-favorites-block">"Добавьте спектакль!"</a>
             </tr>
-            <tr th:each="perf : ${plannedPerf}">
-                 <a th:href="@{|/play/${perf.repertoire.id}|}" id="1" class="row profile-favorites-block">
+            <tr th:each="rep : ${plannedRep}">
+                 <a th:href="@{|/play/${rep.id}|}" id="1" class="row profile-favorites-block">
                      <div class="col l-4">
                          <div class="profile-favorites__img">
-                             <img th:src= "${perf.repertoire.getPictures().stream().findFirst().get().getImage()}" alt="">
+                             <img th:src= "${rep.getPictures().stream().findFirst().get().getImage()}" alt="">
                          </div>
                      </div>
                      <div class="col l-8">
                          <div class="profile-favorites__favorite">
-                             <h2 class="profile-favorites__favorite-title" th:text="${perf.repertoire.name}">
+                             <h2 class="profile-favorites__favorite-title" th:text="${rep.name}">
                              </h2>
-                             <p class="profile-favorites__favorite-description" th:text="${perf.repertoire.title}">
+                             <p class="profile-favorites__favorite-description" th:text="${rep.title}">
                              </p>
                          </div>
                      </div>

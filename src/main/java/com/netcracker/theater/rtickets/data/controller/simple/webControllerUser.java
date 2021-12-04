@@ -78,7 +78,7 @@ public class webControllerUser {
         if (principal != null) {
             String username = principal.getName();
             User user = userService.getUserByLogin(username);
-            user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
+            user.addRepertoirePlanned(repertoireService.getById(id));
             userService.saveUser(user);
             return "redirect:/play/{id}";
         }
@@ -89,7 +89,7 @@ public class webControllerUser {
         if (principal != null) {
             String username = principal.getName();
             User user = userService.getUserByLogin(username);
-            user.addPerformancesAttended(repertoireService.getById(id).getPerformances().iterator().next());
+            user.addRepertoireAttended(repertoireService.getById(id));
             userService.saveUser(user);
             return "redirect:/play/{id}";
         }

@@ -35,13 +35,6 @@ public class Performance {
     @ManyToMany(mappedBy = "performances", fetch = FetchType.LAZY)
     private Set<Actor> actors = new HashSet<>();
 
-    @Builder.Default
-    @ManyToMany(mappedBy = "performances_attended", fetch = FetchType.LAZY)
-    private Set<User> usersAttended = new HashSet<>();
-
-    @Builder.Default
-    @ManyToMany(mappedBy = "performances_planned", fetch = FetchType.LAZY)
-    private Set<User> usersPlanned = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Repertoire repertoire;
@@ -54,15 +47,6 @@ public class Performance {
     @Transient
     SimpleDateFormat patternTime = new SimpleDateFormat("HH:mm:ss");
 
-    public void addToUsersAttended (User user)
-    {
-        usersAttended.add(user);
-    }
-    public void addToUsersPlanned (User user)
-    {
-        usersPlanned.add(user);
-    }
-
 
 
     public Performance(String timeStart, String timeEnd, String date) {
@@ -71,13 +55,11 @@ public class Performance {
         this.date = date;
     }
 
-    public Performance(String timeStart, String timeEnd, String date, Set<Actor> actors, Set<User> usersAttended, Set<User> usersPlanned) {
+    public Performance(String timeStart, String timeEnd, String date, Set<Actor> actors) {
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.date = date;
         this.actors = actors;
-        this.usersAttended = usersAttended;
-        this.usersPlanned = usersPlanned;
     }
 
     public String getTimeStart() {

@@ -26,13 +26,9 @@ public class Main {
         CommentService commentService = context.getBean(CommentService.class);
         RepertoireService repertoireService = context.getBean(RepertoireService.class);
         Repertoire rep = repertoireService.getAllRepertoire().iterator().next();
-        //Comment comment = new Comment("ff", 5);
-        //comment.setRepertoire(rep);
-       // commentService.saveComment(comment);
-       // comment.setUser(userService.getUserByLogin("user"));
-       // System.out.println(userService.getUserByLogin("user").getId());
-       // commentService.saveComment(comment);
-      //  System.out.println(commentService.getAllComments());
+
+        User user = userService.getUserByLogin("user");
+        System.out.println(userService.getUsersRecommendations(user));
 
 
         //System.out.println("attended: " + user.getPerformances_attended());

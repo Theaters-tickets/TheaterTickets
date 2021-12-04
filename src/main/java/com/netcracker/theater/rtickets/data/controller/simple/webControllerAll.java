@@ -80,11 +80,11 @@ public class webControllerAll {
         if (principal == null) {return "redirect:/login";}
         User user = userService.getUserByLogin(principal.getName());
         model.put("currentUser", user);
-        List<Performance> plannedPerf = new ArrayList<>();
-        plannedPerf.addAll(user.getPerformances_planned());
-        model.put("plannedPerf", plannedPerf);
-        Performance perf = new Performance();
-        model.put("perf", perf);
+        List<Repertoire> plannedRep = new ArrayList<>();
+        plannedRep.addAll(user.getRepertoire_planned());
+        model.put("plannedRep", plannedRep);
+        Repertoire rep = new Repertoire();
+        model.put("rep", rep);
         return "account";
     }
 

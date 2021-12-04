@@ -71,6 +71,23 @@ public class Repertoire {
     @JoinColumn(name = "repertoire_id")
     private Set<Picture> pictures = new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany(mappedBy = "repertoire_attended", fetch = FetchType.LAZY)
+    private Set<User> usersAttended = new HashSet<>();
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "repertoire_planned", fetch = FetchType.LAZY)
+    private Set<User> usersPlanned = new HashSet<>();
+
+    public void addToUsersAttended (User user)
+    {
+        usersAttended.add(user);
+    }
+    public void addToUsersPlanned (User user)
+    {
+        usersPlanned.add(user);
+    }
+
     public void addGenre(Genre genre)
     {
         if (genres == null) genres = new HashSet<>();
