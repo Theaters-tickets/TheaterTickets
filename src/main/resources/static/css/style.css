@@ -795,6 +795,7 @@ footer{
 .profile-sidebar__info-item{
     cursor: pointer;
     padding: 4px 0;
+    word-break:break-word;
 }
 .profile-sidebar__info-item:hover{
     color: rgb(80, 80, 255);

@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,11 +27,13 @@ public class Comment {
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column
+    String userName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Repertoire repertoire;
 
 
@@ -66,8 +69,6 @@ public class Comment {
         return createdAt.format(formatter);
     }
 
-
-
     public Comment() {
     }
 
@@ -82,9 +83,6 @@ public class Comment {
                 "id=" + id +
                 ", text='" + text + '\'' +
                 ", score=" + score +
-                ", user=" + user +
-                ", rep=" + repertoire +
-
                 '}';
     }
 }

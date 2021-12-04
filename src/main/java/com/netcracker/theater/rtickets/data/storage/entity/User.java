@@ -1,5 +1,6 @@
 package com.netcracker.theater.rtickets.data.storage.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,7 +46,7 @@ public class User {
 
     private Date ban;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private Set<Comment> comments = new HashSet<>();
 

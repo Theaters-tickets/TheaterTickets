@@ -6,6 +6,8 @@ import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.core.service.*;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,17 +56,31 @@ public class webControllerUser {
     }
     @PostMapping( params = "savecomment", value = "/play/{id}")
     public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment) {
-        //Repertoire repertoire = repertoireService.getById(id);
-        //repertoire.addComment(comment);
-        //repertoireService.saveRep(repertoire);
-        //commentService.saveComment(comment);
-        comment.setUser(userService.getUserByLogin("user"));
         comment.setRepertoire(repertoireService.getById(id));
+        String username;
+        try {
+            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+            System.out.println(username);
+        }
+        catch (Exception e) {
+            return "redirect:/login";
+        }
+        comment.setUserName(username);
         commentService.saveComment(comment);
+        System.out.println(commentService.getAllComments());
         return "redirect:/play/{id}";
     }
     @PostMapping( params = "planned", value = "/play/{id}")
-    public String savePlanned(@PathVariable("id") UUID id, Model model, @ModelAttribute User user) {
+    public String savePlanned(@PathVariable("id") UUID id, Model model) {
+        System.out.println("Planned " + id);
+        String username;
+        try {
+            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        }
+        catch (Exception e) {
+            return "redirect:/login";
+        }
+        User user = userService.getUserByLogin(username);
         user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
         userService.saveUser(user);
         return "redirect:/play/{id}";

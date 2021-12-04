@@ -3,6 +3,8 @@ package com.netcracker.theater.rtickets.data.controller.simple;
 import com.netcracker.theater.rtickets.data.storage.entity.*;
 import com.netcracker.theater.rtickets.data.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,14 @@ public class webController {
     //Added by Alisa
     @GetMapping("/recommendation")
     public String recommendation(Map<String, Object> model) {
-        User user = userService.getUserByLogin("user");
+        String username;
+        try {
+            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        }
+        catch (Exception e) {
+            return "redirect:/login";
+        }
+        User user = userService.getUserByLogin(username);
         model.put("user", user);
         List<Recommendation> recommendations = userService.getUsersRecommendations(user);
         model.put("recommendations", recommendations);

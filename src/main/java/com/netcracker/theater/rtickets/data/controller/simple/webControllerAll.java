@@ -1,12 +1,15 @@
 package com.netcracker.theater.rtickets.data.controller.simple;
 
-import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
-import com.netcracker.theater.rtickets.data.storage.entity.User;
+import com.netcracker.theater.rtickets.data.storage.entity.*;
 import com.netcracker.theater.rtickets.data.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,10 +80,21 @@ public class webControllerAll {
 
 
     @GetMapping("/account")
-    public String getAccount(Map<String, Object> model){
-        //Todo synthesise with authorization
-        User user = userService.getUserByLogin("user");
+    public String getAccount(Map<String, Object> model, Principal principal){
+        String username;
+        try {
+            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        }
+        catch (Exception e) {
+            return "redirect:/login";
+        }
+        User user = userService.getUserByLogin(username);
         model.put("currentUser", user);
+        List<Performance> plannedPerf = new ArrayList<>();
+        plannedPerf.addAll(user.getPerformances_planned());
+        model.put("plannedPerf", plannedPerf);
+        Performance perf = new Performance();
+        model.put("perf", perf);
         return "account";
     }
 

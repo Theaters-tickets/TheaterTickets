@@ -43,84 +43,37 @@
                         <i id="info-list-favorite-icon" class="fas fa-chevron-right"></i>
                     </div>
                     <ul id="info-list-favorite" class="profile-sidebar__info-list">
-                        <a href="#1"><li class="profile-sidebar__info-item">Repertoire 1</li></a>
-                        <a href="#2"><li class="profile-sidebar__info-item">Repertoire 2</li></a>
-                        <a href="#3"><li class="profile-sidebar__info-item">Repertoire 3</li></a>
-                        <a href="#4"><li class="profile-sidebar__info-item">Repertoire 4</li></a>
+                        <tr th:each="perf : ${plannedPerf}">
+                            <a th:href="@{|/play/${perf.repertoire.id}|}">
+                                <li class="profile-sidebar__info-item" th:text="${perf.repertoire.name}"></li>
+                            </a>
+                        </tr>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col l-9 profile-favorites">
             <h1 class="profile-favorites__title">Ваши избранные<span><i class="fas fa-heart"></i></span> </h1>
-            <a href="#" id="1" class="row profile-favorites-block">
-                <div class="col l-4">
-                    <div class="profile-favorites__img">
-                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
-                    </div>
-                </div>
-                <div class="col l-8">
-                    <div class="profile-favorites__favorite">
-                        <h2 class="profile-favorites__favorite-title">
-                            Преступление и наказание 1
-                        </h2>
-                        <p class="profile-favorites__favorite-description">
-                            Краткое описание...
-                        </p>
-                    </div>
-                </div>
-            </a>
-            <a href="#" id="2" class="row profile-favorites-block">
-                <div class="col l-4">
-                    <div class="profile-favorites__img">
-                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
-                    </div>
-                </div>
-                <div class="col l-8">
-                    <div class="profile-favorites__favorite">
-                        <h2 class="profile-favorites__favorite-title">
-                            Преступление и наказание 2
-                        </h2>
-                        <p class="profile-favorites__favorite-description">
-                            Краткое описание...
-                        </p>
-                    </div>
-                </div>
-            </a>
-            <a href="#" id="3" class="row profile-favorites-block">
-                <div class="col l-4">
-                    <div class="profile-favorites__img">
-                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
-                    </div>
-                </div>
-                <div class="col l-8">
-                    <div class="profile-favorites__favorite">
-                        <h2 class="profile-favorites__favorite-title">
-                            Преступление и наказание 3
-                        </h2>
-                        <p class="profile-favorites__favorite-description">
-                            Краткое описание...
-                        </p>
-                    </div>
-                </div>
-            </a>
-            <a href="#" id="4" class="row profile-favorites-block">
-                <div class="col l-4">
-                    <div class="profile-favorites__img">
-                        <img src="https://sun9-15.userapi.com/impg/1OLJJplx_cXEbxN7zJJTNBvUENnPNShpyBFeEg/pIfNSbIqcyM.jpg?size=1920x1080&quality=96&sign=887fc0f74c4c614a6bf1ab51b95f6ea3&type=album" alt="">
-                    </div>
-                </div>
-                <div class="col l-8">
-                    <div class="profile-favorites__favorite">
-                        <h2 class="profile-favorites__favorite-title">
-                            Преступление и наказание 4
-                        </h2>
-                        <p class="profile-favorites__favorite-description">
-                            Краткое описание...
-                        </p>
-                    </div>
-                </div>
-            </a>
+            <tr th:if="${#lists.isEmpty(plannedPerf)}">
+                <a href="#" class="row profile-favorites-block">"Добавьте спектакль!"</a>
+            </tr>
+            <tr th:each="perf : ${plannedPerf}">
+                 <a th:href="@{|/play/${perf.repertoire.id}|}" id="1" class="row profile-favorites-block">
+                     <div class="col l-4">
+                         <div class="profile-favorites__img">
+                             <img th:src= "${perf.repertoire.getPictures().stream().findFirst().get().getImage()}" alt="">
+                         </div>
+                     </div>
+                     <div class="col l-8">
+                         <div class="profile-favorites__favorite">
+                             <h2 class="profile-favorites__favorite-title" th:text="${perf.repertoire.name}">
+                             </h2>
+                             <p class="profile-favorites__favorite-description" th:text="${perf.repertoire.title}">
+                             </p>
+                         </div>
+                     </div>
+                 </a>
+            </tr>
         </div>
     </div>
 </div>
