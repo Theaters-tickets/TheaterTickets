@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.Map;
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class webController {
 
     //Added by Alisa
     @GetMapping("/recommendation")
-    public String recommendation(Map<String, Object> model) {
-        User user = userService.getUserByLogin("user");
+    public String recommendation(Map<String, Object> model, Principal principal) {
+        if (principal == null) {return "redirect:/login";}
+        User user = userService.getUserByLogin(principal.getName());
         model.put("user", user);
         List<Recommendation> recommendations = userService.getUsersRecommendations(user);
         model.put("recommendations", recommendations);
         Recommendation rec = new Recommendation();
         model.put("rec", rec);
-
         return "recommendations";
     }
     @GetMapping("/recommendation/NewYear")

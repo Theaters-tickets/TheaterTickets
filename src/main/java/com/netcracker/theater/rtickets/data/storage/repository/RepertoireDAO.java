@@ -1,9 +1,12 @@
 package com.netcracker.theater.rtickets.data.storage.repository;
 
 import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -22,9 +25,9 @@ public interface RepertoireDAO extends JpaRepository<Repertoire, UUID> {
             "and  (repertoire.name like %:name%)" +
             "and (cast(repertoire.age_min as signed integer) <= :age)", nativeQuery = true)
     List<Repertoire> filterRepertoire(@Param("date") String date,
-                                             @Param("description") String description,
-                                             @Param("name") String name,
-                                             @Param("age") String age);
+                                      @Param("description") String description,
+                                      @Param("name") String name,
+                                      @Param("age") String age);
 
 
 

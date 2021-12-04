@@ -3,6 +3,8 @@ package com.netcracker.theater.rtickets.data.core.service;
 import com.netcracker.theater.rtickets.data.storage.entity.Category;
 import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.storage.entity.Theatre;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Set;
@@ -37,4 +39,5 @@ public interface RepertoireService {
     //Added by Ilya
     //Get similar repertoire by tags
     List<Repertoire> getSimilarRepertoire(Set<Category> categories, int amount);
+
 }

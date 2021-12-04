@@ -67,17 +67,21 @@
                     <i class="header-icon fas fa-info-circle"></i>
                     <span class="header-text">Status</span>
                 </a>
-                <a class="header-link" href="/recommendation" >
+                <a th:if="${accessRights!=''}" class="header-link" href="/recommendation" >
                     <i class="header-icon far fa-comments"></i>
                     <span class="header-text">Recommendation</span>
                 </a>
-                <a class="header-link" href="/login">
+                <a th:if="${accessRights==''}" class="header-link" href="/login">
                     <i class="header-icon fas fa-sign-in-alt"></i>
                     <span class="header-text">Login</span>
                 </a>
-                <a class="header-link" href="/registration">
+                <a th:if="${accessRights==''}" class="header-link" href="/registration">
                     <i class="header-icon far fa-edit"></i>
                     <span class="header-text">Register</span>
+                </a>
+                <a th:if="${accessRights!=''}" class="header-link" href="/account">
+                    <i class="header-icon fas fa-user-circle"></i>
+                    <span class="header-text">Account</span>
                 </a>
             </div>
         </div>
