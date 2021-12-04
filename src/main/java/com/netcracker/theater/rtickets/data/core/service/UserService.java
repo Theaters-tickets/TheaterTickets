@@ -9,9 +9,9 @@ import java.util.UUID;
 public interface UserService {
     List<User> getAllUsers();
 
-    void saveUser(User man);
+    User saveUser(User man);
 
-    void saveAdmin(User man);
+    User saveAdmin(User man);
 
 
 
