@@ -2,13 +2,19 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "performance")
@@ -25,12 +31,15 @@ public class Performance {
 
     private String date;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "performances", fetch = FetchType.LAZY)
     private Set<Actor> actors = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(mappedBy = "performances_attended", fetch = FetchType.LAZY)
     private Set<User> usersAttended = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(mappedBy = "performances_planned", fetch = FetchType.LAZY)
     private Set<User> usersPlanned = new HashSet<>();
 
@@ -54,8 +63,7 @@ public class Performance {
         usersPlanned.add(user);
     }
 
-    public Performance() {
-    }
+
 
     public Performance(String timeStart, String timeEnd, String date) {
         this.timeStart = timeStart;
@@ -117,12 +125,5 @@ public class Performance {
         return Objects.hash(timeStart, timeEnd, date, patternDate, patternTime);
     }
 
-    @Override
-    public String toString() {
-        return "Performance{" +
-                "id=" + id +
-                ", timeStart=" + timeStart +
-                ", timeEnd=" + timeEnd +
-                '}';
-    }
+
 }

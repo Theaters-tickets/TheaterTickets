@@ -48,14 +48,17 @@ public class User {
     @ManyToOne
     private RoleAdmin roleAdmin;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private Set<Comment> comments = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private Set<Template> templates = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "attended_event",
@@ -64,6 +67,7 @@ public class User {
     )
     private Set<Performance> performances_attended = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "planned_event",
