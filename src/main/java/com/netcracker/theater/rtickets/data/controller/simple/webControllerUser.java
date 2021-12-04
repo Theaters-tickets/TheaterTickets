@@ -65,6 +65,7 @@ public class webControllerUser {
     }
     @PostMapping( params = "planned", value = "/play/{id}")
     public String savePlanned(@PathVariable("id") UUID id, Model model, @ModelAttribute User user) {
+        Repertoire v = repertoireService.getById(id);
         user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
         userService.saveUser(user);
         return "redirect:/play/{id}";
