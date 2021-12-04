@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -55,41 +56,37 @@ public class webControllerUser {
         return "repertoireInfo";
     }
     @PostMapping( params = "savecomment", value = "/play/{id}")
-    public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment) {
-        comment.setRepertoire(repertoireService.getById(id));
-        String username;
-        try {
-            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-            System.out.println(username);
+    public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment, Principal principal) {
+        if (principal != null) {
+            comment.setRepertoire(repertoireService.getById(id));
+            String username = principal.getName();
+            comment.setUserName(username);
+            commentService.saveComment(comment);
+            return "redirect:/play/{id}";
         }
-        catch (Exception e) {
-            return "redirect:/login";
-        }
-        comment.setUserName(username);
-        commentService.saveComment(comment);
-        System.out.println(commentService.getAllComments());
-        return "redirect:/play/{id}";
+        return "redirect:/login";
     }
     @PostMapping( params = "planned", value = "/play/{id}")
-    public String savePlanned(@PathVariable("id") UUID id, Model model) {
-        System.out.println("Planned " + id);
-        String username;
-        try {
-            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    public String savePlanned(@PathVariable("id") UUID id, Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userService.getUserByLogin(username);
+            user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
+            userService.saveUser(user);
+            return "redirect:/play/{id}";
         }
-        catch (Exception e) {
-            return "redirect:/login";
-        }
-        User user = userService.getUserByLogin(username);
-        user.addPerformancesPlanned(repertoireService.getById(id).getPerformances().iterator().next());
-        userService.saveUser(user);
-        return "redirect:/play/{id}";
+        return "redirect:/login";
     }
     @PostMapping( params = "attended", value = "/play/{id}")
-    public String saveAttended(@PathVariable("id") UUID id, Model model, @ModelAttribute User user) {
-        user.addPerformancesAttended(repertoireService.getById(id).getPerformances().iterator().next());
-        userService.saveUser(user);
-        return "redirect:/play/{id}";
+    public String saveAttended(@PathVariable("id") UUID id, Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userService.getUserByLogin(username);
+            user.addPerformancesAttended(repertoireService.getById(id).getPerformances().iterator().next());
+            userService.saveUser(user);
+            return "redirect:/play/{id}";
+        }
+        return "redirect:/login";
     }
 
 
