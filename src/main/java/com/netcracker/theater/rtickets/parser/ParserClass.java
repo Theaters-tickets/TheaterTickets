@@ -48,7 +48,7 @@ public class ParserClass {
         String pathToTheNextPage = null;
         Long theatreNumber = 0L;
         try {
-            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=1635240332&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images,dates,place,participants");
+            url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=" + CURRENT_TIME + "&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images,dates,place,participants");
             ObjectMapper mapper = new ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             while (true) {
@@ -57,8 +57,13 @@ public class ParserClass {
                     throw new RuntimeException();
                 } else {
                     JSONArray results = (JSONArray) obj.get("results");
+                    Repertoire repertoire = new Repertoire();
                     for (Object result : results) {
-                        Repertoire repertoire = mapper.readValue(result.toString(), Repertoire.class);
+                        try {
+                            repertoire = mapper.readValue(result.toString(), Repertoire.class);
+                        } catch (Exception ex) {
+                            System.out.println("Exception in parsing");
+                        }
                         check = true;
                         for (Repertoire rep : repertoireService.getAllRepertoire()) {
                             if (rep.equals(repertoire)) { //check fot unique value

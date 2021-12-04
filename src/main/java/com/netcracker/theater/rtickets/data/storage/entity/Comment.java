@@ -27,10 +27,10 @@ public class Comment {
     private LocalDateTime createdAt = LocalDateTime.now();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Repertoire repertoire;
 
 

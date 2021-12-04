@@ -20,7 +20,7 @@ public class RoleActor {
     private UUID id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "role_id")
     private Set<Actor> actors=new HashSet<>();
 

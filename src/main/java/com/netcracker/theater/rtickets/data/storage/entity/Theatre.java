@@ -27,7 +27,8 @@ public class Theatre {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "description", length = 10000)
+    @Lob
+    @Column(name = "description", length = 30000)
     private String description;
 
     @Column(name = "subway")

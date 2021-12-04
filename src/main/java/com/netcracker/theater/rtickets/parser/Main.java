@@ -19,13 +19,20 @@ public class Main {
         ParserClass parserClass = context.getBean(ParserClass.class);
         //TESTPARSER testparser = context.getBean(TESTPARSER.class);
 
-        //parserClass.parseTheatre();
-        //parserClass.parseRecommendation();
-        //parserClass.parseRepertoire();
+        parserClass.parseTheatre();
+        parserClass.parseRecommendation();
+        parserClass.parseRepertoire();
         UserService userService = context.getBean(UserService.class);
         CommentService commentService = context.getBean(CommentService.class);
         RepertoireService repertoireService = context.getBean(RepertoireService.class);
         Repertoire rep = repertoireService.getAllRepertoire().iterator().next();
+        //Comment comment = new Comment("ff", 5);
+        //comment.setRepertoire(rep);
+        //commentService.saveComment(comment);
+        //comment.setUser(userService.getUserByLogin("user"));
+        //System.out.println(userService.getUserByLogin("user").getId());
+        //commentService.saveComment(comment);
+        //System.out.println(commentService.getAllComments());
 
 
         //System.out.println("attended: " + user.getPerformances_attended());

@@ -29,6 +29,7 @@ public class Repertoire {
     @Column(name = "title", length = 5000)
     private String title;
 
+    @Lob
     @Column(name = "description", length = 100000)
     private String description;
 
