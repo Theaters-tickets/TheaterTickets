@@ -47,11 +47,13 @@ public class ParserClass {
      public void parseRepertoire() {
         String pathToTheNextPage = null;
         Long theatreNumber = 0L;
+        int pageCount = 0;
         try {
             url = new URL("https://kudago.com/public-api/v1.4/events/?lang=ru&categories=theater&location=spb&page_size=20&actual_since=" + CURRENT_TIME + "&expand=&fields=id,short_title,description,body_text,age_restriction,tags,images,dates,place,participants");
             ObjectMapper mapper = new ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            while (true) {
+            //while (true) {
+            while (pageCount < 6){
                 JSONObject obj = getObj(url);
                 if (obj.isEmpty()) {
                     throw new RuntimeException();
@@ -156,6 +158,8 @@ public class ParserClass {
 
 
 
+
+
                         //SAVE TAGS
                         Recommendation recDefault = recommendationService.getRecommendationBySlug("Uncategorized");
                         if (recDefault == null) {
@@ -192,6 +196,8 @@ public class ParserClass {
                         break;
                     }
                 }
+                //Added by Ilya
+                pageCount++;
             }
         } catch (Exception e) {
             e.printStackTrace();

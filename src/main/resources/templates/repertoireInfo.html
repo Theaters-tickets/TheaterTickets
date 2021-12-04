@@ -23,21 +23,21 @@
             </div>
 
             <div class="col m-8 header-block-links">
-                <a class="header-link" href="/adminTags">
+                <a th:if="${accessRights=='admin'}" class="header-link" href="/adminTags">
                     <i class="header-icon fas fa-tags"></i>
                     <span class="header-text">AdminTags</span>
                 </a>
-                <a class="header-link" href="/status">
+                <a th:if="${accessRights=='admin'}" class="header-link" href="/status">
                     <i class="header-icon fas fa-info-circle"></i>
                     <span class="header-text">Status</span>
                 </a>
-                <a class="header-link" href="/recommendation">
+                <a th:if="${accessRights!=''}" class="header-link" href="/recommendation">
                     <i class="header-icon fas fa-check"></i>
                     <span class="header-text">Recommendation</span>
                 </a>
-                <a class="header-link" href="/account">
+                <a th:if="${!accessRights.equals('')}" class="header-link" href="/account">
                     <i class="header-icon fas fa-user-circle"></i>
-                    <span class="header-text">User's name</span>
+                    <span class="header-text">Account</span>
                 </a>
             </div>
         </div>

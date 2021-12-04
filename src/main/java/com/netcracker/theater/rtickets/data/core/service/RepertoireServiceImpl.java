@@ -6,6 +6,9 @@ import com.netcracker.theater.rtickets.data.storage.entity.Performance;
 import com.netcracker.theater.rtickets.data.storage.entity.Repertoire;
 import com.netcracker.theater.rtickets.data.storage.entity.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,9 +47,9 @@ public class RepertoireServiceImpl implements RepertoireService{
     @Override
     @Transactional
     public List<Repertoire> filterRepertoire(String date, String description, String name, String age){
-        if (date.equals("") && description.equals("") && name.equals("") && age.equals("99")){
-            return repertoireDAO.findAll();
-        }
+        //if (date.equals("") && description.equals("") && name.equals("") && age.equals("99")){
+        //    return repertoireDAO.findAll();
+        //}
         if (date.equals("")){
             String strDate = "";
         }
@@ -56,13 +59,15 @@ public class RepertoireServiceImpl implements RepertoireService{
                 Date dateDate = df.parse(date);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
                 String strDate = formatter.format(dateDate);
-                return repertoireDAO.filterRepertoire(strDate, description, name, age);
+                List<Repertoire> allRepertoire = repertoireDAO.filterRepertoire(strDate, description, name, age);
+                return allRepertoire;
             }
             catch (Exception e){
                 System.out.println(e.getCause()+e.getMessage());
             }
         }
-        return repertoireDAO.filterRepertoire(date, description, name, age);
+        List<Repertoire> allRepertoire = repertoireDAO.filterRepertoire(date, description, name, age);
+        return allRepertoire;
     }
 
     //Added by Ilya

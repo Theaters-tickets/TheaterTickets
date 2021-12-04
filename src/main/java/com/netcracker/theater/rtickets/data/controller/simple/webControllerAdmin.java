@@ -85,14 +85,13 @@ public class webControllerAdmin {
         model.put("category", categoryService.getAllCategories());
         model.put("uncategorizedCategory", categoryService.getUncategorizedCategories());
         if (parserType.equals("repertoire")){
-            parserClass.parseRepertoire();
-            //parserClass.parseRecommendation();
+            //parserClass.parseRepertoire();                    //To disable unexpected run
         }
         if (parserType.equals("theatre")){
-            parserClass.parseTheatre();
+            //parserClass.parseTheatre();                       //To disable unexpected run
         }
         if (parserType.equals("recommendation")){
-            parserClass.parseRecommendation();
+            //parserClass.parseRecommendation();                //To disable unexpected run
         }
         return "status";
     }

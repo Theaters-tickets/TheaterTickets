@@ -20,10 +20,12 @@ public interface UserDAO extends JpaRepository<User, UUID> {
     List<Recommendation> getUsersRecommendations(User user);
 
     //Added by Ilya
+    //todo delete
     @Query(value = "select * from user where user.login = :login", nativeQuery = true)
     User getUserByLogin(@Param("login") String login);
 
     //Added by Ilya
+    //todo delete
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE user " +
             "SET user.name= :name, user.last_name= :lastName " +

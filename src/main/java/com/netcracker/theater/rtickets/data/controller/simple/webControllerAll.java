@@ -30,21 +30,23 @@ public class webControllerAll {
     @Autowired
     UserService userService;
 
+    @GetMapping("/")
+    public String redirect(){
+        return "redirect:/mainPage";
+    }
+
     //Main page
     @GetMapping("/mainPage")
     public String mainPage(
-            Map<String, Object> model) {
-
+            Map<String, Object> model,
+            Principal principal) {
         List<Repertoire> threeRandom = repertoireService.getThreeRandomRepertoire();
-        //This should be checked via spring security
-        //But now it's hardcoded for admin
-        model.put("accessRights", "admin");
-        //
+        model.put("accessRights", (principal != null ? principal.getName() : ""));
         model.put("threeRandomRepertoire", threeRandom);
         return "mainPage";
-
-
     }
+
+
 
     //Registration page
     @GetMapping("/registration")
@@ -68,30 +70,15 @@ public class webControllerAll {
     }
 
     @PostMapping("/login")
-    public String postLogin(
-            @RequestParam(value="username") String username,
-            @RequestParam (value="password") String password,
-            Map<String, Object> model) {
-        //To-do - authentication
-        if (username.equals("root") && password.equals("root")) {
-            model.put("status", "OK");
-        } else {
-            model.put("status", "ERROR");
-        }
+    public String postLogin() {
         return "login";
     }
 
 
     @GetMapping("/account")
     public String getAccount(Map<String, Object> model, Principal principal){
-        String username;
-        try {
-            username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        }
-        catch (Exception e) {
-            return "redirect:/login";
-        }
-        User user = userService.getUserByLogin(username);
+        if (principal == null) {return "redirect:/login";}
+        User user = userService.getUserByLogin(principal.getName());
         model.put("currentUser", user);
         List<Performance> plannedPerf = new ArrayList<>();
         plannedPerf.addAll(user.getPerformances_planned());
