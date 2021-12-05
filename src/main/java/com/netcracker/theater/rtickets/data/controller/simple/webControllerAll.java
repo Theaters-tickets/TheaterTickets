@@ -2,12 +2,15 @@ package com.netcracker.theater.rtickets.data.controller.simple;
 
 import com.netcracker.theater.rtickets.data.storage.entity.*;
 import com.netcracker.theater.rtickets.data.core.service.*;
+import com.zaxxer.hikari.util.SuspendResumeLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,18 +59,26 @@ public class webControllerAll {
     }
 
     @PostMapping("/registration")
-    public void postRegistration(Map<String, Object> model,
+    public String postRegistration(Map<String, Object> model,
                                  @RequestBody User user)
     {
         User us = userService.saveUser(user);
-        if (us.getId() == null)
+        if (us == null){
+            //System.out.println("non unique");
+            model.put("status", "Non unique login!");
+            return "registration";
+        }
+        else if (us.getId() == null)
         {
+            //System.out.println("Error");
             String str = "пользователь уже есть";
         }
         else
         {
+            //System.out.println("Success");
             String str = "создался";
         }
+        return "redirect:/mainPage";
     }
 
     //Login page

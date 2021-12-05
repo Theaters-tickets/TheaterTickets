@@ -143,6 +143,7 @@ public class RestControllerUsers {
         }
     }
     //редактирование данныех пользователя
+    /*
     @PostMapping("/saveDataUser")
     public void saveDataUser2(@RequestBody User user)
     {
@@ -162,5 +163,7 @@ public class RestControllerUsers {
                     .build());
         }
     }
+
+     */
 
 }

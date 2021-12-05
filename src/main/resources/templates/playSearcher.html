@@ -1,7 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <title>Поиск спекталя</title>
-
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="stylesheet" href="/css/grid.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/animation.css">
+<link rel="stylesheet" href="/fonts/fontawesome-free-5.15.4-web/css/all.min.css">
+<!--a id="main" class="link" href="/mainPage">Main page</a-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/-->
+<script type="text/javascript" th:src="@{/scripts/script.js}"></script>
 <style>
 
     .wrapper {
@@ -20,7 +28,7 @@
     .main {
         width: 70%;
         height: auto;
-        max-height: 90vh;
+        max-height: 80vh;
         border: #454542 solid 2px;
         overflow-x: hidden;
         overflow-y: auto;
@@ -55,16 +63,46 @@
         color: #3C4667;
         text-decoration-line: none;
     }
-
-
+    .head{
+        width: 100%;
+        z-index: 1;
+        background-color: rgba(197, 20, 20, 0.7);
+    }
 </style>
 <head>
-    <a id="main" class="link" href="/mainPage">Main page</a>
-    <title>Play searcher</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
-    <script type="text/javascript" th:src="@{/scripts/script.js}"></script>
+
 </head>
+<div class="head">
+    <div class="grid wide">
+        <div class="row">
+            <div class="col m-4">
+                <a href="/mainPage" class="header-title-link">
+                    <img src="/img/logo.png" alt="">
+                    <h1 class="header-title-link__text">Theater tickets</h1>
+                </a>
+            </div>
+
+            <div class="col m-8 header-block-links">
+                <a th:if="${accessRights=='admin'}" class="header-link" href="/adminTags">
+                    <i class="header-icon fas fa-tags"></i>
+                    <span class="header-text">AdminTags</span>
+                </a>
+                <a th:if="${accessRights=='admin'}" class="header-link" href="/status">
+                    <i class="header-icon fas fa-info-circle"></i>
+                    <span class="header-text">Status</span>
+                </a>
+                <a th:if="${accessRights!=''}" class="header-link" href="/recommendation">
+                    <i class="header-icon fas fa-check"></i>
+                    <span class="header-text">Recommendation</span>
+                </a>
+                <a th:if="${!accessRights.equals('')}" class="header-link" href="/account">
+                    <i class="header-icon fas fa-user-circle"></i>
+                    <span class="header-text">Account</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <body>
 <div class="wrapper">
@@ -93,33 +131,8 @@
     </div>
 
 </div>
-<!--
-<div class="block-left">
-    <p>Фильтр</p>
-    <form th:method="post">
-        <input type="text" name="age" placeholder="Возраст ДО">
-        <br>
-        <input type="text" name="description" placeholder="Описание">
-        <br>
-        <input type="text" name="name" placeholder="Название">
-        <br>
-        <input type="text" name="date" placeholder="Дата">
-        <button type="submit">Find!</button>
-    </form>
-    </div>
 
-<div class="block-right">
-    <p>Спектакли</p>
-    <table class="styled-table">
-        <tr th:each="play : ${plays}">
-            <td style="width: 25%"><a  th:href="@{|/play/${play.id}|}"><span th:text="${play.name}"> Name </span></a></td>
-            <td style="width: 75%"><span th:text="${play.title}"> Description </span></td>
-        </tr>
-    </table>
-</div>
--->
 <footer>
-<button th:onclick="goBack()">Go back to main!</button>
 </footer>
 </body>
 </html>

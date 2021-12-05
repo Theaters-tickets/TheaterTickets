@@ -66,7 +66,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = this.findByLogin(man.getLogin());
         if (user.getId() == null) {
             this.saveMan(man, "ROLE_USER");
-            return user;
+            return this.findByLogin(man.getLogin());
+            //return user;
         }
         else return null;
     }
@@ -89,6 +90,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<User> optional = userDAO.findById(id);
         return optional.orElse(null);
     }
+
 
     @Transactional
     private void saveMan(User man, String roleAdmin)
