@@ -3,17 +3,23 @@ package com.netcracker.theater.rtickets.data.core.service;
 import com.netcracker.theater.rtickets.data.storage.entity.Recommendation;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface UserService {
     List<User> getAllUsers();
 
-    void saveUser(User man);
+    User saveUser(User man);
 
-    void saveAdmin(User man);
+    User saveAdmin(User man);
 
+    @Transactional
+    void deleteUserById(UUID id);
 
+    @Transactional
+    Set<User> findByParameters(String login, String password, String email); //метод для поиска пользователя по его параметрам, можно указать параметр == null
 
     User getUser(UUID id);
 

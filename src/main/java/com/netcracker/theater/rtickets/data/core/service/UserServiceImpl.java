@@ -33,12 +33,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserServiceImpl userService;
 
+    @Override
+    @Transactional
+    public void deleteUserById(UUID id) {
+        userDAO.deleteById(id);
+    }
 
+    @Override
+    public Set<User> findByParameters(String login, String password, String email) {
+        Set<User> resultSet = userDAO.findByParameters(login,password,email);
+        return resultSet;
+    }
 
     public User findByLogin(String login)
     {
         Optional<User> user = userDAO.findByLogin(login);
-        return user.orElse(null);
+        return user.orElse(User.builder().build());
     }
 
     @Override
@@ -51,21 +61,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void saveUser(User man)
+    public User saveUser(User man)
     {
         User user = this.findByLogin(man.getLogin());
-        if (user == null)
+        if (user.getId() == null) {
             this.saveMan(man, "ROLE_USER");
+            return user;
+        }
+        else return null;
     }
-
 
 
     @Override
     @Transactional
-    public void saveAdmin(User man) {
+    public User saveAdmin(User man) {
         User user = this.findByLogin(man.getLogin());
-        if (user == null)
+        if (user.getId() == null) {
             this.saveMan(man, "ROLE_ADMIN");
+            return user;
+        }
+        else return null;
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.netcracker.theater.rtickets.data.storage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,6 +14,9 @@ import java.util.Set;
 import java.util.UUID;
 
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "theatre")
@@ -137,8 +142,6 @@ public class Theatre {
         this.number = number;
     }
 
-    public Theatre() {
-    }
 
     public Theatre(String name, String address) {
         this.name = name;

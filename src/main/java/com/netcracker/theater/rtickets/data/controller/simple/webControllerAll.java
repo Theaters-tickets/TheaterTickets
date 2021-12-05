@@ -59,7 +59,15 @@ public class webControllerAll {
     public void postRegistration(Map<String, Object> model,
                                  @RequestBody User user)
     {
-        userService.saveUser(user);
+        User us = userService.saveUser(user);
+        if (us.getId() == null)
+        {
+            String str = "пользователь уже есть";
+        }
+        else
+        {
+            String str = "создался";
+        }
     }
 
     //Login page

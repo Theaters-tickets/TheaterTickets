@@ -20,8 +20,8 @@ public class Main {
         //TESTPARSER testparser = context.getBean(TESTPARSER.class);
 
         //parserClass.parseTheatre();
-        //parserClass.parseRecommendation();
-        //parserClass.parseRepertoire();
+        parserClass.parseRecommendation();
+        parserClass.parseRepertoire();
         UserService userService = context.getBean(UserService.class);
         CommentService commentService = context.getBean(CommentService.class);
         RepertoireService repertoireService = context.getBean(RepertoireService.class);
