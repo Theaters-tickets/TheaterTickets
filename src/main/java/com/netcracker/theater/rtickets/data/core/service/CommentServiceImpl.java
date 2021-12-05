@@ -31,4 +31,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void deleteComment(UUID id) { commentDAO.deleteById(id); }
 
+    @Override
+    @Transactional
+    public Comment getUsersComment(String userName, UUID repId) { return commentDAO.getUsersComment(userName, repId); }
+
 }

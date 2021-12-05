@@ -17,7 +17,7 @@
         background-color: #C7C5C5;
     }
     .white-box {
-        width: 65vw;
+        width: 55vw;
         background-color: white;
         margin: auto;
         right:0;
@@ -87,25 +87,28 @@
         </div>
     </div>
 </header>
-<div class="content">
-    <div class="white-box">
-        <table class="table-rec">
-            <tr th:if="${#lists.isEmpty(recommendations)}">
-                <td colspan="5">Рекоммендаций пока нет! Добавьте спектакли в избранное, чтобы мы узнали вас получше</td>
-            </tr>
 
-            <tr th:each="rec : ${recommendations}">
-                <td th:if="${rec.getRuName()} !='Uncategorized'">
-                    <a th:href="@{|/recommendation/${rec.getName()}|}" >
-                    <div class="picture">
-                        <img th:src= "${rec.picture.getImage()}"height="200px" width="400px"></img>
-                        <div th:text="${rec.getRuName()}"></div>
-                    </div>
-                    </a>
-                </td>
-            </tr>
-        </table>
+    <div class="white-box">
+            <div class="grid wide">
+                <h2 class="container-recommend__title">Подборки, основанные на ваших предпочтениях</h2>
+                     <table class="table-rec">
+                      <tr th:if="${#lists.isEmpty(recommendations)}">
+                           <td colspan="5">Рекоммендаций пока нет! Добавьте спектакли в избранное, чтобы мы узнали вас получше</td>
+                      </tr>
+
+                     <tr th:each="rec : ${recommendations}">
+                       <td th:if="${rec.getRuName()} !='Uncategorized'">
+                           <a th:href="@{|/recommendation/${rec.getName()}|}" class="col l-3 container-recommend__repertoire">
+                               <h4 class="container-recommend__rec-title" th:text="${rec.getRuName()}"></h4>
+                               <img th:src= "${rec.picture.getImage()}" alt="" class="container-recommend__image">
+                           </a>
+
+                       </td>
+                     </tr>
+                     </table>
+            </div>
     </div>
-</div>
+
+
 </body>
 </html>

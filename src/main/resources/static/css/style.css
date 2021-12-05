@@ -939,3 +939,20 @@ form .btn button:hover{
     height: 500px;
     width: 500px;
 }
+.container-recommend__image{
+    width: 400px;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.container-recommend__rec-title{
+    min-width: 200px;
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 8px 4px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: white;
+}

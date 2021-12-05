@@ -14,4 +14,6 @@ public interface CommentService {
 
     void deleteComment(UUID id);
 
+    Comment getUsersComment(String userName, UUID repId);
+
 }

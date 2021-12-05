@@ -65,8 +65,12 @@ public class webControllerUser {
     @PostMapping( params = "savecomment", value = "/play/{id}")
     public String createComment(@PathVariable("id") UUID id, Model model, @ModelAttribute Comment comment, Principal principal) {
         if (principal != null) {
-            comment.setRepertoire(repertoireService.getById(id));
             String username = principal.getName();
+            Comment userComm = commentService.getUsersComment(username, id);
+            if (userComm != null) {
+                commentService.deleteComment(userComm.getId());
+            }
+            comment.setRepertoire(repertoireService.getById(id));
             comment.setUserName(username);
             commentService.saveComment(comment);
             return "redirect:/play/{id}";

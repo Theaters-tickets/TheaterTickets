@@ -27,8 +27,6 @@ public class Main {
         RepertoireService repertoireService = context.getBean(RepertoireService.class);
         Repertoire rep = repertoireService.getAllRepertoire().iterator().next();
 
-        User user = userService.getUserByLogin("user");
-        System.out.println(userService.getUsersRecommendations(user));
 
 
         //System.out.println("attended: " + user.getPerformances_attended());
