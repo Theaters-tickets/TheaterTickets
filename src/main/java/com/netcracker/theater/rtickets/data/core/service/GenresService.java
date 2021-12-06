@@ -1,4 +1,4 @@
-package com.netcracker.theater.rtickets.data.core.service;
+/*package com.netcracker.theater.rtickets.data.core.service;
 
 import com.netcracker.theater.rtickets.data.storage.entity.Genre;
 
@@ -14,3 +14,5 @@ public interface GenresService {
 
     void deleteGenre(UUID id);
 }
+
+ */

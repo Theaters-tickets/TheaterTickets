@@ -1,7 +1,7 @@
 package com.netcracker.theater.rtickets.data.controller.rest;
 
-import com.netcracker.theater.rtickets.data.storage.entity.Genre;
-import com.netcracker.theater.rtickets.data.core.service.GenresService;
+//import com.netcracker.theater.rtickets.data.storage.entity.Genre;
+//import com.netcracker.theater.rtickets.data.core.service.GenresService;
 import com.netcracker.theater.rtickets.data.core.service.RepertoireService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,12 +15,13 @@ import java.util.List;
 @RequestMapping("/genres")
 public class RestControllerGenre {
 
-    @Autowired
-    private GenresService genresService;
+    //@Autowired
+    //private GenresService genresService;
 
     @Autowired
     private RepertoireService repertoireService;
 
+    /*
     @Operation(summary = "все жанры")
     @GetMapping()
     public List<Genre> showAllGenres()
@@ -28,11 +29,16 @@ public class RestControllerGenre {
         return genresService.getAllGenres();
     }
 
+     */
+
+    /*
     @PostMapping()
     public void saveGenres(@RequestBody Genre genre)
     {
         genresService.saveGenre(genre);
     }
+
+     */
 
 
 }

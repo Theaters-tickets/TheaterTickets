@@ -38,7 +38,7 @@ public class Repertoire {
     @Lob
     @Column(name = "description", length = 100000)
     private String description;
-
+/*
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "repertoire_genres",
@@ -46,6 +46,7 @@ public class Repertoire {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres;
+ */
 
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -87,12 +88,13 @@ public class Repertoire {
     {
         usersPlanned.add(user);
     }
-
+/*
     public void addGenre(Genre genre)
     {
         if (genres == null) genres = new HashSet<>();
         genres.add(genre);
     }
+ */
 
     public void addComment(Comment comment)
     {
@@ -197,11 +199,11 @@ public class Repertoire {
         this.title = title;
     }
 
-    public Repertoire(String name, String age_min, String title, Set<Genre> genres, Set<Comment> comments, Set<Performance> performances, Set<Category> categories, Set<Picture> pictures) {
+    public Repertoire(String name, String age_min, String title/*, Set<Genre> genres */, Set<Comment> comments, Set<Performance> performances, Set<Category> categories, Set<Picture> pictures) {
         this.name = name;
         this.age_min = age_min;
         this.title = title;
-        this.genres = genres;
+        //this.genres = genres;
         this.comments = comments;
         this.performances = performances;
         this.categories = categories;

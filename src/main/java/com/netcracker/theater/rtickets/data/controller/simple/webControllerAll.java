@@ -22,8 +22,8 @@ public class webControllerAll {
     TheatreService theatreService;
     @Autowired
     RepertoireService repertoireService;
-    @Autowired
-    GenresService genresService;
+    //@Autowired
+    //GenresService genresService;
     @Autowired
     CategoryService categoryService;
     @Autowired
@@ -83,13 +83,15 @@ public class webControllerAll {
 
     //Login page
     @GetMapping("/login")
-    public String getLogin(Map<String, Object> model)
+    public String getLogin(Map<String, Object> model, Principal principal)
     {
+        model.put("accessRights", (principal != null ? principal.getName() : ""));
         return "login";
     }
 
     @PostMapping("/login")
-    public String postLogin() {
+    public String postLogin(Map<String, Object> model, Principal principal) {
+        model.put("accessRights", (principal != null ? principal.getName() : ""));
         return "login";
     }
 
@@ -107,12 +109,12 @@ public class webControllerAll {
         return "account";
     }
 
+    /*
     @PostMapping("/account")
     public String postAccount(@RequestParam(value="name") String name,
                               @RequestParam(value="lastName") String lastName,
                               @RequestParam(value="password") String password,
                               Map<String, Object> model){
-        //Todo synthesise with authorization
         User user = userService.getUserByLogin("user");
         if (user.getPassword().equals(password)){
             userService.updateUser(user, name, lastName);
@@ -126,4 +128,6 @@ public class webControllerAll {
 
         return "account";
     }
+
+     */
 }

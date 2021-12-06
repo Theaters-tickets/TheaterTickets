@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repertoire</title>
+    <title>Спектакль</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -33,11 +33,11 @@
                 </a>
                 <a th:if="${accessRights!=''}" class="header-link" href="/recommendation">
                     <i class="header-icon fas fa-check"></i>
-                    <span class="header-text">Recommendation</span>
+                    <span class="header-text">Рекомендации</span>
                 </a>
                 <a th:if="${!accessRights.equals('')}" class="header-link" href="/account">
                     <i class="header-icon fas fa-user-circle"></i>
-                    <span class="header-text">Account</span>
+                    <span class="header-text">Аккаунт</span>
                 </a>
             </div>
         </div>
@@ -66,7 +66,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="col l-7 repertoire-info-info" style="padding-left: 20px;">
+                <div class="col l-7 repertoire-info-info" style="padding-left: 20px; text-align: justify">
                     <p class="repertoire-info-info__description" th:utext="${repertoire.getDescription()}" >
                     </p>
                     <br>
@@ -200,7 +200,8 @@
 
 <script>
     // Slide show
-    const WIDTH_IMAGE = document.querySelector(".repertoire-info-image").clientWidth
+    //const WIDTH_IMAGE = document.querySelector(".repertoire-info-image").clientWidth
+    const WIDTH_IMAGE = 512;//Added
     const slides = document.querySelector(".repertoire-info-item")
     const imageAll = document.querySelectorAll(".repertoire-info-image")
     var index = 0

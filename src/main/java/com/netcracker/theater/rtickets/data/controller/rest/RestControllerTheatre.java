@@ -1,7 +1,7 @@
 package com.netcracker.theater.rtickets.data.controller.rest;
 
 import com.netcracker.theater.rtickets.data.storage.entity.Theatre;
-import com.netcracker.theater.rtickets.data.core.service.GenresService;
+//import com.netcracker.theater.rtickets.data.core.service.GenresService;
 import com.netcracker.theater.rtickets.data.core.service.TheatreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,8 +19,8 @@ public class RestControllerTheatre {
     @Autowired
     private TheatreService theatreService;
 
-    @Autowired
-    private GenresService genresService;
+    //@Autowired
+    //private GenresService genresService;
 
     @Operation(summary = "все театры")
     @GetMapping("/theatre")

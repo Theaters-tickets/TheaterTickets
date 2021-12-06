@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>Рекомендации</title>
     <link rel="stylesheet" href="css/grid.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="fonts/fontawesome-free-5.15.4-web/css/all.min.css">
@@ -68,20 +68,20 @@
                     <span class="header-text">Status</span>
                 </a>
                 <a th:if="${accessRights!=''}" class="header-link" href="/recommendation" >
-                    <i class="header-icon far fa-comments"></i>
-                    <span class="header-text">Recommendation</span>
+                    <i class="header-icon fas fa-check"></i>
+                    <span class="header-text">Рекомендации</span>
                 </a>
                 <a th:if="${accessRights==''}" class="header-link" href="/login">
                     <i class="header-icon fas fa-sign-in-alt"></i>
-                    <span class="header-text">Login</span>
+                    <span class="header-text">Логин</span>
                 </a>
                 <a th:if="${accessRights==''}" class="header-link" href="/registration">
                     <i class="header-icon far fa-edit"></i>
-                    <span class="header-text">Register</span>
+                    <span class="header-text">Регистрация</span>
                 </a>
                 <a th:if="${accessRights!=''}" class="header-link" href="/account">
                     <i class="header-icon fas fa-user-circle"></i>
-                    <span class="header-text">Account</span>
+                    <span class="header-text">Аккаунт</span>
                 </a>
             </div>
         </div>

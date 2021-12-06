@@ -31,19 +31,23 @@
                 </a>
                 <a th:if="${accessRights!=''}" class="header-link" href="/recommendation">
                     <i class="header-icon fas fa-check"></i>
-                    <span class="header-text">Recommendation</span>
+                    <span class="header-text">Рекомендации</span>
                 </a>
-                <a class="header-link" href="/login">
+                <a th:if="${accessRights==''}" class="header-link" href="/login">
                     <i class="header-icon fas fa-sign-in-alt"></i>
-                    <span class="header-text">Login</span>
+                    <span class="header-text">Вход</span>
+                </a>
+                <a th:if="${accessRights!=''}" class="header-link" href="/logout">
+                    <i class="header-icon fas fa-sign-in-alt"></i>
+                    <span class="header-text">Выход</span>
                 </a>
                 <a th:if="${accessRights==''}" class="header-link" href="/registration">
                     <i class="header-icon far fa-edit"></i>
-                    <span class="header-text">Register</span>
+                    <span class="header-text">Регистрация</span>
                 </a>
                 <a th:if="${accessRights!=''}" class="header-link" href="/account">
                     <i class="header-icon fas fa-user-circle"></i>
-                    <span class="header-text">Account</span>
+                    <span class="header-text">Аккаунт</span>
                 </a>
             </div>
         </div>
@@ -64,10 +68,10 @@
                         </div>
                         <h2 class="repertoire-title" th:text="${threeRandomRepertoire[0].name}"></h2>
                         <p class="repertoire-description" th:text="${threeRandomRepertoire[0].title}"></p>
-                        <span class="repertoire-favorite">
+                        <!--span class="repertoire-favorite">
                                 <i class="fas fa-check repertoire-favorite-icon"></i>
                                 <span class="repertoire-favorite-text">Лучшее</span>
-                            </span>
+                            </span-->
                     </div>
                 </div>
                 <div class="col m-4 repertoire">
@@ -78,10 +82,10 @@
 
                         <h2 class="repertoire-title" th:text="${threeRandomRepertoire[1].name}"></h2>
                         <p class="repertoire-description" th:text="${threeRandomRepertoire[1].title}"></p>
-                        <span class="repertoire-favorite">
+                        <!--span class="repertoire-favorite">
                                 <i class="fas fa-check repertoire-favorite-icon"></i>
                                 <span class="repertoire-favorite-text">Лучшее</span>
-                            </span>
+                            </span-->
                     </div>
                 </div>
                 <div class="col m-4 repertoire">
@@ -91,10 +95,10 @@
                         </div>
                         <h2 class="repertoire-title" th:text="${threeRandomRepertoire[2].name}"></h2>
                         <p class="repertoire-description" th:text="${threeRandomRepertoire[2].title}"></p>
-                        <span class="repertoire-favorite">
+                        <!--span class="repertoire-favorite">
                                 <i class="fas fa-check repertoire-favorite-icon"></i>
                                 <span class="repertoire-favorite-text">Лучшее</span>
-                            </span>
+                            </span-->
                     </div>
                 </div>
             </div>

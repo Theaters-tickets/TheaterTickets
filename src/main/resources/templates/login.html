@@ -19,24 +19,41 @@
         background: white;
         text-decoration-line: none;
     }
+    .head{
+        width: 100%;
+        z-index: 1;
+        background-color: rgba(197, 20, 20, 0.7);
+    }
 </style>
 
 <script>
 </script>
 
+<div class="head">
+    <div class="grid wide">
+        <div class="row">
+            <div class="col l-4">
+                <a href="/mainPage" class="header-title-link">
+                    <img src="/img/logo.png" alt="">
+                    <h1 class="header-title-link__text">Theater tickets</h1>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <body>
-<a id="main" href="/mainPage">Main page</a>
+
 <div class="login-form">
     <form th:action="@{/login}" method="post">
     <div class="login-box">
-         <h1 class="login-header">LOGIN</h1>
-         <input id="login" type="text" class="login-input" placeholder="Your Login" name="username">
-         <input id="password" type="password" class="login-input" placeholder="Password" name="password">
-         <a th:text="${status}">Status</a>
+         <h1 class="login-header">ВХОД В АККАУНТ</h1>
+         <input id="login" type="text" class="login-input" placeholder="Логин" name="username">
+         <input id="password" type="password" class="login-input" placeholder="Пароль" name="password">
+         <a th:text="${status}">Статус</a>
          <!--a href="#" class="login-link">Forgot your password?</a-->
          <button class="login-control" type="submit" onclick="login()">Войти</button>
-         <p class="login-nav-register">Don't have an account? <a class="login-link" href="/registration">Register</a></p>
+         <p th:if="${accessRights==''}" class="login-nav-register">Ещё нет аккаунта? <a class="login-link" href="/registration" style="font-weight: bold">Регистрация</a></p>
     </div>
     </form>
 </div>

@@ -54,10 +54,13 @@ public class User {
     @JoinColumn(name = "user_id")
     private Set<Comment> comments = new HashSet<>();
 
+    /*
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private Set<Template> templates = new HashSet<>();
+
+     */
 
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -95,11 +98,14 @@ public class User {
         comments.add(comment);
     }
 
+    /*
     public void addTemplate(Template template)
     {
         if (templates == null) templates = new HashSet<>();
         templates.add(template);
     }
+
+     */
 
     public String getDotsPassword() {
         return password.replaceAll(".", "*");

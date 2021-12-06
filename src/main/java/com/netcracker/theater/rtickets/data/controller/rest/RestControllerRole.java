@@ -1,9 +1,9 @@
 package com.netcracker.theater.rtickets.data.controller.rest;
 
-import com.netcracker.theater.rtickets.data.storage.repository.ParameterDAO;
+//import com.netcracker.theater.rtickets.data.storage.repository.ParameterDAO;
 import com.netcracker.theater.rtickets.data.storage.repository.RoleAdminDAO;
 import com.netcracker.theater.rtickets.data.storage.repository.UserDAO;
-import com.netcracker.theater.rtickets.data.storage.entity.Parameter;
+//import com.netcracker.theater.rtickets.data.storage.entity.Parameter;
 import com.netcracker.theater.rtickets.data.storage.entity.RoleAdmin;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
 import com.netcracker.theater.rtickets.data.core.service.UserService;
@@ -26,8 +26,8 @@ public class RestControllerRole {
     @Autowired
     private UserDAO userDAO;
 
-    @Autowired
-    private ParameterDAO parameterDAO;
+    //@Autowired
+    //private ParameterDAO parameterDAO;
 
     @Autowired
     private UserService userService;
@@ -70,12 +70,14 @@ public class RestControllerRole {
     {
         userDAO.deleteById(id);
     }
-
+/*
     @PostMapping("/newParam")
     public void saveUser(@RequestBody Parameter parameter)
     {
         parameterDAO.save(parameter);
     }
+
+ */
 
     @Operation(summary = "dell")
     @GetMapping("/del")

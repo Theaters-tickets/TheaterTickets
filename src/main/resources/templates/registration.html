@@ -19,6 +19,11 @@
         background: white;
         text-decoration-line: none;
     }
+    .head{
+        width: 100%;
+        z-index: 1;
+        background-color: rgba(197, 20, 20, 0.7);
+    }
 </style>
 
 <script>
@@ -69,23 +74,36 @@
     }
 </script>
 
-<body>
-<a id="main" href="/mainPage">Main page</a>
 
+<div class="head">
+    <div class="grid wide">
+        <div class="row">
+            <div class="col l-4">
+                <a href="/mainPage" class="header-title-link">
+                    <img src="/img/logo.png" alt="">
+                    <h1 class="header-title-link__text">Theater tickets</h1>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+<div>
 <form onsubmit="return false">
     <div class="register-form">
         <div class="register-box">
-            <h1 class="register-header">CREATE ACCOUNT</h1>
-            <input type="text" class="register-input" placeholder="Your Login" name="login" id="login" required>
-            <input type="text" class="register-input" placeholder="Your Name" name="name" id="name" required>
-            <input type="password" class="register-input" placeholder="Password" name="password" id="psw" required>
-            <input type="password" class="register-input" placeholder="Confirm Password" name="passwordRepeat" id="psw-repeat" required>
+            <h1 class="register-header">СОЗДАНИЕ АККАУНТА</h1>
+            <input type="text" class="register-input" placeholder="Ваш логин" name="login" id="login" required>
+            <input type="text" class="register-input" placeholder="Ваше имя" name="name" id="name" required>
+            <input type="password" class="register-input" placeholder="Пароль" name="password" id="psw" required>
+            <input type="password" class="register-input" placeholder="Пароль ещё раз" name="passwordRepeat" id="psw-repeat" required>
             <!--p><input type="checkbox" class="register-input-check">I agree all statements in <a class="register-link" href="#">Terms of service</a></p-->
             <a th:text="${status}" id="status">Status</a>
             <button class="register-control" onclick="register()">Зарегестрироваться</button>
-            <p class="register-nav-login">У Вас уже есть аккаунт?<a class="register-link" href="/login">Login here</a></p>
+            <p class="register-nav-login">У Вас уже есть аккаунт? <a class="register-link" href="/login" style="font-weight: bold">Вход</a></p>
         </div>
     </div>
+</div>
 </form>
 </body>
 </html>

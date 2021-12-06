@@ -1,4 +1,4 @@
-package com.netcracker.theater.rtickets.data.core.service;
+/*package com.netcracker.theater.rtickets.data.core.service;
 
 import com.netcracker.theater.rtickets.data.storage.repository.GenreDAO;
 import com.netcracker.theater.rtickets.data.storage.entity.Genre;
@@ -39,3 +39,5 @@ public class GenresServiceImpl implements GenresService{
         genreDAO.deleteById(id);
     }
 }
+
+ */

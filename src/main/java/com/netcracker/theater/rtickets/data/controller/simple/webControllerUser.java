@@ -31,8 +31,8 @@ public class webControllerUser {
     TheatreService theatreService;
     @Autowired
     RepertoireService repertoireService;
-    @Autowired
-    GenresService genresService;
+    //@Autowired
+    //GenresService genresService;
     @Autowired
     CategoryService categoryService;
     @Autowired

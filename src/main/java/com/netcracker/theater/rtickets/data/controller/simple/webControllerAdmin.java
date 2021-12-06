@@ -19,8 +19,8 @@ public class webControllerAdmin {
     TheatreService theatreService;
     @Autowired
     RepertoireService repertoireService;
-    @Autowired
-    GenresService genresService;
+    //@Autowired
+    //GenresService genresService;
     @Autowired
     CategoryService categoryService;
     @Autowired
@@ -50,7 +50,7 @@ public class webControllerAdmin {
     public String adminTagsPost(
             @RequestBody(required = false) List<TagInfo> TagInfos,
             Map<String, Object> model){
-        System.out.println(TagInfos);
+        //System.out.println(TagInfos);
         for (TagInfo newTagType : TagInfos) {
             Recommendation rec = recommendationService.getRecommendationByName(newTagType.getParent());
             rec.addCategory(categoryService.getCategoryByName(newTagType.getTag()));
