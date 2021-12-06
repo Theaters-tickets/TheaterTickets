@@ -40,11 +40,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public Set<User> findByParameters(String login, String password, String email) {
         Set<User> resultSet = userDAO.findByParameters(login,password,email);
         return resultSet;
     }
 
+    @Transactional
     public User findByLogin(String login)
     {
         Optional<User> user = userDAO.findByLogin(login);
@@ -130,6 +132,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = this.findByLogin(login);
 

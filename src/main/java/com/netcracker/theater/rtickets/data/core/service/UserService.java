@@ -15,10 +15,8 @@ public interface UserService {
 
     User saveAdmin(User man);
 
-    @Transactional
     void deleteUserById(UUID id);
 
-    @Transactional
     Set<User> findByParameters(String login, String password, String email); //метод для поиска пользователя по его параметрам, можно указать параметр == null
 
     User getUser(UUID id);

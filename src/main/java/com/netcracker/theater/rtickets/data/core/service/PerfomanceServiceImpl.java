@@ -21,6 +21,7 @@ public class PerfomanceServiceImpl implements PerfomanceService {
     }
 
     @Override
+    @Transactional
     public void savePer(Performance performance) {
         perfomanceDAO.save(performance);
     }
@@ -28,6 +29,7 @@ public class PerfomanceServiceImpl implements PerfomanceService {
     //Added by Ilya
     //To get performance by id
     @Override
+    @Transactional
     public Performance getById(UUID id){
         return perfomanceDAO.getById(id);
     }

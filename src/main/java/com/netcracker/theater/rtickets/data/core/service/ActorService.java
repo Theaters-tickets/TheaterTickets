@@ -2,10 +2,12 @@ package com.netcracker.theater.rtickets.data.core.service;
 
 import com.netcracker.theater.rtickets.data.storage.entity.Actor;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 public interface ActorService {
+
     List<Actor> getAllActors();
 
     void saveActor(Actor actor);
