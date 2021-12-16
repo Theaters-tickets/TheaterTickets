@@ -62,21 +62,27 @@ public class webControllerAll {
     public String postRegistration(Map<String, Object> model,
                                  @RequestBody User user)
     {
-        User us = userService.saveUser(user);
-        if (us == null){
-            //System.out.println("non unique");
-            model.put("status", "Non unique login!");
-            return "registration";
-        }
-        else if (us.getId() == null)
+        if (userService.isStringOnlyAlphabet(user.getLogin()) &&
+            userService.isStringOnlyAlphabet(user.getName()) &&
+            userService.isStringOnlyAlphabetAndNumbersAndSymbols(user.getPassword()))
         {
-            //System.out.println("Error");
-            String str = "пользователь уже есть";
-        }
-        else
-        {
-            //System.out.println("Success");
-            String str = "создался";
+            User us = userService.saveUser(user);
+            if (us == null){
+                //System.out.println("non unique");
+                model.put("status", "Non unique login!");
+                return "registration";
+            }
+            else if (us.getId() == null)
+            {
+                //System.out.println("Error");
+                String str = "пользователь уже есть";
+            }
+            else
+            {
+                //System.out.println("Success");
+                String str = "создался";
+            }
+            return "redirect:/mainPage";
         }
         return "redirect:/mainPage";
     }
