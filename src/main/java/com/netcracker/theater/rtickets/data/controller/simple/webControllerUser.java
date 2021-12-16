@@ -22,7 +22,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -50,6 +54,12 @@ public class webControllerUser {
         model.put("repertoire", repertoire);
         model.put("categories", repertoireService.getCategoriesByIdOfRepertoire(id));
         model.put("similarRepertoire", repertoireService.getSimilarRepertoire(repertoire.getCategories(), 4));
+
+
+        List<Performance> connectedPerfomances = new ArrayList<>(repertoire.getPerformances());
+        //Todo add sort
+        model.put("connectedPerformances", connectedPerfomances);
+
 
         //Added by Alisa
         //Comments for repertoire

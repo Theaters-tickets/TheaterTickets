@@ -92,9 +92,10 @@
             <div class="grid wide">
                 <h2 class="container-recommend__title">Подборки, основанные на ваших предпочтениях</h2>
                      <table class="table-rec">
-                      <tr th:if="${#lists.isEmpty(recommendations)}">
+                         <div th:if="${#lists.isEmpty(recommendations)}">Рекоммендаций пока нет! Добавьте спектакли в избранное, чтобы мы узнали вас получше</div>
+                      <!--tr th:if="${#lists.isEmpty(recommendations)}">
                            <td colspan="5">Рекоммендаций пока нет! Добавьте спектакли в избранное, чтобы мы узнали вас получше</td>
-                      </tr>
+                      </tr-->
 
                      <tr th:each="rec : ${recommendations}">
                        <td th:if="${rec.getRuName()} !='Uncategorized'">

@@ -49,6 +49,9 @@
         color: inherit;
         font-family: "Berlin Sans FB Demi";
     }
+    input{
+        width: 160px;
+    }
 
     td{
         border-bottom: #454542 2px solid;
@@ -109,11 +112,11 @@
     <div class="sidebar">
         <h1>Фильтр</h1>
         <form th:method="post">
-            <input type="text" name="age" placeholder="Возраст ДО">
+            <input id="number" type="number" min="0" max="99" name="age" placeholder="Возраст ДО" maxlength="3">
             <br>
-            <input type="text" name="description" placeholder="Описание">
+            <input type="text" name="description" placeholder="Описание" maxlength="20">
             <br>
-            <input type="text" name="name" placeholder="Название">
+            <input type="text" name="name" placeholder="Название" maxlength="20">
             <br>
             <input type="date" name="date" placeholder="Дата">
             <button type="submit">Find!</button>

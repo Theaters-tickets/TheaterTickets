@@ -44,6 +44,67 @@
     </div>
 </header>
 
+<style>
+    .tabs {
+        min-width: 60px;
+        padding: 0px;
+        margin: 0 auto;
+    }
+    label{
+        width: fit-content;
+    }
+
+    section {
+        width: fit-content;
+        height: 0px;
+        /*overflow: hidden;*/
+        overflow: auto;
+        margin: -1px 0px 0px 0px;
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.2s;
+    }
+
+
+    table{
+        width: 100%;
+    }
+
+    .tabs > input {
+        display: none;
+    }
+
+    .tabs > label {
+        display: block;
+        padding: 7px 15px;
+        font-weight: 600;
+        text-align: left;
+        color: #aaa;
+        border: 1px solid #ddd;
+        /*background: #ffffff;*/
+    }
+
+    .tabs > label:hover {
+        color: #888;
+        cursor: pointer;
+        /*background: #fff;*/
+    }
+
+    .tabs > input:checked + label {
+        color: #555;
+        /*background: #fff;*/
+    }
+
+    #tab1:checked ~ #content-tab1{
+        /*height: 400px;*/
+        height: fit-content;
+        max-height: 200px;
+        /*background: #fcffe0;*/
+    }
+</style>
+
 <div class="container">
     <div class="container-repertoire-info">
         <div class="grid wide">
@@ -70,15 +131,33 @@
                     <p class="repertoire-info-info__description" th:utext="${repertoire.getDescription()}" >
                     </p>
                     <br>
-                    <p class="repertoire-info-info__allow" th:text="${repertoire.age_min + '+'}"></p>
+                    <p class="repertoire-info-info__allow" th:text="${'Возрастное ограничение ' + repertoire.age_min + '+'}"></p>
+                    <br>
                 </div>
             </div>
             <form method="post">
                 <button class="repertoire-info__btn-visit" value="planned" name="planned" type="submit">Хочу посетить</button>
                 <button class="repertoire-info__btn-visited" value="attended" name="attended" type="submit">Уже посетил</button>
             </form>
+            <!--------------------------------------------------------->
+            <br>
+            <div th:if="${connectedPerformances.size()>0}" class="tabs">
 
+                <input id="tab1" type="checkbox">
+                <label for="tab1">Посмотреть даты</label>
+
+                <section id="content-tab1">
+                    <table>
+                        <tr th:each="perf : ${connectedPerformances}">
+                            <td><div th:text="${perf.getDate()}">Date</div></a></td>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+            <div th:if="${connectedPerformances.size()==0}">В ближайшее время нет спектаклей</div>
+            <!--------------------------------------------------------->
         </div>
+
     </div>
     <div class="container-rating">
         <div class="grid wide">
