@@ -16,5 +16,4 @@ public interface RoleActorService {
     void deleteRole(UUID id);
 
     RoleActor getRoleByName(String name);
-
 }

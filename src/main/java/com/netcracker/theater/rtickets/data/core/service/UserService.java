@@ -15,10 +15,8 @@ public interface UserService {
 
     User saveAdmin(User man);
 
-    @Transactional
     void deleteUserById(UUID id);
 
-    @Transactional
     Set<User> findByParameters(String login, String password, String email); //метод для поиска пользователя по его параметрам, можно указать параметр == null
 
     User getUser(UUID id);
@@ -34,5 +32,9 @@ public interface UserService {
     //Added by Ilya
     //To update user
     void updateUser(User user, String name, String lastName);
+
+    boolean isStringOnlyAlphabet(String str);
+
+    boolean isStringOnlyAlphabetAndNumbersAndSymbols(String str);
 
 }

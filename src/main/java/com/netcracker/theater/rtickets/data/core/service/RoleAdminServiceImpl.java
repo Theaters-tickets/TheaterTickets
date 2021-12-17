@@ -6,6 +6,7 @@ import com.netcracker.theater.rtickets.data.storage.repository.RoleAdminDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 
@@ -16,6 +17,7 @@ public class RoleAdminServiceImpl implements RoleAdminService {
     RoleAdminDAO roleAdminDAO;
 
     @Override
+    @Transactional
     public RoleAdmin findByRole(String name) {
         Optional<RoleAdmin> role = roleAdminDAO.findByRole(name);
         return role.orElse(null);

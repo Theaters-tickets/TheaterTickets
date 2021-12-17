@@ -6,6 +6,5 @@ import com.netcracker.theater.rtickets.data.storage.entity.User;
 import java.util.Optional;
 
 public interface RoleAdminService {
-
     RoleAdmin  findByRole (String role);
 }

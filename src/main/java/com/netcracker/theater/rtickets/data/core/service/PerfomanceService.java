@@ -10,7 +10,6 @@ public interface PerfomanceService {
     List<Performance> getAllPerformance();
     void savePer(Performance performance);
 
-
     //Added by Ilya
     //To get performance by id
     Performance getById(UUID id);

@@ -81,6 +81,8 @@ public class RepertoireServiceImpl implements RepertoireService{
 
     //Added by Ilya
     //Categories as list for repertoire
+    @Override
+    @Transactional
     public List<String> getCategoriesByIdOfRepertoire(UUID id){
         List<String> repertoireCategories = new ArrayList<>();
         Set<Category> categories = repertoireDAO.getById(id).getCategories();
@@ -92,6 +94,8 @@ public class RepertoireServiceImpl implements RepertoireService{
 
     //Added by Ilya
     //
+    @Override
+    @Transactional
     public Theatre getTheatreByIdOfRepertoire(UUID id){
         Repertoire repertoire = repertoireDAO.getById(id);
         Theatre theatre = new Theatre();
@@ -106,6 +110,8 @@ public class RepertoireServiceImpl implements RepertoireService{
 
     //Added by Ilya
     //Get similar repertoire by tags
+    @Override
+    @Transactional
     public List<Repertoire> getSimilarRepertoire(Set<Category> categories, int amount){
         List<String> categoriesLike = new ArrayList<>();
         for (Category cat : categories){
