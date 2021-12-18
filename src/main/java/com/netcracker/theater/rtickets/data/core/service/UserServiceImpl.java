@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public Set<User> findByParameters(String login, String password, String email) {
-        Set<User> resultSet = userDAO.findByParameters(login,password,email);
-        return resultSet;
+        return userDAO.findByParameters(login,password,email);
     }
 
     @Transactional
@@ -144,4 +143,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<GrantedAuthority> grantList = new ArrayList<>();
         return new org.springframework.security.core.userdetails.User(user.getLogin(),user.getPassword(), Arrays.asList(authority));
     }
+
+    public boolean isStringOnlyAlphabet(String str)
+    {
+        return ((str != null)
+                && ( str.length() < 25)
+                && (!str.equals(""))
+                && (str.matches("^[a-zA-Z]*$")));
+    }
+    public boolean isStringOnlyAlphabetAndNumbersAndSymbols(String str)
+    {
+        return ((str != null)
+                && ( str.length() < 25)
+                && (!str.equals(""))
+                && (str.matches("[-/@#$%^&_+=()a-zA-Z0-9]+")));
+    }
+
 }

@@ -33,4 +33,8 @@ public interface UserService {
     //To update user
     void updateUser(User user, String name, String lastName);
 
+    boolean isStringOnlyAlphabet(String str);
+
+    boolean isStringOnlyAlphabetAndNumbersAndSymbols(String str);
+
 }
