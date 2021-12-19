@@ -1,4 +1,4 @@
-package com.netcracker.theater.rtickets.exception;
+/*package com.netcracker.theater.rtickets.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,3 +22,4 @@ public class ControllerExceprionHandler {
        return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
     }
 }
+*/
