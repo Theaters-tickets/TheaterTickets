@@ -55,7 +55,19 @@
                     // Запрос успешно выполнен
                     console.log(response);
                     // return response.json() и так далее см. документацию
-                    location.assign('/login');
+                    //location.assign('/login');
+                    console.log(response.url);
+                    if (response.url == "http://localhost:8080/mainPage"){
+                        location.assign('/login');
+                    }
+                    else{
+                        const status = document.getElementById("status");
+                        dataLogin.value = "";
+                        dataPassword.value = "";
+                        dataPasswordRepeat.value = "";
+                        status.innerHTML = "Ошибка! Неуникальный логин".fontcolor("orange");
+                    }
+
                 },
                 function(error) {
                     // Запрос не получилось отправить
@@ -69,7 +81,7 @@
             const status = document.getElementById("status");
             dataPassword.value = "";
             dataPasswordRepeat.value = "";
-            status.innerHTML = "Error! Password not equals to password repeat".fontcolor("orange");
+            status.innerHTML = "Ошибка! Пароли не совпадают".fontcolor("orange");
         }
     }
 </script>
@@ -93,10 +105,10 @@
     <div class="register-form">
         <div class="register-box">
             <h1 class="register-header">СОЗДАНИЕ АККАУНТА</h1>
-            <input type="text" class="register-input" placeholder="Ваш логин" name="login" id="login" required>
-            <input type="text" class="register-input" placeholder="Ваше имя" name="name" id="name" required>
-            <input type="password" class="register-input" placeholder="Пароль" name="password" id="psw" required>
-            <input type="password" class="register-input" placeholder="Пароль ещё раз" name="passwordRepeat" id="psw-repeat" required>
+            <input type="text" class="register-input" placeholder="Ваш логин" name="login" id="login" maxlength="20" required>
+            <input type="text" class="register-input" placeholder="Ваше имя" name="name" id="name" maxlength="20" required>
+            <input type="password" class="register-input" placeholder="Пароль" name="password" id="psw" maxlength="20" required>
+            <input type="password" class="register-input" placeholder="Пароль ещё раз" name="passwordRepeat" id="psw-repeat" maxlength="20" required>
             <!--p><input type="checkbox" class="register-input-check">I agree all statements in <a class="register-link" href="#">Terms of service</a></p-->
             <a th:text="${status}" id="status">Status</a>
             <button class="register-control" onclick="register()">Зарегестрироваться</button>

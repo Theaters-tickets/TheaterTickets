@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.security.Principal;
@@ -60,37 +61,42 @@ public class webControllerAll {
 
     @PostMapping("/registration")
     public String postRegistration(Map<String, Object> model,
-                                 @RequestBody User user)
+                                 @RequestBody User user,
+                                   ServletResponse resp)
     {
         if (userService.isStringOnlyAlphabet(user.getLogin()) &&
             userService.isStringOnlyAlphabet(user.getName()) &&
-            userService.isStringOnlyAlphabetAndNumbersAndSymbols(user.getPassword()))
+            userService.isStringOnlyAlphabetAndNumbersAndSymbols(user.getPassword()) &&
+                userService.getUserByLogin(user.getLogin()) == null)
         {
             User us = userService.saveUser(user);
-            if (us == null){
-                //System.out.println("non unique");
-                model.put("status", "Non unique login!");
-                return "registration";
-            }
-            else if (us.getId() == null)
-            {
-                //System.out.println("Error");
-                String str = "пользователь уже есть";
-            }
-            else
-            {
-                //System.out.println("Success");
-                String str = "создался";
-            }
             return "redirect:/mainPage";
         }
-        return "redirect:/mainPage";
+        else{
+            System.out.println("Error handling");
+            if (userService.getUserByLogin(user.getLogin()) != null){
+                model.put("status", "Неуникальный логин!");
+            }
+            else{
+                model.put("status", "Произошла ошибка! Все поля должны состоять из букв!");
+            }
+            HttpServletResponse response=(HttpServletResponse) resp;
+            response.setStatus(500);
+
+            return "registration";
+        }
     }
 
     //Login page
     @GetMapping("/login")
-    public String getLogin(Map<String, Object> model, Principal principal)
+    public String getLogin(Map<String, Object> model, Principal principal, @RequestParam(value = "error", defaultValue = "false")String errorStat)
     {
+        if (errorStat.equals("true")){
+            model.put("status", "Ошибка входа!");
+        }
+        else{
+            model.put("status", "");
+        }
         model.put("accessRights", (principal != null ? principal.getName() : ""));
         return "login";
     }

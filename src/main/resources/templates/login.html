@@ -48,8 +48,8 @@
     <form th:action="@{/login}" method="post">
     <div class="login-box">
          <h1 class="login-header">ВХОД В АККАУНТ</h1>
-         <input id="login" type="text" class="login-input" placeholder="Логин" name="username">
-         <input id="password" type="password" class="login-input" placeholder="Пароль" name="password">
+         <input id="login" type="text" class="login-input" placeholder="Логин" name="username" maxlength="20">
+         <input id="password" type="password" class="login-input" placeholder="Пароль" name="password" maxlength="20">
          <a th:text="${status}">Статус</a>
          <!--a href="#" class="login-link">Forgot your password?</a-->
          <button class="login-control" type="submit" onclick="login()">Войти</button>

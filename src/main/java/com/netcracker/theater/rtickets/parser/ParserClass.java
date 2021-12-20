@@ -64,7 +64,7 @@ public class ParserClass {
                         try {
                             repertoire = mapper.readValue(result.toString(), Repertoire.class);
                         } catch (Exception ex) {
-                            System.out.println("Exception in parsing");
+                            //System.out.println("Exception in parsing");
                         }
                         check = true;
                         for (Repertoire rep : repertoireService.getAllRepertoire()) {
@@ -83,7 +83,7 @@ public class ParserClass {
                         try {
                             theatreNumber = (Long) ((JSONObject) resultObject.get("place")).get("id");
                         } catch (Exception ex) {
-                            System.out.println("No place for this performance!");
+                            //System.out.println("No place for this performance!");
                             continue;
                         }
                         Theatre theatre = theatreService.getTheatreByNumber(theatreNumber);

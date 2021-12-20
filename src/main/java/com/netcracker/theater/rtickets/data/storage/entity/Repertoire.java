@@ -18,7 +18,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "repertoire")
+@Table(name = "repertoire",
+        indexes = {
+                @Index(columnList = "age_min, name", name = "Repertoire_idx") })
 public class Repertoire {
     @Id
     @GeneratedValue

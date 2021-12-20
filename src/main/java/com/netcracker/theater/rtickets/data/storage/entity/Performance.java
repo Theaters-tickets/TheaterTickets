@@ -17,7 +17,9 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "performance")
+@Table(name = "performance",
+        indexes = {
+        @Index(columnList = "date", name = "dateIndex") })
 public class Performance {
     @Id
     @JsonIgnore
