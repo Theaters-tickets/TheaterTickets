@@ -26,15 +26,15 @@ public class NewErrorController implements ErrorController {
             Integer statusCode = Integer.valueOf(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                logger.error("Error 404", ex);
+                logger.error(errorMessage);
                 return "error-404";
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                logger.error("Error 500", ex);
+                logger.error(errorMessage);
                 return "error-500";
             }
         }
-        logger.error("Uncategorized error", ex);
+        logger.error(errorMessage);
         return "error";
     }
 }
