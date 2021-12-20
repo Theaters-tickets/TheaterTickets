@@ -8,8 +8,11 @@ import com.netcracker.theater.rtickets.data.core.service.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
@@ -44,6 +47,8 @@ public class ParserClass {
 
     public static URL url;
 
+    private static Logger logger = LoggerFactory.getLogger(ParserClass.class);
+
      public void parseRepertoire() {
         String pathToTheNextPage = null;
         Long theatreNumber = 0L;
@@ -64,7 +69,7 @@ public class ParserClass {
                         try {
                             repertoire = mapper.readValue(result.toString(), Repertoire.class);
                         } catch (Exception ex) {
-                            System.out.println("Exception in parsing");
+                            logger.error("Error while parsing", ex);
                         }
                         check = true;
                         for (Repertoire rep : repertoireService.getAllRepertoire()) {
@@ -83,7 +88,7 @@ public class ParserClass {
                         try {
                             theatreNumber = (Long) ((JSONObject) resultObject.get("place")).get("id");
                         } catch (Exception ex) {
-                            System.out.println("No place for this performance!");
+                            logger.error("No place for this performance", ex);
                             continue;
                         }
                         Theatre theatre = theatreService.getTheatreByNumber(theatreNumber);
@@ -190,19 +195,21 @@ public class ParserClass {
                         pathToTheNextPage = obj.get("next").toString();
                         url = new URL(pathToTheNextPage);
                         countPages++;
-                        System.out.println("PAGE " + countPages);
+                        logger.info("PAGE " + countPages);
+                        //System.out.println("PAGE " + countPages);
                     } catch (NullPointerException ex) {
-                        System.out.println("END!");
+                        logger.info("END!");
+                        //System.out.println("END!");
                         break;
                     }
                 }
                 //Added by Ilya
                 pageCount++;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.error("Exception", ex);
         }
-        System.out.println("OK!");
+         logger.info("OK!");
     }
 
     public void parseTheatre() {
@@ -232,10 +239,10 @@ public class ParserClass {
                     theaterURL = new URL(pathToTheNextPage);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.error("Exception", ex);
         }
-        System.out.println("OK!");
+        logger.info("OK!");
     }
 
     public void parseRecommendation() {
@@ -303,7 +310,7 @@ public class ParserClass {
                 obj = (JSONObject) parse.parse(inline);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Exception", ex);
         }
         return obj;
     }
@@ -329,7 +336,8 @@ public class ParserClass {
                 arr = (JSONArray) parse.parse(inline);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            logger.error("Exception", ex);
         }
         return arr;
     }
