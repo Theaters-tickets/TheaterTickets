@@ -1,7 +1,6 @@
 package com.netcracker.theater.rtickets.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,7 @@ import java.util.Map;
 @Controller
 public class NewErrorController implements ErrorController {
 
-    //Logger logger = LoggerFactory.getLogger(NewErrorController.class);
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger();
 
 
     @RequestMapping("/error")
@@ -27,15 +26,15 @@ public class NewErrorController implements ErrorController {
             Integer statusCode = Integer.valueOf(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                //logger.error("Error 404", ex);
+                logger.error("Error 404", ex);
                 return "error-404";
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                //logger.error("Error 500", ex);
+                logger.error("Error 500", ex);
                 return "error-500";
             }
         }
-        //logger.error("Uncategorized error", ex);
+        logger.error("Uncategorized error", ex);
         return "error";
     }
 }

@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.netcracker.theater.rtickets.data.storage.entity.*;
 import com.netcracker.theater.rtickets.data.core.service.*;
+import org.apache.logging.log4j.LogManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
@@ -47,7 +45,8 @@ public class ParserClass {
 
     public static URL url;
 
-    private static Logger logger = LoggerFactory.getLogger(ParserClass.class);
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger();
+
 
      public void parseRepertoire() {
         String pathToTheNextPage = null;
