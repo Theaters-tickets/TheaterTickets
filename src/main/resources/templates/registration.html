@@ -57,7 +57,7 @@
                     // return response.json() и так далее см. документацию
                     //location.assign('/login');
                     console.log(response.url);
-                    if (response.url == "http://localhost:8080/mainPage"){
+                    if (response.url.includes("/mainPage")){
                         location.assign('/login');
                     }
                     else{
