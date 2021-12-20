@@ -5,6 +5,8 @@ import com.netcracker.theater.rtickets.data.storage.entity.RoleAdmin;
 import com.netcracker.theater.rtickets.data.storage.entity.User;
 import com.netcracker.theater.rtickets.data.storage.repository.RoleAdminDAO;
 import com.netcracker.theater.rtickets.data.storage.repository.UserDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +34,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserServiceImpl userService;
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     @Transactional
@@ -70,7 +74,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return this.findByLogin(man.getLogin());
             //return user;
         }
-        else return null;
+        else
+        {
+            logger.info("Пользователь с таким логином уже есть");
+            return null;
+        }
     }
 
 
@@ -106,6 +114,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     .name(man.getName())
                     .enabled(true)
                     .build());
+            logger.info("Новый пользователь создан");
+        }
+        else
+        {
+            logger.info("Нет роли с таким названием: " + roleAdmin);
         }
     }
 
